@@ -1,3 +1,4 @@
+<!-- main .html doc; gets instructions, MSIT task; has file-writing -->
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,20 +15,23 @@
         <script src="jspsych-6.1.0/plugins/jspsych-survey-text.js"></script>
         <script src="jspsych-6.1.0/plugins/jspsych-instructions.js"></script>
         <script src="jspsych-6.1.0/plugins/jspsych-call-function.js"></script>
-        <script type="text/javascript" src="jspsych-6.1.0/d3.min.js"></script>
+        <script src="jspsych-6.1.0/plugins/MSIT.js"></script>
         <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
         <style>
-            .task {
-                font-size: 60px;
+            .fixation-task {
+                font-size: 12vh;
+            }
+            .MSIT-task {
+                font-size: 12vh;
             }
         </style>
     </head>
     <body>
     </body>
-    <script type="text/javascript" src="parameters.js"></script>
-    <script type="text/javascript" src="instructions.js"> </script>
-    <!-- <script type="text/javascript" src="MSIT_task.js"> </script> -->
-    <!-- <script type="text/javascript" src="MSIT_task_v2.js"> </script> -->
-    <script type="text/javascript" src="MSIT_task_v3.js"> </script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script> -->
+    <!-- <script type="text/javascript" src="parameters.js"></script> -->
+    <script type="text/javascript" src="MSIT_instructions.js"></script>
+    <script type="text/javascript" src="current.js"></script>
     
 </html>
