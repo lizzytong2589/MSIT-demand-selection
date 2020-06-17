@@ -31,6 +31,11 @@ jsPsych.plugins["MSIT"] = (function() {
         default: undefined,
         description: 'fixation time in ms',
       },
+      demand_selection: {
+        type: jsPsych.plugins.parameterType.BOOL,
+        default: false,
+        description: 'whether or not to include demand selection (true = yes; false = no)',
+      },
     }
   }
 
@@ -78,6 +83,7 @@ jsPsych.plugins["MSIT"] = (function() {
 
     // counters and parameters 
     var is_practice = trial.is_practice;
+    var demand_selection = trial.demand_selection;
     var n_MSIT_tasks = trial.n_MSIT_tasks;
     var n_MSIT_tasks_performed = 0; // number of MSIT tasks performed in one travel period
     var MSIT_task_duration = trial.MSIT_task_duration;
@@ -85,41 +91,82 @@ jsPsych.plugins["MSIT"] = (function() {
     var MSIT_task_type = trial.MSIT_task_type;
     var is_missed = false;
 
+    // create promise that can be resolved externally 
+    var outside_resolve;
+    var external_promise = function(){
+      return new Promise(function(resolve) { 
+        outside_resolve = resolve;
+      });
+    } // end external_prommise
+
+    // call when choice made for demand selection
+    var choice_response = function(info) {
+      // kill keyboard listener
+      jsPsych.pluginAPI.cancelKeyboardResponse(choice_keyboardListener);
+      
+      response = info;
+
+      // check choice and set task type
+      if(jsPsych.pluginAPI.compareKeys('1', response.key)){
+        MSIT_task_type = 'congruent';
+      } else if(jsPsych.pluginAPI.compareKeys('3', response.key)) {
+        MSIT_task_type = 'incongruent';
+      }
+      
+      // set and write data
+      var data = {
+        phase: 'Demand Selection',
+        is_practice: is_practice,
+        task_type: null,
+        task_duration: null,
+        fixation_duration: null,
+        stimulus: null,
+        rt: response.rt,
+        key_press: jsPsych.pluginAPI.convertKeyCodeToKeyCharacter(response.key),
+        correct_response: null,
+        correct: null,
+        is_missed: null,
+        MSIT_tasks_performed: null,
+      }
+      jsPsych.data.write(data);
+
+      // console.log(MSIT_task_type)
+      outside_resolve();
+    } // end choice_response
+
+    // Show prompt to ask for choice of task if there is demand selection
+    var choice = async function() {
+      // ask user for choice
+      display_element.innerHTML = "<p>Press 1 to choose <span style ='color:blue'>matching</span> " +
+        "and 3 to choose <span style ='color:orange'>mismatching</span> tasks.</p>"
+      
+      // set up keyboard listener
+      choice_keyboardListener = jsPsych.pluginAPI.getKeyboardResponse({
+        callback_function: choice_response, 
+        valid_responses: ['1','3'], 
+        rt_method: 'performance', 
+        persist: false,
+        allow_held_key: false
+      })
+      
+      await external_promise();
+    } // end choice()
+
+
     // promisify timeout function
     var timeout = function(ms, id) {
       return new Promise(resolve => jsPsych.pluginAPI.setTimeout(function(){
         display_element.querySelector(id).style.visibility = 'hidden';
         resolve();
       }, ms));
-    }
-
-    // create promise that resolves when task_hidden is called
-    var task_hidden;
-    var hide_MSIT = function(){
-      return new Promise(function(resolve) { 
-        task_hidden = resolve;
-      });
-    }
-
+    } // end timeout
 
     // draw fixation cross
     var draw_fixation_cross = async function(){
       var fixation_cross = '<div class="fixation-task" id="fixation-cross">'+'+'+'</div>';
-      // console.log('fixation cross');
 
       // show fixation cross
       display_element.innerHTML = fixation_cross;
-
-      // set and write data
-      // var data = {
-      //   phase: 'MSIT',
-      //   task_type: 'fixation',
-      //   task_duration: fixation_duration,
-      //   stimulus: '+',
-      //   rt: 'null',
-      //   key_press: 'null',
-      // }
-      // jsPsych.data.write(data);
 
       // finish after set time
       await timeout(fixation_duration, '#fixation-cross');
@@ -130,13 +177,11 @@ jsPsych.plugins["MSIT"] = (function() {
     // MSIT task creation
     var current_MSIT_task = {};
 
-    // call if key pressed during MSIT task
+    // call if key pressed during MSIT task (function below)
     var MSIT_response = async function(info){ 
       // kill keyboard listener and timeout
       jsPsych.pluginAPI.clearAllTimeouts();
-      if (typeof keyboardListener !== 'undefined') {
-        jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
-      }
+      jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
 
       response = info;
       var correct = false;
@@ -153,6 +198,7 @@ jsPsych.plugins["MSIT"] = (function() {
         is_practice: is_practice,
         task_type: current_MSIT_task[0]['task_type'],
         task_duration: MSIT_task_duration,
+        fixation_duration: fixation_duration,
         stimulus: current_MSIT_task[0]['task'],
         rt: response.rt,
         key_press: key_pressed,
@@ -164,8 +210,8 @@ jsPsych.plugins["MSIT"] = (function() {
       jsPsych.data.write(data);
       
       // hide task; resolve promise for show_MSIT_task()
-      task_hidden();
-      
+      outside_resolve();
+
     } // end MSIT_response
 
     // function to create one MSIT task
@@ -189,7 +235,7 @@ jsPsych.plugins["MSIT"] = (function() {
       jsPsych.pluginAPI.setTimeout(function() {
         // display_element.querySelector('#MSIT-stimulus').style.visibility = 'hidden';
         jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
-        task_hidden();
+        outside_resolve();
       }, MSIT_task_duration);
 
       is_missed = true; // before any keys pressed
@@ -201,7 +247,7 @@ jsPsych.plugins["MSIT"] = (function() {
         allow_held_key: false
       })
       
-      await hide_MSIT()
+      await external_promise()
 
       // if no key is pressed
       if (is_missed) {
@@ -210,6 +256,7 @@ jsPsych.plugins["MSIT"] = (function() {
           is_practice: is_practice,
           task_type: current_MSIT_task[0]['task_type'],
           task_duration: MSIT_task_duration,
+          fixation_duration: fixation_duration,
           stimulus: current_MSIT_task[0]['task'],
           rt: null,
           key_press: null,
@@ -222,19 +269,23 @@ jsPsych.plugins["MSIT"] = (function() {
       }
     } // end show_MSIT_task
   
+
     // create desired number of MSIT tasks 
     var MSIT_task_sequence = async function() {
       n_MSIT_tasks_performed = 0;
+
+      // if demand_selection task, determine task choice
+      if(demand_selection) {
+        await choice();
+      } 
+
+      // run MSIT trials
       for (var i = 0; i < n_MSIT_tasks; i++) {
         await draw_fixation_cross();
         await show_MSIT_task();
       }
       end_trial();
     }
-
-    // run task sequence
-    MSIT_task_sequence();
-
 
     // function to end trial when it is time
     var end_trial = function() {
@@ -258,6 +309,10 @@ jsPsych.plugins["MSIT"] = (function() {
       // move on to the next trial
       jsPsych.finishTrial();
     };
+    
+    // run task sequence
+    MSIT_task_sequence();
+
   };
 
   return plugin;
