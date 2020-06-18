@@ -1,44 +1,44 @@
-var MSIT_pagelinks_a = ['Stimuli/MSIT_instructions/Slide1.PNG',
-                                'Stimuli/MSIT_instructions/Slide2.PNG',
-                                'Stimuli/MSIT_instructions/Slide3.PNG',
-                                'Stimuli/MSIT_instructions/Slide4.PNG',
-                                'Stimuli/MSIT_instructions/Slide5.PNG',
-                                'Stimuli/MSIT_instructions/Slide6.PNG',
-                                'Stimuli/MSIT_instructions/Slide7.PNG',
-                                'Stimuli/MSIT_instructions/Slide8.PNG',
-                                'Stimuli/MSIT_instructions/Slide9.PNG',
-                                'Stimuli/MSIT_instructions/Slide10.PNG',
-                                'Stimuli/MSIT_instructions/Slide11.PNG',
-                                'Stimuli/MSIT_instructions/Slide12.PNG',
-                                'Stimuli/MSIT_instructions/Slide13.PNG',
-                                'Stimuli/MSIT_instructions/Slide14.PNG',
-                                'Stimuli/MSIT_instructions/Slide15.PNG',
-                                'Stimuli/MSIT_instructions/Slide16.PNG',
-                                'Stimuli/MSIT_instructions/Slide17.PNG',
-                                'Stimuli/MSIT_instructions/Slide18.PNG',
-                                'Stimuli/MSIT_instructions/Slide19.PNG',
-                                'Stimuli/MSIT_instructions/Slide20.PNG',
-                                'Stimuli/MSIT_instructions/Slide21.PNG',
-                                'Stimuli/MSIT_instructions/Slide22.PNG',
-                                'Stimuli/MSIT_instructions/Slide23.PNG',
-                                'Stimuli/MSIT_instructions/Slide24.PNG', 
-                                'Stimuli/MSIT_instructions/Slide25.PNG',
-                                'Stimuli/MSIT_instructions/Slide26.PNG',
-                                'Stimuli/MSIT_instructions/Slide27.PNG',
-                                'Stimuli/MSIT_instructions/Slide28.PNG',
-                                'Stimuli/MSIT_instructions/Slide29.PNG',
-                                'Stimuli/MSIT_instructions/Slide30.PNG',
-                                'Stimuli/MSIT_instructions/Slide31.PNG',  
+var MSIT_pagelinks_a = ['Stimuli/MSIT_instructions/Slide1.png',
+                                'Stimuli/MSIT_instructions/Slide2.png',
+                                'Stimuli/MSIT_instructions/Slide3.png',
+                                'Stimuli/MSIT_instructions/Slide4.png',
+                                'Stimuli/MSIT_instructions/Slide5.png',
+                                'Stimuli/MSIT_instructions/Slide6.png',
+                                'Stimuli/MSIT_instructions/Slide7.png',
+                                'Stimuli/MSIT_instructions/Slide8.png',
+                                'Stimuli/MSIT_instructions/Slide9.png',
+                                'Stimuli/MSIT_instructions/Slide10.png',
+                                'Stimuli/MSIT_instructions/Slide11.png',
+                                'Stimuli/MSIT_instructions/Slide12.png',
+                                'Stimuli/MSIT_instructions/Slide13.png',
+                                'Stimuli/MSIT_instructions/Slide14.png',
+                                'Stimuli/MSIT_instructions/Slide15.png',
+                                'Stimuli/MSIT_instructions/Slide16.png',
+                                'Stimuli/MSIT_instructions/Slide17.png',
+                                'Stimuli/MSIT_instructions/Slide18.png',
+                                'Stimuli/MSIT_instructions/Slide19.png',
+                                'Stimuli/MSIT_instructions/Slide20.png',
+                                'Stimuli/MSIT_instructions/Slide21.png',
+                                'Stimuli/MSIT_instructions/Slide22.png',
+                                'Stimuli/MSIT_instructions/Slide23.png',
+                                'Stimuli/MSIT_instructions/Slide24.png', 
+                                'Stimuli/MSIT_instructions/Slide25.png',
+                                'Stimuli/MSIT_instructions/Slide26.png',
+                                'Stimuli/MSIT_instructions/Slide27.png',
+                                'Stimuli/MSIT_instructions/Slide28.png',
+                                'Stimuli/MSIT_instructions/Slide29.png',
+                                'Stimuli/MSIT_instructions/Slide30.png',
+                                'Stimuli/MSIT_instructions/Slide31.png',  
 ];
 
-var pages_a = [];
+var MSIT_pages_a = [];
 for (var i = 0; i < MSIT_pagelinks_a.length; i++){
-    pages_a.push('<img src= "'+ MSIT_pagelinks_a[i] +  '" alt = "" >')
+    MSIT_pages_a.push('<img src= "'+ MSIT_pagelinks_a[i] +  '" alt = "" >')
 }
 
-var instruction_pages_a = {
+var MSIT_instructions_a = {
     type: 'instructions',
-    pages: pages_a,
+    pages: MSIT_pages_a,
     show_clickable_nav: true
 }
 
@@ -46,7 +46,7 @@ var instruction_pages_a = {
 var matching_intro = {
     type: 'html-keyboard-response',
     stimulus:'',
-    prompt: "<p>Let's try out the <span style ='color:blue'>matching</span> tasks! <br> Press any key to start.</p>"
+    prompt: "<p><span style = 'font-size: 200%; font-weight: bold'>Let's try out the <span style ='color:blue'>matching</span> tasks! </span><br> Press any key to start.</p>"
 }
 
 // congruent tasks
@@ -63,7 +63,7 @@ var match_task = {
     is_practice: true,
     on_finish: function(data) {
         congruent_tasks_performed++;
-        data.n_MSIT_tasks_performed = congruent_tasks_performed;
+        data.MSIT_tasks_performed = congruent_tasks_performed;
     }
 }
 
@@ -76,9 +76,11 @@ var feedback = {
         current_correct_key = practice_MSIT_data['correct_response'];
         var current_key_pressed = practice_MSIT_data['key_press'];
         if (current_correct_key == current_key_pressed) {
-            trial.stimulus = "<p><span style = 'font-size: larger; font-weight: bold'>That was correct!</span><br>Press any key to continue."
+            trial.stimulus = "<p><span style = 'font-size: 200%; font-weight: bold'>That was correct!</span><br>" +
+            "Press any key to continue.</p>";
         } else {
-            incorr_str = "<span style = 'font-size: larger; font-weight: bold'>Sorry, that was incorrect. The oddball was " + current_correct_key + ".</span><br>Press any key to continue.";
+            incorr_str = "<span style = 'font-size: 200%; font-weight: bold'>Sorry, that was incorrect. " +
+                "The oddball was " + current_correct_key + ".</span><br>Press any key to continue.</p>";
             trial.stimulus = incorr_str;
         }
     },
@@ -98,7 +100,7 @@ var loop_congruent = {
 var mismatching_intro = {
     type: 'html-keyboard-response',
     stimulus:'',
-    prompt: "<p>Let's try out the <span style ='color:orange'>mismatching</span> tasks! </br> Press any key to start.</p>"
+    prompt: "<p><span style = 'font-size: 200%; font-weight:bold'>Let's try out the <span style ='color:orange'>mismatching</span> tasks! </span></br> Press any key to start.</p>"
 }
 
 // incongruent tasks
@@ -112,25 +114,8 @@ var mismatch_task = {
     is_practice: true,
     on_finish: function(data) {
         incongruent_tasks_performed++;
-        data.n_MSIT_tasks_performed = incongruent_tasks_performed;
+        data.MSIT_tasks_performed = incongruent_tasks_performed;
     }
-}
-
-var feedback = {
-    type: 'html-keyboard-response',
-    stimulus: '',
-    on_start: function(trial) {
-        var practice_MSIT_data = jsPsych.data.get().last(2).values()[0];
-        // console.log(practice_MSIT_data);
-        current_correct_key = practice_MSIT_data['correct_response'];
-        var current_key_pressed = practice_MSIT_data['key_press'];
-        if (current_correct_key == current_key_pressed) {
-            trial.stimulus = "<p><span style = 'font-size: larger; font-weight: bold'>That was correct!</span><br>Press any key to continue."
-        } else {
-            incorr_str = "<span style = 'font-size: larger; font-weight: bold'>Sorry, that was incorrect. The oddball was " + current_correct_key + ".</span><br>Press any key to continue.";
-            trial.stimulus = incorr_str;
-        }
-    },
 }
 
 // run through practice incongruent trials
@@ -144,13 +129,14 @@ var loop_incongruent = {
 
 var end_instructions = {
     type: 'html-keyboard-response',
-    stimulus: "<p>Great job! Now you're ready to start the experiment!</p>",
+    stimulus: "<p><span style = 'font-size:200%'>Great job! You're ready to start the experiment!</span>" +
+    " </br>Press any key to continue.</p>",
 }
 
 var instructions = [];
-instructions.push(instruction_pages_a);
-instructions.push(mismatching_intro);
-instructions.push(loop_incongruent);
+instructions.push(MSIT_instructions_a);
 instructions.push(matching_intro);
 instructions.push(loop_congruent);
+instructions.push(mismatching_intro);
+instructions.push(loop_incongruent);
 instructions.push(end_instructions);
