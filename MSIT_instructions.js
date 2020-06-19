@@ -46,52 +46,54 @@ var MSIT_instructions_a = {
 var matching_intro = {
     type: 'html-keyboard-response',
     stimulus:'',
-    prompt: "<p><span style = 'font-size: 200%; font-weight: bold'>Let's try out the <span style ='color:blue'>matching</span> tasks! </span><br> Press any key to start.</p>"
+    prompt: "<p><span style = 'font-size: 200%; font-weight: bold'>Let's try out the <span style ='color:blue'>matching</span> trials! </span><br> Press any key to start.</p>"
 }
 
-// congruent tasks
+// congruent trials
 const n_practice = 4;
-var congruent_tasks_performed = 0;
+var congruent_trials_performed = 0;
 var correct = false;
 var current_correct_key = 0;
-var match_task = {
+var match_trial = {
     type: 'MSIT',
-    n_MSIT_tasks: 1,
-    MSIT_task_duration: 1000,
-    MSIT_task_type: 'congruent',
+    n_MSIT_trials: 1,
+    MSIT_trial_duration: 1000,
+    MSIT_trial_type: 'congruent',
     fixation_duration: 250,
     is_practice: true,
     on_finish: function(data) {
-        congruent_tasks_performed++;
-        data.MSIT_tasks_performed = congruent_tasks_performed;
+        congruent_trials_performed++;
+        data.MSIT_trials_performed = congruent_trials_performed; 
     }
 }
 
 var feedback = {
     type: 'html-keyboard-response',
     stimulus: '',
+    response_ends_trial: false,
+    choice: jsPsych.NO_KEYS,
+    trial_duration: 750,
     on_start: function(trial) {
         var practice_MSIT_data = jsPsych.data.get().last(2).values()[0];
         // console.log(practice_MSIT_data);
         current_correct_key = practice_MSIT_data['correct_response'];
         var current_key_pressed = practice_MSIT_data['key_press'];
-        if (current_correct_key == current_key_pressed) {
-            trial.stimulus = "<p><span style = 'font-size: 200%; font-weight: bold'>That was correct!</span><br>" +
-            "Press any key to continue.</p>";
-        } else {
-            incorr_str = "<span style = 'font-size: 200%; font-weight: bold'>Sorry, that was incorrect. " +
-                "The oddball was " + current_correct_key + ".</span><br>Press any key to continue.</p>";
+        if (current_correct_key != current_key_pressed) {
+            incorr_str = "<span style = 'font-size: 200%; font-weight: bold'>Incorrect. " +
+                "Oddball was " + current_correct_key + ".</span></p>";
             trial.stimulus = incorr_str;
+        } else {
+            this.trial_duration = 0;
         }
     },
 }
 
 // run through practice congruent trials
-var practice_congruent = [match_task, feedback];
+var practice_congruent = [match_trial, feedback];
 var loop_congruent = {
     timeline: practice_congruent,
     loop_function: function() {
-      return (congruent_tasks_performed < n_practice) 
+      return (congruent_trials_performed < n_practice) 
     }
 }
 
@@ -100,30 +102,30 @@ var loop_congruent = {
 var mismatching_intro = {
     type: 'html-keyboard-response',
     stimulus:'',
-    prompt: "<p><span style = 'font-size: 200%; font-weight:bold'>Let's try out the <span style ='color:orange'>mismatching</span> tasks! </span></br> Press any key to start.</p>"
+    prompt: "<p><span style = 'font-size: 200%; font-weight:bold'>Let's try out the <span style ='color:orange'>mismatching</span> trials! </span></br> Press any key to start.</p>"
 }
 
-// incongruent tasks
-var incongruent_tasks_performed = 0;
-var mismatch_task = {
+// incongruent trials
+var incongruent_trials_performed = 0;
+var mismatch_trial = {
     type: 'MSIT',
-    n_MSIT_tasks: 1,
-    MSIT_task_duration: 1000,
-    MSIT_task_type: 'incongruent',
+    n_MSIT_trials: 1,
+    MSIT_trial_duration: 1000,
+    MSIT_trial_type: 'incongruent',
     fixation_duration: 250,
     is_practice: true,
     on_finish: function(data) {
-        incongruent_tasks_performed++;
-        data.MSIT_tasks_performed = incongruent_tasks_performed;
+        incongruent_trials_performed++;
+        data.MSIT_trials_performed = incongruent_trials_performed;
     }
 }
 
 // run through practice incongruent trials
-var practice_incongruent = [mismatch_task, feedback];
+var practice_incongruent = [mismatch_trial, feedback];
 var loop_incongruent = {
     timeline: practice_incongruent,
     loop_function: function() {
-      return (incongruent_tasks_performed < n_practice) 
+      return (incongruent_trials_performed < n_practice) 
     }
 }
 
