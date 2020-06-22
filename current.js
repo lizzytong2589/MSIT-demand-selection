@@ -20,7 +20,7 @@ var MSIT_trials = {
     type: 'MSIT',
     n_MSIT_trials: 6,
     MSIT_trial_duration: 1000,
-    MSIT_trial_type: 'congruent',
+    MSIT_trial_type: 'match',
     fixation_duration: 250,
     is_practice: false,
     demand_selection: false,
@@ -32,13 +32,10 @@ var temp_intermediate = {
 }
 
 var demand_selection_MSIT_trials = {
-    type: 'MSIT',
-    n_MSIT_trials: 6,
-    MSIT_trial_duration: 1000,
-    MSIT_trial_type: null,
-    fixation_duration: 250,
+    type: 'MSIT-demand-selection',
     is_practice: false,
-    demand_selection: true,
+    n_demand_trials: 5,
+    fixation_duration: 3000,
 }
 
 //  set up experiment structure
@@ -48,25 +45,24 @@ timeline.push(...instructions)
 timeline.push(MSIT_trials);
 timeline.push(temp_intermediate);
 timeline.push(demand_selection_MSIT_trials);
-timeline.push(temp_intermediate);
-timeline.push(demand_selection_MSIT_trials);
 
-var instruction_images = MSIT_pagelinks_a;
+var instruction_images = MSIT_pagelinks_a.concat(MSIT_pagelinks_b);
 
 // start experiment
 jsPsych.init({
     timeline: timeline,
     preload_images: instruction_images,
-    on_close: function() {
-        // jsPsych.data.get().localSave('csv','partial_results.csv');
-        // var file_name = date + '_' + time + '_partial_results.csv';
-        // jsPsych.data.get().localSave('csv', file_name);
-    },
     on_finish: function() {
-        var MSIT_data = jsPsych.data.get().filter({phase: 'MSIT'});
-        // jsPsych.data.get().filter({phase: 'foraging'}).localSave('csv','foraging_results.csv');
-
+        // // filter data by experiment phase
+        // var MSIT_data = jsPsych.data.get().filter({phase: 'MSIT'});
+        // var foraging_data = jsPsych.data.get().filter({phase: 'foraging'});
+        // var demand_selection = jsPsych.data.get().filter({phase: 'demand selection'});
+       
         var file_name = date + '_' + time + '_results.csv';
-        MSIT_data.localSave('csv', file_name);
+        // MSIT_data.localSave('csv', file_name);
+        // foraging_data.localSave('csv', file_name);
+        // demand_selection.localSave('csv', file_name);
+        jsPsych.data.get().localSave('csv', file_name);
+
     },
 });
