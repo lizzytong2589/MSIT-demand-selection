@@ -1,5 +1,4 @@
 jsPsych.plugins["MSIT"] = (function() {
-
   var plugin = {};
 
   plugin.info = {
@@ -11,85 +10,80 @@ jsPsych.plugins["MSIT"] = (function() {
         default: undefined,
         description: 'true = practice',
       },
-      n_MSIT_tasks: {
+      n_MSIT_trials: {
         type: jsPsych.plugins.parameterType.INT,
         default: undefined,
-        description: 'number of MSIT tasks to perform',
+        description: 'number of MSIT trials to perform',
       },
-      MSIT_task_duration: {
+      MSIT_trial_duration: {
         type: jsPsych.plugins.parameterType.FLOAT,
         default: undefined,
         description: 'time MSIT stimulus is shown in ms for if no key is pressed',
       },
-      MSIT_task_type: {
+      MSIT_trial_type: {
         type: jsPsych.plugins.parameterType.STRING,
         default: undefined,
-        description: 'control, congruent, or incongruent',
+        description: 'control, match, or mismatch',
       },
       fixation_duration: {
         type: jsPsych.plugins.parameterType.INT,
         default: undefined,
         description: 'fixation time in ms',
       },
-      demand_selection: {
-        type: jsPsych.plugins.parameterType.BOOL,
-        default: false,
-        description: 'whether or not to include demand selection (true = yes; false = no)',
-      },
     }
   }
 
 
   plugin.trial = function(display_element, trial) {
-    // stimuli for each test: task (symbols), task_type(control, incongruent, congruent), correct_response(1,2,3)
+    // stimuli for each test: trial (symbols), trial_type(control, mismatch, match), correct_response(1,2,3)
     var symbols = ['1', '2', '3'];
     var control = [
-        {task: symbols[0] + ' X X', task_type: 'control', correct_response: '1'},
-        {task: 'X ' + symbols[1] + ' X', task_type: 'control', correct_response: '2'},
-        {task: 'X X ' + symbols[2], task_type: 'control', correct_response: '3'},
+        {trial: symbols[0] + ' X X', trial_type: 'control', correct_response: '1'},
+        {trial: 'X ' + symbols[1] + ' X', trial_type: 'control', correct_response: '2'},
+        {trial: 'X X ' + symbols[2], trial_type: 'control', correct_response: '3'},
     ];
-    var congruent = [
-        // tasks where answer is 1
-        {task: symbols[0] + ' 2 2', task_type: 'congruent', correct_response: '1'},
-        {task: symbols[0] + ' 3 3', task_type: 'congruent', correct_response: '1'},
+    var match = [
+        // trials where answer is 1
+        {trial: symbols[0] + ' 2 2', trial_type: 'match', correct_response: '1'},
+        {trial: symbols[0] + ' 3 3', trial_type: 'match', correct_response: '1'},
 
-        // tasks where answer is 2
-        {task: '1 ' + symbols[1] + ' 1', task_type: 'congruent', correct_response: '2'},
-        {task: '3 ' + symbols[1] + ' 3', task_type: 'congruent', correct_response: '2'},
+        // trials where answer is 2
+        {trial: '1 ' + symbols[1] + ' 1', trial_type: 'match', correct_response: '2'},
+        {trial: '3 ' + symbols[1] + ' 3', trial_type: 'match', correct_response: '2'},
 
-        // tasks where answer is 3      
-        {task: '1 1 ' + symbols[2], task_type: 'congruent', correct_response: '3'},
-        {task: '2 2 ' + symbols[2], task_type: 'congruent', correct_response: '3'},
+        // trials where answer is 3      
+        {trial: '1 1 ' + symbols[2], trial_type: 'match', correct_response: '3'},
+        {trial: '2 2 ' + symbols[2], trial_type: 'match', correct_response: '3'},
     ]; 
-    var incongruent = [
-        // tasks where answer is 1
-        {task: '2 ' + symbols[0] + ' 2', task_type: 'incongruent', correct_response: '1'},
-        {task: '3 ' + symbols[0] + ' 3', task_type: 'incongruent', correct_response: '1'},
-        {task: '2 2 ' + symbols[0], task_type: 'incongruent', correct_response: '1'},
-        {task: '3 3 ' + symbols[0], task_type: 'incongruent', correct_response: '1'},
+    var mismatch = [
+        // trials where answer is 1
+        {trial: '2 ' + symbols[0] + ' 2', trial_type: 'mismatch', correct_response: '1'},
+        {trial: '3 ' + symbols[0] + ' 3', trial_type: 'mismatch', correct_response: '1'},
+        {trial: '2 2 ' + symbols[0], trial_type: 'mismatch', correct_response: '1'},
+        {trial: '3 3 ' + symbols[0], trial_type: 'mismatch', correct_response: '1'},
 
-        // tasks where answer is 2
-        {task: '1 1 ' + symbols[1], task_type: 'incongruent', correct_response: '2'},
-        {task: '3 3 ' + symbols[1], task_type: 'incongruent', correct_response: '2'},
-        {task: symbols[1] + ' 1 1', task_type: 'incongruent', correct_response: '2'},
-        {task: symbols[1] + ' 3 3', task_type: 'incongruent', correct_response: '2'},
+        // trials where answer is 2
+        {trial: '1 1 ' + symbols[1], trial_type: 'mismatch', correct_response: '2'},
+        {trial: '3 3 ' + symbols[1], trial_type: 'mismatch', correct_response: '2'},
+        {trial: symbols[1] + ' 1 1', trial_type: 'mismatch', correct_response: '2'},
+        {trial: symbols[1] + ' 3 3', trial_type: 'mismatch', correct_response: '2'},
 
-        // tasks where answer is 3
-        {task: symbols[2] + ' 1 1', task_type: 'incongruent', correct_response: '3'},
-        {task: symbols[2] + ' 2 2', task_type: 'incongruent', correct_response: '3'},
-        {task: '1 ' + symbols[2] + ' 1', task_type: 'incongruent', correct_response: '3'},
-        {task: '2 ' + symbols[2] + ' 2', task_type: 'incongruent', correct_response: '3'},
+        // trials where answer is 3
+        {trial: symbols[2] + ' 1 1', trial_type: 'mismatch', correct_response: '3'},
+        {trial: symbols[2] + ' 2 2', trial_type: 'mismatch', correct_response: '3'},
+        {trial: '1 ' + symbols[2] + ' 1', trial_type: 'mismatch', correct_response: '3'},
+        {trial: '2 ' + symbols[2] + ' 2', trial_type: 'mismatch', correct_response: '3'},
     ];
 
-    // counters and parameters 
+    // plugin parameters 
     var is_practice = trial.is_practice;
-    var demand_selection = trial.demand_selection;
-    var n_MSIT_tasks = trial.n_MSIT_tasks;
-    var n_MSIT_tasks_performed = 0; // number of MSIT tasks performed in one travel period
-    var MSIT_task_duration = trial.MSIT_task_duration;
+    var n_MSIT_trials = trial.n_MSIT_trials;
+    var n_MSIT_trials_performed = 0; // number of MSIT trials performed in one travel period
+    var MSIT_trial_duration = trial.MSIT_trial_duration;
     var fixation_duration = trial.fixation_duration;
-    var MSIT_task_type = trial.MSIT_task_type;
+    var MSIT_trial_type = trial.MSIT_trial_type;
     var is_missed = false;
+    
 
     // create promise that can be resolved externally 
     var outside_resolve;
@@ -99,72 +93,16 @@ jsPsych.plugins["MSIT"] = (function() {
       });
     } // end external_prommise
 
-    // call when choice made for demand selection
-    var choice_response = function(info) {
-      // kill keyboard listener
-      jsPsych.pluginAPI.cancelKeyboardResponse(choice_keyboardListener);
-      
-      response = info;
-
-      // check choice and set task type
-      if(jsPsych.pluginAPI.compareKeys('1', response.key)){
-        MSIT_task_type = 'congruent';
-      } else if(jsPsych.pluginAPI.compareKeys('3', response.key)) {
-        MSIT_task_type = 'incongruent';
-      }
-      
-      // set and write data
-      var data = {
-        phase: 'Demand Selection',
-        is_practice: is_practice,
-        task_type: null,
-        task_duration: null,
-        fixation_duration: null,
-        stimulus: null,
-        rt: response.rt,
-        key_press: jsPsych.pluginAPI.convertKeyCodeToKeyCharacter(response.key),
-        correct_response: null,
-        correct: null,
-        is_missed: null,
-        MSIT_tasks_performed: null,
-      }
-      jsPsych.data.write(data);
-
-      // console.log(MSIT_task_type)
-      outside_resolve();
-    } // end choice_response
-
-    // Show prompt to ask for choice of task if there is demand selection
-    var choice = async function() {
-      // ask user for choice
-      display_element.innerHTML = "<p>Press 1 to choose <span style ='color:blue'>matching</span> " +
-        "and 3 to choose <span style ='color:orange'>mismatching</span> tasks.</p>"
-      
-      // set up keyboard listener
-      choice_keyboardListener = jsPsych.pluginAPI.getKeyboardResponse({
-        callback_function: choice_response, 
-        valid_responses: ['1','3'], 
-        rt_method: 'performance', 
-        persist: false,
-        allow_held_key: false
-      })
-      
-      await external_promise();
-    } // end choice()
-
-
     // promisify timeout function
     var timeout = function(ms, id) {
       return new Promise(resolve => jsPsych.pluginAPI.setTimeout(function(){
-        display_element.querySelector(id).style.visibility = 'hidden';
         resolve();
       }, ms));
     } // end timeout
 
     // draw fixation cross
+    var fixation_cross = '<div class="fixation-trial" id="fixation-cross">'+'+'+'</div>';
     var draw_fixation_cross = async function(){
-      var fixation_cross = '<div class="fixation-task" id="fixation-cross">'+'+'+'</div>';
-
       // show fixation cross
       display_element.innerHTML = fixation_cross;
 
@@ -174,10 +112,10 @@ jsPsych.plugins["MSIT"] = (function() {
     }; // end draw_fixation_cross
 
 
-    // MSIT task creation
-    var current_MSIT_task = {};
+    //// MSIT Trial Set-up ////
+    var current_MSIT_trial = {};
 
-    // call if key pressed during MSIT task (function below)
+    // call if key pressed during MSIT trial (function below)
     var MSIT_response = async function(info){ 
       // kill keyboard listener and timeout
       jsPsych.pluginAPI.clearAllTimeouts();
@@ -187,7 +125,7 @@ jsPsych.plugins["MSIT"] = (function() {
       var correct = false;
       is_missed = false;
       var key_pressed = jsPsych.pluginAPI.convertKeyCodeToKeyCharacter(response.key);
-      var correct_response = current_MSIT_task[0]['correct_response'];
+      var correct_response = current_MSIT_trial[0]['correct_response'];
       
       if(key_pressed == correct_response) {
         correct = true;
@@ -196,47 +134,45 @@ jsPsych.plugins["MSIT"] = (function() {
       var data = {
         phase: 'MSIT',
         is_practice: is_practice,
-        task_type: current_MSIT_task[0]['task_type'],
-        task_duration: MSIT_task_duration,
+        trial_type: current_MSIT_trial[0]['trial_type'],
+        trial_duration: MSIT_trial_duration,
         fixation_duration: fixation_duration,
-        stimulus: current_MSIT_task[0]['task'],
+        stimulus: current_MSIT_trial[0]['trial'],
         rt: response.rt,
         key_press: key_pressed,
         correct_response: correct_response,
         correct: correct,
         is_missed: is_missed,
-        MSIT_tasks_performed: n_MSIT_tasks_performed,
+        MSIT_trials_performed: n_MSIT_trials_performed,
       }
       jsPsych.data.write(data);
       
-      // hide task; resolve promise for show_MSIT_task()
+      // hide trial; resolve promise for show_MSIT_trial()
       outside_resolve();
 
     } // end MSIT_response
 
-    // function to create one MSIT task
-    var show_MSIT_task = async function() {
-      n_MSIT_tasks_performed++;
-      if (MSIT_task_type == 'control') {
-        current_MSIT_task = jsPsych.randomization.sampleWithReplacement(control, 1);
-      } else if (MSIT_task_type == 'congruent') {
-        current_MSIT_task = jsPsych.randomization.sampleWithReplacement(congruent, 1);
-      } else if (MSIT_task_type == 'incongruent') {
-        current_MSIT_task = jsPsych.randomization.sampleWithReplacement(incongruent, 1);
+    // function to create one MSIT trial
+    var show_MSIT_trial = async function() {
+      n_MSIT_trials_performed++;
+      if (MSIT_trial_type == 'control') {
+        current_MSIT_trial = jsPsych.randomization.sampleWithReplacement(control, 1);
+      } else if (MSIT_trial_type == 'match') {
+        current_MSIT_trial = jsPsych.randomization.sampleWithReplacement(match, 1);
+      } else if (MSIT_trial_type == 'mismatch') {
+        current_MSIT_trial = jsPsych.randomization.sampleWithReplacement(mismatch, 1);
       }
-      
-      var task = current_MSIT_task[0]['task'];
-      var MSIT_stimulus = '<div class = "MSIT-task" id="MSIT-stimulus">' + task +'</div>';
+      var trial = current_MSIT_trial[0]['trial'];
+      var MSIT_stimulus = '<div class = "MSIT-trial" id="MSIT-stimulus">' + trial +'</div>';
 
       // show stimulus
       display_element.innerHTML = MSIT_stimulus;
 
-      // clear MSIT task after set time if no response
+      // clear MSIT trial after set time if no response
       jsPsych.pluginAPI.setTimeout(function() {
-        // display_element.querySelector('#MSIT-stimulus').style.visibility = 'hidden';
         jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
         outside_resolve();
-      }, MSIT_task_duration);
+      }, MSIT_trial_duration);
 
       is_missed = true; // before any keys pressed
       keyboardListener = jsPsych.pluginAPI.getKeyboardResponse({
@@ -254,38 +190,33 @@ jsPsych.plugins["MSIT"] = (function() {
         var data = {
           phase: 'MSIT',
           is_practice: is_practice,
-          task_type: current_MSIT_task[0]['task_type'],
-          task_duration: MSIT_task_duration,
+          trial_type: current_MSIT_trial[0]['trial_type'],
+          trial_duration: MSIT_trial_duration,
           fixation_duration: fixation_duration,
-          stimulus: current_MSIT_task[0]['task'],
+          stimulus: current_MSIT_trial[0]['trial'],
           rt: null,
           key_press: null,
-          correct_response: current_MSIT_task[0]['correct_response'],
+          correct_response: current_MSIT_trial[0]['correct_response'],
           correct: null,
           is_missed: is_missed,
-          MSIT_tasks_performed: n_MSIT_tasks_performed,
+          MSIT_trials_performed: n_MSIT_trials_performed,
         }
         jsPsych.data.write(data);
       }
-    } // end show_MSIT_task
+    } // end show_MSIT_trial
   
 
-    // create desired number of MSIT tasks 
-    var MSIT_task_sequence = async function() {
-      n_MSIT_tasks_performed = 0;
-
-      // if demand_selection task, determine task choice
-      if(demand_selection) {
-        await choice();
-      } 
+    // create desired number of MSIT trials 
+    var MSIT_trial_sequence = async function() {
+      n_MSIT_trials_performed = 0;
 
       // run MSIT trials
-      for (var i = 0; i < n_MSIT_tasks; i++) {
+      for (var j = 0; j < n_MSIT_trials; j++) {
         await draw_fixation_cross();
-        await show_MSIT_task();
+        await show_MSIT_trial();
       }
       end_trial();
-    }
+    } // end MSIT_trial_sequence
 
     // function to end trial when it is time
     var end_trial = function() {
@@ -297,21 +228,15 @@ jsPsych.plugins["MSIT"] = (function() {
         jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
       }
 
-      // gather the data to store for the trial
-      var trial_data = {
-        fixation_duration: fixation_duration,
-        MSIT_task_duration: MSIT_task_duration,
-      };
-
       // clear the display
       display_element.innerHTML = '';
 
       // move on to the next trial
       jsPsych.finishTrial();
-    };
+    }; // end end_trial
     
-    // run task sequence
-    MSIT_task_sequence();
+    // run trial sequence
+    MSIT_trial_sequence();
 
   };
 
