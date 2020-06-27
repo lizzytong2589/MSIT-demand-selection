@@ -90,29 +90,29 @@ var matching_intro = {
         "<span style ='color:blue'>matching</span> trials! </span><br> Press any key to start.</p>"
 }
 
-// congruent trials
-var congruent_trials_performed = 0;
+// match trials
+var match_trials_performed = 0;
 var correct = false;
 var current_correct_key = 0;
 var match_trial = {
     type: 'MSIT',
     n_MSIT_trials: 1,
     MSIT_trial_duration: 1000,
-    MSIT_trial_type: 'congruent',
+    MSIT_trial_type: 'match',
     fixation_duration: 250,
     is_practice: true,
     on_finish: function(data) {
-        congruent_trials_performed++;
-        data.MSIT_trials_performed = congruent_trials_performed; 
+        match_trials_performed++;
+        data.MSIT_trials_performed = match_trials_performed; 
     }
 }
 
-// run through practice congruent trials
-var practice_congruent = [match_trial, feedback];
-var loop_congruent = {
-    timeline: practice_congruent,
+// run through practice match trials
+var practice_match = [match_trial, feedback];
+var loop_match = {
+    timeline: practice_match,
     loop_function: function() {
-      return (congruent_trials_performed < n_practice) 
+      return (match_trials_performed < n_practice) 
     }
 }
 
@@ -124,27 +124,27 @@ var mismatching_intro = {
         "<span style ='color:orange'>mismatching</span> trials! </span></br> Press any key to start.</p>"
 }
 
-// incongruent trials
-var incongruent_trials_performed = 0;
+// mismatch trials
+var mismatch_trials_performed = 0;
 var mismatch_trial = {
     type: 'MSIT',
     n_MSIT_trials: 1,
     MSIT_trial_duration: 1000,
-    MSIT_trial_type: 'incongruent',
+    MSIT_trial_type: 'mismatch',
     fixation_duration: 250,
     is_practice: true,
     on_finish: function(data) {
-        incongruent_trials_performed++;
-        data.MSIT_trials_performed = incongruent_trials_performed;
+        mismatch_trials_performed++;
+        data.MSIT_trials_performed = mismatch_trials_performed;
     }
 }
 
-// run through practice incongruent trials
-var practice_incongruent = [mismatch_trial, feedback];
-var loop_incongruent = {
-    timeline: practice_incongruent,
+// run through practice mismatch trials
+var practice_mismatch = [mismatch_trial, feedback];
+var loop_mismatch = {
+    timeline: practice_mismatch,
     loop_function: function() {
-      return (incongruent_trials_performed < n_practice) 
+      return (mismatch_trials_performed < n_practice) 
     }
 }
 
@@ -157,8 +157,8 @@ var end_instructions = {
 var instructions = [];
 instructions.push(MSIT_instructions_a);
 instructions.push(matching_intro);
-instructions.push(loop_congruent);
+instructions.push(loop_match);
 instructions.push(MSIT_instructions_b);
 instructions.push(mismatching_intro);
-instructions.push(loop_incongruent);
+instructions.push(loop_mismatch);
 instructions.push(end_instructions);
