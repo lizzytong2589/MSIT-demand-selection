@@ -1,56 +1,46 @@
 
   .fixation-trial {
     font-size: 100px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
   }
   .MSIT-trial {
     font-size: 100px;
   }
-  .left-demand-selection {
-    display: table;
-    position: fixed;
-    padding: 10px 10px;
+  .dst-container {
+    height: 90vh;
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    align-content: safe space-around;
+  }
+  .col {
+    display: flex;
+    flex-flow: column;
+    flex: 0 1 100%;
+    align-items: safe center;
+    justify-content: safe center;
+    margin: auto;
+  }
+  .row {
+    display: flex;
+    height: 100%;
+    flex: 0 1 100%;
+  }
+  .demand-selection-choice-box {
+    display: flex;
+    align-self: center;
+    flex: 1 1 100%;
+    flex-direction: column;
     border: 8px solid black;
-    width: 25%;
-    height: 30%;
-    left: 10%;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 200%;
-    text-align: center;
     overflow: hidden;
   }
-  .left-demand-selection-text {
-    display: table-cell;
-    vertical-align: middle;
-    position: relative;
+  .demand-selection-choice-box p {
+    display: flex;
+    flex-flow: column wrap;
+    font-size: 5vmin;
+    flex: 0 1 100%;
     line-height: 1.2;
-    margin: 10px;
-  }
-  .right-demand-selection {
-    display: table;
-    position: fixed;
-    border: 8px solid black;
-    padding: 10px 10px;
-    width: 25%;
-    height: 30%;
-    right: 10%;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 200%;
-    text-align: center;
-    vertical-align: middle;
-    overflow: hidden;
-  }
-  .right-demand-selection-text {
-    display: table-cell;
-    vertical-align: middle;
-    position: relative;
-    line-height: 1.2;
-    margin: 0;
+    justify-content: safe center;
+    align-content: safe center;
   }
   .match {
     color:blue;
@@ -60,19 +50,14 @@
     color: orange;
     font-weight: bold;
   }
-  .right-arrow {
-    position: fixed;
-    font-size: 100px;
-    right: 20%;
-    bottom: 20%;
-    text-align: right;
-    vertical-align: bottom;
-  }
-  .left-arrow {
-    position: fixed;
-    font-size: 100px;
-    left: 20%;
-    bottom: 20%;
-    text-align: left;
-    vertical-align: bottom;
+  .arrow-key-container {
+    display: flex;
+    flex: 0 1 content;
+    padding: 10px;
+    height: max-content;
+    border: 3px solid black;
+    border-radius: 15px;
+    font-size: 3em;
+    justify-content: safe center;
+    overflow: hidden;
   }

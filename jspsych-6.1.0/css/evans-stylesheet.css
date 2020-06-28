@@ -1,0 +1,99 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+
+.form__header {
+  margin-bottom: 25px;
+  border-bottom: 1px dashed rgba(48, 48, 48, 0.15);
+  height: auto;
+}
+
+.form__title {
+  font-size: 35px;
+  margin: 2px 0;
+}
+
+.form__instruction {
+  font-size: 22px;
+}
+
+.preamble {
+  font-size: 18px;
+}
+
+.form__options {
+  border: none;
+  padding: 0 0 50px 0;
+}
+
+.form__question {
+  font-size: 25px;
+}
+
+.questionDemo {
+  margin: 60px 0 0 0;
+  font-size: 25px;
+  line-height: 15px
+}
+
+.form__answer {
+  display: block;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 20px 0 20px 0;
+  height: 100px;
+  vertical-align: middle;
+  font-size: 22px;
+  text-align: center;
+  color: #0092ff;
+}
+
+.textEntry {
+  display: block;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 20px 1% 20px 1%;
+  height: 100px;
+  vertical-align: middle;
+  font-size: 20px;
+  text-align: center;
+  color: #0092ff;
+}
+
+
+.submitContainer {
+  margin: 0 0 150px 0;
+}
+
+.submit_button {
+  display: block;
+  height: 60px;
+  width: 200px;
+  border: none;
+  background-color: #005da9;
+  color: #f5f5f5;
+  text-transform: uppercase;
+  font-family: 'Source Sans Pro', sans-serif;
+  padding: 0 20px;
+  border-radius: 20px;
+  font-weight: 900;
+  cursor: pointer;
+  margin: auto;
+  -webkit-transition: all .25s ease-in-out;
+  transition: all .25s ease-in-out;
+  font-size: 22px;
+  outline: none;
+}
+.submit_button:hover, .submit:focus {
+  background-color: #008aff;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.25);
+  outline: none;
+}
+
+.bold_text {
+  font-weight: bold;
+}
+
+.small_text {
+  font-size: 15px;
+}

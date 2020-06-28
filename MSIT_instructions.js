@@ -87,7 +87,7 @@ var matching_intro = {
     type: 'html-keyboard-response',
     stimulus:'',
     prompt: "<p><span style = 'font-size: 200%; font-weight: bold'>Let's try out some " +
-        "<span style ='color:blue'>matching</span> trials! </span><br> Press any key to start.</p>"
+        "<span class ='match'>matching</span> trials! </span><br> Press any key to start.</p>"
 }
 
 // match trials
@@ -98,7 +98,7 @@ var match_trial = {
     type: 'MSIT',
     n_MSIT_trials: 1,
     MSIT_trial_duration: 1000,
-    MSIT_trial_type: 'match',
+    MSIT_trial_type: 'matching',
     fixation_duration: 250,
     is_practice: true,
     on_finish: function(data) {
@@ -130,7 +130,7 @@ var mismatch_trial = {
     type: 'MSIT',
     n_MSIT_trials: 1,
     MSIT_trial_duration: 1000,
-    MSIT_trial_type: 'mismatch',
+    MSIT_trial_type: 'mismatching',
     fixation_duration: 250,
     is_practice: true,
     on_finish: function(data) {
