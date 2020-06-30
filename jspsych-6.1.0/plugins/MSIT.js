@@ -5,6 +5,11 @@ jsPsych.plugins["MSIT"] = (function() {
     name: "MSIT",
     description: "creates a Multi-Source Interference Task",
     parameters: {
+      round: {
+        type: jsPsych.plugins.parameterType.INT,
+        default: undefined,
+        description: 'round number',
+      },
       is_practice: {
         type: jsPsych.plugins.parameterType.BOOL,
         default: false,
@@ -76,6 +81,7 @@ jsPsych.plugins["MSIT"] = (function() {
     ];
 
     // plugin parameters 
+    var round = trial.round;
     var is_practice = trial.is_practice;
     var n_MSIT_trials = trial.n_MSIT_trials;
     var n_MSIT_trials_performed = 0; // number of MSIT trials performed in one travel period
@@ -134,6 +140,7 @@ jsPsych.plugins["MSIT"] = (function() {
       var data = {
         phase: 'MSIT',
         is_practice: is_practice,
+        round: round,
         MSIT_trial_type: current_MSIT_trial[0]['trial_type'],
         trial_duration: MSIT_trial_duration,
         fixation_duration: fixation_duration,
@@ -190,6 +197,7 @@ jsPsych.plugins["MSIT"] = (function() {
         var data = {
           phase: 'MSIT',
           is_practice: is_practice,
+          round: round,
           MSIT_trial_type: current_MSIT_trial[0]['trial_type'],
           trial_duration: MSIT_trial_duration,
           fixation_duration: fixation_duration,

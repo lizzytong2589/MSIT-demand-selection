@@ -1,35 +1,35 @@
-var MSIT_pagelinks_a = ['Stimuli/MSIT_instructions/Slide1.png',
-                                'Stimuli/MSIT_instructions/Slide2.png',
-                                'Stimuli/MSIT_instructions/Slide3.png',
-                                'Stimuli/MSIT_instructions/Slide4.png',
-                                'Stimuli/MSIT_instructions/Slide5.png',
-                                'Stimuli/MSIT_instructions/Slide6.png',
-                                'Stimuli/MSIT_instructions/Slide7.png',
-                                'Stimuli/MSIT_instructions/Slide8.png',
-                                'Stimuli/MSIT_instructions/Slide9.png',
-                                'Stimuli/MSIT_instructions/Slide10.png',
-                                'Stimuli/MSIT_instructions/Slide11.png',
-                                'Stimuli/MSIT_instructions/Slide12.png',
-                                'Stimuli/MSIT_instructions/Slide13.png',
-                                'Stimuli/MSIT_instructions/Slide14.png',
-                                'Stimuli/MSIT_instructions/Slide15.png',
-                                'Stimuli/MSIT_instructions/Slide16.png',
-                                'Stimuli/MSIT_instructions/Slide17.png',
-                                'Stimuli/MSIT_instructions/Slide18.png',
-                                'Stimuli/MSIT_instructions/Slide19.png',
+var MSIT_pagelinks_a = ['Instructions/instructions_MSIT/Slide01.png',
+                            'Instructions/instructions_MSIT/Slide02.png',
+                            'Instructions/instructions_MSIT/Slide03.png',
+                            'Instructions/instructions_MSIT/Slide04.png',
+                            'Instructions/instructions_MSIT/Slide05.png',
+                            'Instructions/instructions_MSIT/Slide06.png',
+                            'Instructions/instructions_MSIT/Slide07.png',
+                            'Instructions/instructions_MSIT/Slide08.png',
+                            'Instructions/instructions_MSIT/Slide09.png',
+                            'Instructions/instructions_MSIT/Slide10.png',
+                            'Instructions/instructions_MSIT/Slide11.png',
+                            'Instructions/instructions_MSIT/Slide12.png',
+                            'Instructions/instructions_MSIT/Slide13.png',
+                            'Instructions/instructions_MSIT/Slide14.png',
+                            'Instructions/instructions_MSIT/Slide15.png',
+                            'Instructions/instructions_MSIT/Slide16.png',
+                            'Instructions/instructions_MSIT/Slide17.png',
+                            'Instructions/instructions_MSIT/Slide18.png',
+                            'Instructions/instructions_MSIT/Slide19.png',
+                            'Instructions/instructions_MSIT/Slide20.png',
+                            'Instructions/instructions_MSIT/Slide21.png',
 ];
 
-var MSIT_pagelinks_b = ['Stimuli/MSIT_instructions/Slide20.png',
-                                'Stimuli/MSIT_instructions/Slide21.png',
-                                'Stimuli/MSIT_instructions/Slide22.png',
-                                'Stimuli/MSIT_instructions/Slide23.png',
-                                'Stimuli/MSIT_instructions/Slide24.png', 
-                                'Stimuli/MSIT_instructions/Slide25.png',
-                                'Stimuli/MSIT_instructions/Slide26.png',
-                                'Stimuli/MSIT_instructions/Slide27.png',
-                                'Stimuli/MSIT_instructions/Slide28.png',
-                                'Stimuli/MSIT_instructions/Slide29.png',
-                                'Stimuli/MSIT_instructions/Slide30.png', 
+var MSIT_pagelinks_b = ['Instructions/instructions_MSIT/Slide22.png',
+                            'Instructions/instructions_MSIT/Slide23.png',
+                            'Instructions/instructions_MSIT/Slide24.png', 
+                            'Instructions/instructions_MSIT/Slide25.png',
+                            'Instructions/instructions_MSIT/Slide26.png',
+                            'Instructions/instructions_MSIT/Slide27.png',
+                            'Instructions/instructions_MSIT/Slide28.png',
+                            'Instructions/instructions_MSIT/Slide29.png',
+                            'Instructions/instructions_MSIT/Slide30.png', 
 ];
 
 
@@ -44,13 +44,13 @@ for (var i = 0; i < MSIT_pagelinks_b.length; i++){
     MSIT_pages_b.push('<img src= "'+ MSIT_pagelinks_b[i] +  '" alt = "" >')
 }
 
-var MSIT_instructions_a = {
+var instructions_MSIT_a = {
     type: 'instructions',
     pages: MSIT_pages_a,
     show_clickable_nav: true
 }
 
-var MSIT_instructions_b = {
+var instructions_MSIT_b = {
     type: 'instructions',
     pages: MSIT_pages_b,
     show_clickable_nav: true
@@ -58,7 +58,7 @@ var MSIT_instructions_b = {
 
 
 //////// PRACTICE MSIT TRIALS ////////
-const n_practice = 4; // keep number trials same for practice matching and mismatching
+const n_practice_MSIT = 4; // keep number trials same for practice matching and mismatching
 
 // feedback for practice trials; triggers only when incorrect response
 var feedback = {
@@ -112,11 +112,11 @@ var practice_match = [match_trial, feedback];
 var loop_match = {
     timeline: practice_match,
     loop_function: function() {
-      return (match_trials_performed < n_practice) 
+      return (match_trials_performed < n_practice_MSIT) 
     }
 }
 
-// INCONGRUENT(mistmatching) INTRO
+// INCONGRUENT(mismatching) INTRO
 var mismatching_intro = {
     type: 'html-keyboard-response',
     stimulus:'',
@@ -144,21 +144,14 @@ var practice_mismatch = [mismatch_trial, feedback];
 var loop_mismatch = {
     timeline: practice_mismatch,
     loop_function: function() {
-      return (mismatch_trials_performed < n_practice) 
+      return (mismatch_trials_performed < n_practice_MSIT) 
     }
 }
 
-var end_instructions = {
-    type: 'html-keyboard-response',
-    stimulus: "<p><span style = 'font-size:200%'>Great job! You're ready to start the experiment!</span>" +
-    " </br>Press any key to continue.</p>",
-}
-
-var instructions = [];
-instructions.push(MSIT_instructions_a);
-instructions.push(matching_intro);
-instructions.push(loop_match);
-instructions.push(MSIT_instructions_b);
-instructions.push(mismatching_intro);
-instructions.push(loop_mismatch);
-instructions.push(end_instructions);
+var instructions_MSIT = [];
+instructions_MSIT.push(instructions_MSIT_a);
+instructions_MSIT.push(matching_intro);
+instructions_MSIT.push(loop_match);
+instructions_MSIT.push(instructions_MSIT_b);
+instructions_MSIT.push(mismatching_intro);
+instructions_MSIT.push(loop_mismatch);
