@@ -107,13 +107,13 @@ jsPsych.plugins["MSIT"] = (function() {
     } // end timeout
 
     // draw fixation cross
-    var fixation_cross = '<div class="fixation-trial" id="fixation-cross">'+'+'+'</div>';
+    var fixation_cross = '<div class="fixation-trial">'+'+'+'</div>';
     var draw_fixation_cross = async function(){
       // show fixation cross
       display_element.innerHTML = fixation_cross;
 
       // finish after set time
-      await timeout(fixation_duration, '#fixation-cross');
+      await timeout(fixation_duration);
 
     }; // end draw_fixation_cross
 
@@ -170,7 +170,7 @@ jsPsych.plugins["MSIT"] = (function() {
         current_MSIT_trial = jsPsych.randomization.sampleWithReplacement(mismatching, 1);
       }
       var trial = current_MSIT_trial[0]['trial'];
-      var MSIT_stimulus = '<div class = "MSIT-trial" id="MSIT-stimulus">' + trial +'</div>';
+      var MSIT_stimulus = '<div class = "MSIT-trial">' + trial +'</div>';
 
       // show stimulus
       display_element.innerHTML = MSIT_stimulus;

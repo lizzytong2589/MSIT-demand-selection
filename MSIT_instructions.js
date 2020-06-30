@@ -96,6 +96,7 @@ var correct = false;
 var current_correct_key = 0;
 var match_trial = {
     type: 'MSIT',
+    round: 0,
     n_MSIT_trials: 1,
     MSIT_trial_duration: 1000,
     MSIT_trial_type: 'matching',
@@ -128,6 +129,7 @@ var mismatching_intro = {
 var mismatch_trials_performed = 0;
 var mismatch_trial = {
     type: 'MSIT',
+    round: 0,
     n_MSIT_trials: 1,
     MSIT_trial_duration: 1000,
     MSIT_trial_type: 'mismatching',

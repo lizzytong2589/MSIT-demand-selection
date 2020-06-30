@@ -1,8 +1,8 @@
   .fixation-trial {
-    font-size: 100px;
+    font-size: 18vh;
   }
   .MSIT-trial {
-    font-size: 100px;
+    font-size: 18vh;
   }
   .dst-container {
     height: 90vh;
@@ -26,8 +26,8 @@
   }
   .demand-selection-choice-box {
     display: flex;
-    align-self: center;
-    flex: 1 1 100%;
+    align-self: center;;
+    flex: 1 1 content;
     flex-direction: column;
     border: 8px solid black;
     overflow: hidden;
@@ -36,8 +36,9 @@
     display: flex;
     flex-flow: column wrap;
     font-size: 5vmin;
-    flex: 1 1 content;
+    flex: 1 1 100%;
     line-height: 1.2;
+    padding: 5%;
     justify-content: safe center;
     align-content: safe center;
   }
@@ -53,10 +54,10 @@
     display: flex;
     flex: 0 1 content;
     padding: 10px;
-    height: max-content;
+    /* height: max-content; */
     border: 3px solid black;
     border-radius: 15px;
-    font-size: 3em;
+    font-size: 5vmin;
     justify-content: safe center;
     overflow: hidden;
   }
