@@ -1,15 +1,16 @@
 // Popup for user to input ID; persists until value input
 function getID() {
     'use strict';
-    let ID = prompt("Please input your worker ID", "");  
+    let ID = prompt("Please input your ID", "");  
     if(!ID) {
         getID();
     } else {
         sessionStorage.setItem('subjID', ID);
     }
-  }
+}
 
 getID();
+
 
 // start time for file naming
 var date = '';
@@ -26,7 +27,7 @@ var welcome = {
         var today = start_time.toDateString();
         date = today.substring(8,10) + '-' +  today.substring(4,7) + '-' + today.substring(11,15); // DD-MMM-YYYY
         time = time + start_time.getHours() + ':' + start_time.getMinutes() + ':' + start_time.getSeconds();
-    }
+    },
 }
 
 //// Demand Selection ////
@@ -46,7 +47,13 @@ var next_round = {
         }
         return string;
     },
-    choices: ['Continue'],
+    choices: function() {
+        if (current_round != n_rounds) {
+            return ['Continue'];
+        } else {
+            return ['End'];
+        }
+    },
     on_finish: function() {
         // increment round #
         current_round++;
@@ -104,6 +111,8 @@ jsPsych.init({
         var file_name = 'ID:' + sessionStorage.getItem('subjID') + '_'+ date + '_' + time + '_results.csv';
 
         results.localSave('csv', file_name);
+        task_done = true;
+        close();
 
     },
 });

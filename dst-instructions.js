@@ -46,7 +46,7 @@ var show_no_show_MSIT = jsPsych.randomization.shuffle(left_or_right);
 
 //////// PRACTICE DST TRIALS ////////
 // initialize parameters (same ones used in demand_selection_task)
-const dst_trial_duration = 3000; 
+const dst_trial_duration = 7000; 
 var match_side;
 var mismatch_side;
 var current_n_matches;
@@ -132,9 +132,9 @@ var MSIT_trial_choice = {
     type: "html-keyboard-response",
     stimulus: function() {
         if (trial_type == 'matching') {
-            return "<p class = 'match' style = 'font-size: 5vmin'>" + trial_type + "</p>";
+            return "<p class = 'match' style = 'font-size: 7vmin'>" + trial_type + "</p>";
         } else {
-            return "<p class = 'mismatch' style = 'font-size: 5vmin'>" + trial_type + "</p>";
+            return "<p class = 'mismatch' style = 'font-size: 7vmin'>" + trial_type + "</p>";
         }
         
     },
@@ -154,7 +154,7 @@ var show_MSIT_conditional = {
 // if MSIT trials not shown, show a message
 var no_show_MSIT = {
     type: "html-keyboard-response",
-    stimulus: "<p style = 'font-size: 5vmin; font-weight: 'bold>Trials omitted.</p>",
+    stimulus: "<p style = 'font-size: 7vmin; font-weight: 'bold>Trials omitted...</p>",
     choices: jsPsych.NO_KEYS,
     trial_duration: message_duration,
 }

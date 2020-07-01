@@ -15,9 +15,12 @@
     <body>
     </body>
     <script>
+        let task_done = false;
         // warning message for if user acidentally refreshes, hits back button, etc.
         window.onbeforeunload = function() {
-            return "Are you sure you want to leave the experiment?"; // custom message ignored in recent browser versions
+            if (!task_done) {
+                return "Are you sure you want to leave the experiment?"; // custom message ignored in recent browser versions
+            }
         };
     </script>
     <script type="text/javascript" src="make-dst-stimulus.js"></script>

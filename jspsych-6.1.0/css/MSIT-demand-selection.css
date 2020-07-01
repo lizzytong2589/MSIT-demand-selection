@@ -1,8 +1,8 @@
   .fixation-trial {
-    font-size: 18vh;
+    font-size: 16vmin;
   }
   .MSIT-trial {
-    font-size: 18vh;
+    font-size: 16vmin;
   }
   .dst-container {
     height: 90vh;
@@ -35,7 +35,7 @@
   .demand-selection-choice-box p {
     display: flex;
     flex-flow: column wrap;
-    font-size: 5vmin;
+    font-size: 6.5vmin;
     flex: 1 1 100%;
     line-height: 1.2;
     padding: 5%;
@@ -54,10 +54,9 @@
     display: flex;
     flex: 0 1 content;
     padding: 10px;
-    /* height: max-content; */
     border: 3px solid black;
     border-radius: 15px;
-    font-size: 5vmin;
+    font-size: 7vmin;
     justify-content: safe center;
     overflow: hidden;
   }

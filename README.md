@@ -8,7 +8,7 @@ In each DST trial, subjects are asked to make a choice between a certain number 
 Each distinct choice is shown to the subject twice (once per round for a total of two rounds with an option to break in between rounds).
 
 
-This project was created using the [jsPsych][[1](https://www.jspsych.org/) JavaScript library
+This project was created using the [jsPsych][1](https://www.jspsych.org/) JavaScript library
 
 References:
 [1] de Leeuw, J. R. (2015). jsPsych: A JavaScript library for creating behavioral experiments in a web browser. Behavior Research Methods, 47(1), 1-12. doi:10.3758/s13428-014-0458-y.
