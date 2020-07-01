@@ -1,11 +1,15 @@
-// Popup for user to input ID
-'use strict';
-let ID = prompt("What is your worker ID?", "");  
+// Popup for user to input ID; persists until value input
+function getID() {
+    'use strict';
+    let ID = prompt("Please input your worker ID", "");  
+    if(!ID) {
+        getID();
+    } else {
+        sessionStorage.setItem('subjID', ID);
+    }
+  }
 
-// generate random ID if none input
-if (ID == null || ID == "") {
-    ID = jsPsych.randomization.randomID(10);
-}
+getID();
 
 // start time for file naming
 var date = '';
@@ -97,7 +101,7 @@ jsPsych.init({
 
         var results = MSIT_dst_data.join(interaction_data);
        
-        var file_name = 'ID:' + ID + '_'+ date + '_' + time + '_results.csv';
+        var file_name = 'ID:' + sessionStorage.getItem('subjID') + '_'+ date + '_' + time + '_results.csv';
 
         results.localSave('csv', file_name);
 
