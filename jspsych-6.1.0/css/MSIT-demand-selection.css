@@ -60,3 +60,9 @@
     justify-content: safe center;
     overflow: hidden;
   }
+  .attention-check-circle {
+    height: 30vh;
+    width: 30vh;
+    background-color: black;
+    border-radius: 50%;
+  }

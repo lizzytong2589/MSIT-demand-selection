@@ -58,6 +58,7 @@ var random_choice;
 var is_practice = true;
 var current_round = 0;
 var message_duration = 500;
+var attention_check = 0;
 
 // run an individual DST trial
 var show_DST = {
@@ -73,6 +74,9 @@ var show_DST = {
         if(is_missed) {
             demand_choice = null;
             random_choice = Math.random();
+            attention_check++;
+        } else {
+            attention_check = 0;
         }
         // possibilities for MSIT based on dst response (or lack thereof)
         if((demand_choice == 'leftarrow' && match_side == 'left') || (demand_choice == 'rightarrow' && match_side == 'right') ||
@@ -102,6 +106,7 @@ var show_DST = {
             demand_selection_trials_performed: dst_index,
             trial_duration: dst_trial_duration,
             message_duration: message_duration,
+            attention_check: attention_check,
         };
           jsPsych.data.write(data);
           // console.table({'round #': current_round,'trial idx':dst_index,'trials this round':dst_index, 'choice':demand_choice, 'matches': current_n_matches, 'mismatches': current_n_mismatches, 'show_task':show_no_show_MSIT[dst_index]});
@@ -167,9 +172,23 @@ var no_show_MSIT_conditional = {
     }
 }
 
+var attention_circle = {
+    type: 'html-keyboard-response',
+    stimulus: "<div class = 'attention-check-circle'></div>",
+    choices: jsPsych.NO_KEYS,
+    trial_duration: message_duration,
+}
+
+var attention_check_conditional = {
+    timeline: [attention_circle],
+    conditional_function: function() {
+        return attention_check > 1;
+    }
+}
+
 // go through distinct demand selection trials (repeat set # of times) w/ possibility of running MSIT trials...
 var DST_trials = {
-    timeline: [show_DST, show_MSIT_conditional, no_show_MSIT_conditional],
+    timeline: [show_DST, attention_check_conditional, show_MSIT_conditional, no_show_MSIT_conditional],
     loop_function: function() {
         return (dst_index < n_demand_trials);
     },
@@ -183,10 +202,11 @@ var end_instructions = {
     " </br>Please click the button below to begin.</p>",
     choices: ['Start'],
     on_start: function() {
-        // set up for actual trials
+        // set up for actual trials; reset/re-write parameters
         dst_index = 0;
         is_practice = false;
         current_round = 1;
+        attention_check = 0;
 
         n_demand_trials = n_total_demand_choices;
         shuffled_choices = jsPsych.randomization.sampleWithoutReplacement(demand_selection_choices, n_demand_trials);
