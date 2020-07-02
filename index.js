@@ -2,6 +2,7 @@
 function getID() {
     'use strict';
     let ID = prompt("Please input your ID", "");  
+    var ID = prompt("Please input your ID", "");
     if(!ID) {
         getID();
     } else {
@@ -40,7 +41,7 @@ var next_round = {
         if (current_round != n_rounds) {
             var string = "<p style = 'font-size: 120%'>You have completed "+ current_round + " round(s) of " + n_rounds + "." +
             "<br>When you are ready, please press the button below to continue to the next round.</br></p>";
-            
+
         } else {
             var string = "<p style = 'font-size: 120%'>You have completed " + current_round + " round(s) of " + n_rounds + "."+
             "<br>Thank you for participating in this experiment. You may now close this page.</br></p>";
@@ -89,8 +90,8 @@ instruction_images.concat(DST_pagelinks_a);
 jsPsych.init({
     timeline: main_timeline,
     exclusions: {
-        min_width: 500,
-        min_height: 265,
+      min_width: 800,
+      min_height: 600
       },
     preload_images: instruction_images,
     on_finish: function() {
@@ -107,7 +108,7 @@ jsPsych.init({
         MSIT_dst_data = MSIT_dst_data.ignore('trial_index');
 
         var results = MSIT_dst_data.join(interaction_data);
-       
+
         var file_name = 'ID:' + sessionStorage.getItem('subjID') + '_'+ date + '_' + time + '_results.csv';
 
         results.localSave('csv', file_name);
