@@ -23,31 +23,55 @@ var make_dst_stimulus = function() {
       match_side = 'right';
       mismatch_side = 'left';
       
-      // choice on LHS of screen
+      //// choice on LHS of screen
       demand_trial_html += "<div class = 'row'>";
-      demand_trial_html += "<div class ='demand-selection-choice-box col'><p>" + current_n_mismatches + 
-        "<span class = 'mismatch'> mismatching</span></p></div>";
+
+      // change box color if choice already made
+      if(demand_choice == 'leftarrow' || default_side == 'left') {
+        demand_trial_html += "<div class ='demand-selection-choice-box col' style = 'border-color: #00a645'>";
+      } else {
+        demand_trial_html += "<div class ='demand-selection-choice-box col'>";
+      }
+      demand_trial_html += "<p>" + current_n_mismatches + "<span class = 'mismatch'> mismatching</span></p></div>";
       
       demand_trial_html += fixation_cross;
 
-      // choice on RHS of screen
-      demand_trial_html += "<div class = 'demand-selection-choice-box col'><p>" + current_n_matches +
-        "<span class = 'match'> matching</span></p></div></div>";
+      //// choice on RHS of screen
+      // change box color if choice already made
+      if(demand_choice == 'rightarrow' || default_side == 'right') {
+        demand_trial_html += "<div class ='demand-selection-choice-box col' style = 'border-color: #00a645'>";
+      } else {
+        demand_trial_html += "<div class ='demand-selection-choice-box col'>";
+      }
+
+      demand_trial_html += "<p>" + current_n_matches + "<span class = 'match'> matching</span></p></div></div>";
       
     } else if(left_or_right[dst_index] == 1){
       match_side = 'left';
       mismatch_side = 'right';
 
-      // choice on LHS of screen
+      //// choice on LHS of screen
       demand_trial_html += "<div class = 'row'>";
-      demand_trial_html += "<div class ='demand-selection-choice-box col'><p>" + current_n_matches +
-        "<span class = 'match'> matching</span></p></div>";
+
+      // change box color if choice already made
+      if(demand_choice == 'leftarrow' || default_side == 'left') {
+        demand_trial_html += "<div class ='demand-selection-choice-box col' style = 'border-color: #00a645'>";
+      } else {
+        demand_trial_html += "<div class ='demand-selection-choice-box col'>";
+      }
+
+      demand_trial_html += "<p>" + current_n_matches + "<span class = 'match'> matching</span></p></div>";
 
       demand_trial_html += fixation_cross;
       
-      // choice on RHS of screen
-      demand_trial_html += "<div class = 'demand-selection-choice-box col'><p>" + current_n_mismatches +
-        "<span class = 'mismatch'> mismatching</span></p></div></div>";
+      //// choice on RHS of screen
+      // change box color if choice already made
+      if(demand_choice == 'rightarrow' || default_side == 'right') {
+        demand_trial_html += "<div class ='demand-selection-choice-box col' style = 'border-color: #00a645'>";
+      } else {
+        demand_trial_html += "<div class ='demand-selection-choice-box col'>";
+      }
+      demand_trial_html += "<p>" + current_n_mismatches + "<span class = 'mismatch'> mismatching</span></p></div></div>";
 
     }
 
