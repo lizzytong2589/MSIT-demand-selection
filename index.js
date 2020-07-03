@@ -1,7 +1,6 @@
 // Popup for user to input ID; persists until value input
 function getID() {
-    'use strict';
-    let ID = prompt("Please input your ID", "");  
+    'use strict'; 
     var ID = prompt("Please input your ID", "");
     if(!ID) {
         getID();
