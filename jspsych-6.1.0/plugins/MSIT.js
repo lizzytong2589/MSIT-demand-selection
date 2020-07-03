@@ -28,7 +28,7 @@ jsPsych.plugins["MSIT"] = (function() {
       MSIT_trial_type: {
         type: jsPsych.plugins.parameterType.STRING,
         default: undefined,
-        description: 'control, matching, or mismatching',
+        description: 'matching or mismatching',
       },
       fixation_duration: {
         type: jsPsych.plugins.parameterType.INT,
@@ -42,24 +42,11 @@ jsPsych.plugins["MSIT"] = (function() {
   plugin.trial = function(display_element, trial) {
     // stimuli for each test: trial (symbols), trial_type(control, mismatching, matching), correct_response(1,2,3)
     var symbols = ['1', '2', '3'];
-    var control = [
-        {trial: symbols[0] + ' X X', trial_type: 'control', correct_response: '1'},
-        {trial: 'X ' + symbols[1] + ' X', trial_type: 'control', correct_response: '2'},
-        {trial: 'X X ' + symbols[2], trial_type: 'control', correct_response: '3'},
-    ];
     var matching = [
-        // trials where answer is 1
-        {trial: symbols[0] + ' 2 2', trial_type: 'matching', correct_response: '1'},
-        {trial: symbols[0] + ' 3 3', trial_type: 'matching', correct_response: '1'},
-
-        // trials where answer is 2
-        {trial: '1 ' + symbols[1] + ' 1', trial_type: 'matching', correct_response: '2'},
-        {trial: '3 ' + symbols[1] + ' 3', trial_type: 'matching', correct_response: '2'},
-
-        // trials where answer is 3      
-        {trial: '1 1 ' + symbols[2], trial_type: 'matching', correct_response: '3'},
-        {trial: '2 2 ' + symbols[2], trial_type: 'matching', correct_response: '3'},
-    ]; 
+        {trial: symbols[0] + ' 0 0', trial_type: 'matching', correct_response: '1'},
+        {trial: '0 ' + symbols[1] + ' 0', trial_type: 'matching', correct_response: '2'},
+        {trial: '0 0 ' + symbols[2], trial_type: 'matching', correct_response: '3'},
+    ];
     var mismatching = [
         // trials where answer is 1
         {trial: '2 ' + symbols[0] + ' 2', trial_type: 'mismatching', correct_response: '1'},
