@@ -49,19 +49,21 @@ var show_no_show_MSIT = jsPsych.randomization.shuffle(left_or_right);
 const dst_trial_duration = 7000; 
 const MSIT_trial_duration = 1000;
 const fixation_duration = 250;
+const message_duration = 500;
 var match_side;
 var mismatch_side;
 var current_n_matches;
 var current_n_mismatches;
 var n_choice_fewer; // whether # trials chosen is less than the option not chosen
 var n_choice_diff;
+var demand_choice;
 var n_trials_MSIT;
 var trial_type; // match or mismatch for MSIT trials
 var dst_index = 0;
 var random_choice;
+var default_side;
 var is_practice = true;
 var current_round = 0;
-var message_duration = 500;
 var attention_check = 0;
 
 // run an individual DST trial
@@ -73,24 +75,28 @@ var show_DST = {
     trial_duration: dst_trial_duration,
     choices: ['leftarrow', 'rightarrow'],
     on_finish: function(data) {
-        var demand_choice = jsPsych.pluginAPI.convertKeyCodeToKeyCharacter(data.key_press);
+        demand_choice = jsPsych.pluginAPI.convertKeyCodeToKeyCharacter(data.key_press);
         is_missed = (data.key_press == null);
         n_choice_fewer = false;
         if(is_missed) {
             demand_choice = null;
             random_choice = Math.random();
+            if (random_choice <= 0.5) {
+                default_side = 'left';
+            } else {
+                default_side = 'right';
+            }
             attention_check++;
         } else {
             attention_check = 0;
         }
 
-
         // possibilities for MSIT based on dst response (or lack thereof)
         if((demand_choice == 'leftarrow' && match_side == 'left') || (demand_choice == 'rightarrow' && match_side == 'right') ||
-        (is_missed && random_choice <= 0.5)) {
+        (default_side == 'left' && match_side == 'left') || (default_side == 'right' && match_side == 'right')) {
             n_trials_MSIT = current_n_matches;
             trial_type = 'matching';
-
+            
             // check if need delay screen
             if(current_n_matches < current_n_mismatches) {
                 n_choice_fewer = true;
@@ -98,7 +104,7 @@ var show_DST = {
             }
 
         } else if ((demand_choice == 'leftarrow' && mismatch_side == 'left') || (demand_choice == 'rightarrow' && mismatch_side == 'right') ||
-        ((is_missed && random_choice > 0.5))) {
+        ((default_side == 'left' && mismatch_side == 'left') || (default_side == 'right' && mismatch_side == 'right'))) {
             n_trials_MSIT = current_n_mismatches;
             trial_type = 'mismatching';
 
@@ -107,9 +113,6 @@ var show_DST = {
                 n_choice_diff = current_n_matches - current_n_mismatches;
             }
         } 
-
-        // increment # of trials performed
-        dst_index++;
 
         // data writing
         var data = {
@@ -122,13 +125,30 @@ var show_DST = {
             n_matches: current_n_matches,
             mismatch_screen_side: mismatch_side,
             n_mismatches: current_n_mismatches,
-            demand_selection_trials_performed: dst_index,
+            demand_selection_trials_performed: dst_index + 1,
             trial_duration: dst_trial_duration,
             message_duration: message_duration,
             attention_check: attention_check,
         };
           jsPsych.data.write(data);
           // console.table({'round #': current_round,'trial idx':dst_index,'trials this round':dst_index, 'choice':demand_choice, 'matches': current_n_matches, 'mismatches': current_n_mismatches, 'show_task':show_no_show_MSIT[dst_index]});
+    }
+}
+
+var DST_choice = {
+    type: 'html-keyboard-response',
+    stimulus: function() {
+        return make_dst_stimulus();
+    },
+    trial_duration: message_duration,
+    choices: jsPsych.NO_KEYS,
+    on_finish: function() {
+        // increment # of trials performed
+        dst_index++;
+
+        // reset for next trials
+        demand_choice = null;
+        default_side = null;
     }
 }
  
@@ -151,20 +171,6 @@ var MSIT_trials = {
     },
 }
 
-// show the MSIT trial type that will be displayed 
-var MSIT_trial_choice = {
-    type: "html-keyboard-response",
-    stimulus: function() {
-        if (trial_type == 'matching') {
-            return "<p class = 'match' style = 'font-size: 7vmin'>" + trial_type + "</p>";
-        } else {
-            return "<p class = 'mismatch' style = 'font-size: 7vmin'>" + trial_type + "</p>";
-        }
-    },
-    choices: jsPsych.NO_KEYS,
-    trial_duration: message_duration,
-}
-
 // delay if # of trials chosen is fewer than # of trials in option not chosen
 var delay_screen = {
     type: 'html-keyboard-response',
@@ -181,7 +187,7 @@ var delay_screen = {
 
 // decide if the round is one where the MSIT trials will be shown
 var show_MSIT_conditional = {
-    timeline: [delay_screen, MSIT_trial_choice, MSIT_trials, delay_screen],
+    timeline: [delay_screen, MSIT_trials, delay_screen],
     conditional_function: function() {
         // determine whether or not to show trials; -1 b/c already incremented # of trials
         return(show_no_show_MSIT[dst_index - 1] == 1);
@@ -208,7 +214,7 @@ var attention_circle = {
     type: 'html-keyboard-response',
     stimulus: "<div class = 'attention-check-circle'></div>",
     choices: jsPsych.NO_KEYS,
-    trial_duration: message_duration,
+    trial_duration: fixation_duration,
 }
 
 var attention_check_conditional = {
@@ -220,7 +226,7 @@ var attention_check_conditional = {
 
 // go through distinct demand selection trials (repeat set # of times) w/ possibility of running MSIT trials...
 var DST_trials = {
-    timeline: [show_DST, attention_check_conditional, show_MSIT_conditional, no_show_MSIT_conditional],
+    timeline: [show_DST, DST_choice, attention_check_conditional, show_MSIT_conditional, no_show_MSIT_conditional],
     loop_function: function() {
         return (dst_index < n_demand_trials);
     },
