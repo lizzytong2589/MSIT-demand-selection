@@ -19,17 +19,19 @@ var MSIT_pagelinks_a = ['Instructions/instructions_MSIT/Slide01.png',
                             'Instructions/instructions_MSIT/Slide19.png',
                             'Instructions/instructions_MSIT/Slide20.png',
                             'Instructions/instructions_MSIT/Slide21.png',
+                            'Instructions/instructions_MSIT/Slide22.png',
 ];
 
-var MSIT_pagelinks_b = ['Instructions/instructions_MSIT/Slide22.png',
-                            'Instructions/instructions_MSIT/Slide23.png',
-                            'Instructions/instructions_MSIT/Slide24.png', 
-                            'Instructions/instructions_MSIT/Slide25.png',
+var MSIT_pagelinks_b = ['Instructions/instructions_MSIT/Slide23.png',
+                            'Instructions/instructions_MSIT/Slide24.png',
+                            'Instructions/instructions_MSIT/Slide25.png', 
                             'Instructions/instructions_MSIT/Slide26.png',
                             'Instructions/instructions_MSIT/Slide27.png',
                             'Instructions/instructions_MSIT/Slide28.png',
                             'Instructions/instructions_MSIT/Slide29.png',
-                            'Instructions/instructions_MSIT/Slide30.png', 
+                            'Instructions/instructions_MSIT/Slide30.png',
+                            'Instructions/instructions_MSIT/Slide31.png', 
+                            'Instructions/instructions_MSIT/Slide32.png', 
 ];
 
 
@@ -55,7 +57,6 @@ var instructions_MSIT_b = {
     pages: MSIT_pages_b,
     show_clickable_nav: true
 }
-
 
 //////// PRACTICE MSIT TRIALS ////////
 const n_practice_MSIT = 4; // keep number trials same for practice matching and mismatching
