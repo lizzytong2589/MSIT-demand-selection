@@ -1,17 +1,3 @@
-// Popup for user to input ID; persists until value input
-function getID() {
-    'use strict'; 
-    var ID = prompt("Please input your ID", "");
-    if(!ID) {
-        getID();
-    } else {
-        sessionStorage.setItem('subjID', ID);
-    }
-}
-
-getID();
-
-
 // start time for file naming
 var date = '';
 var time = '';
@@ -29,6 +15,16 @@ var welcome = {
         time = time + start_time.getHours() + ':' + start_time.getMinutes() + ':' + start_time.getSeconds();
     },
 }
+
+var getID = {
+    type: 'survey-text',
+    questions: [
+      {prompt: "Please input your worker ID"}, 
+    ],
+    on_finish: function(data) {
+        data.phase = 'MSIT'
+    }
+};
 
 //// Demand Selection ////
 const n_rounds = 2;
@@ -77,6 +73,7 @@ var rounds = {
 //  set up experiment structure
 var main_timeline = [];
 main_timeline.push(welcome);
+main_timeline.push(getID);
 main_timeline.push(...instructions_MSIT);
 main_timeline.push(...instructions_DST);
 main_timeline.push(rounds);
@@ -89,13 +86,34 @@ instruction_images.concat(DST_pagelinks_a);
 jsPsych.init({
     timeline: main_timeline,
     exclusions: {
-      min_width: 800,
-      min_height: 600
-      },
+        min_width: 800,
+        min_height: 600
+    },
     preload_images: instruction_images,
-    on_finish: function() {
+    on_close: function() {
+        if(!task_done) {
+            // add subject ID to data
+            jsPsych.data.get().addToAll({worker_ID: sessionStorage.getItem('subjID'), experiment_completed: false});
+            var interaction_data = jsPsych.data.getInteractionData();
+
+            // filter data by experiment phase
+            var MSIT_dst_data = jsPsych.data.get().filterCustom(function(trial){
+                return ((trial.phase =='MSIT') || (trial.phase =='demand selection'));
+            });
+            MSIT_dst_data = MSIT_dst_data.ignore('internal_node_id');
+            MSIT_dst_data = MSIT_dst_data.ignore('trial_type');
+            MSIT_dst_data = MSIT_dst_data.ignore('trial_index');
+
+            var results = MSIT_dst_data.join(interaction_data);
+
+            var resultJson = results.json();
+            jatos.submitResultData(resultJson, jatos.startNextComponent);
+        }      
+    },
+    on_finish: function() {            
+        // (non JATOS)
         // add subject ID to data
-        jsPsych.data.get().addToAll({worker_ID: name});
+        jsPsych.data.get().addToAll({worker_ID: ID});
         var interaction_data = jsPsych.data.getInteractionData();
 
         // filter data by experiment phase
@@ -108,11 +126,10 @@ jsPsych.init({
 
         var results = MSIT_dst_data.join(interaction_data);
 
-        var file_name = 'ID:' + sessionStorage.getItem('subjID') + '_'+ date + '_' + time + '_results.csv';
+        var file_name = 'ID:' + ID + '_'+ date + '_' + time + '_results.csv';
 
         results.localSave('csv', file_name);
         task_done = true;
         close();
-
     },
 });
