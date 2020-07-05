@@ -1,12 +1,28 @@
-var DST_pagelinks_a = ['Instructions/instructions_DST/Slide1.png',
-                                'Instructions/instructions_DST/Slide2.png',
-                                'Instructions/instructions_DST/Slide3.png',
-                                'Instructions/instructions_DST/Slide4.png',
-                                'Instructions/instructions_DST/Slide5.png',
-                                'Instructions/instructions_DST/Slide6.png',
-                                'Instructions/instructions_DST/Slide7.png',
-                                'Instructions/instructions_DST/Slide8.png',
-                                'Instructions/instructions_DST/Slide9.png',
+var DST_pagelinks_a = ['Instructions/instructions_DST/Slide01.png',
+                            'Instructions/instructions_DST/Slide02.png',
+                            'Instructions/instructions_DST/Slide03.png',
+                            'Instructions/instructions_DST/Slide04.png',
+                            'Instructions/instructions_DST/Slide05.png',
+                            'Instructions/instructions_DST/Slide06.png',
+                            'Instructions/instructions_DST/Slide07.png',
+                            'Instructions/instructions_DST/Slide08.png',
+                            'Instructions/instructions_DST/Slide09.png',
+                            'Instructions/instructions_DST/Slide10.png',
+                            'Instructions/instructions_DST/Slide11.png',
+                            'Instructions/instructions_DST/Slide12.png',
+                            'Instructions/instructions_DST/Slide13.png',
+                            'Instructions/instructions_DST/Slide14.png',
+                            'Instructions/instructions_DST/Slide15.png',
+                            'Instructions/instructions_DST/Slide16.png',
+                            'Instructions/instructions_DST/Slide17.png',
+                            'Instructions/instructions_DST/Slide18.png',
+                            'Instructions/instructions_DST/Slide19.png',
+                            'Instructions/instructions_DST/Slide20.png',
+                            'Instructions/instructions_DST/Slide21.png',
+                            'Instructions/instructions_DST/Slide22.png',
+                            'Instructions/instructions_DST/Slide23.png',
+                            'Instructions/instructions_DST/Slide24.png',
+                            'Instructions/instructions_DST/Slide25.png',
 ];
 
 // Set up pages for instructions
@@ -49,7 +65,7 @@ var show_no_show_MSIT = jsPsych.randomization.shuffle(left_or_right);
 const dst_trial_duration = 7000; 
 const MSIT_trial_duration = 1000;
 const fixation_duration = 250;
-const message_duration = 500;
+const message_duration = 1000;
 var match_side;
 var mismatch_side;
 var current_n_matches;
@@ -64,7 +80,6 @@ var random_choice;
 var default_side;
 var is_practice = true;
 var current_round = 0;
-var attention_check = 0;
 
 // run an individual DST trial
 var show_DST = {
@@ -86,9 +101,6 @@ var show_DST = {
             } else {
                 default_side = 'right';
             }
-            attention_check++;
-        } else {
-            attention_check = 0;
         }
 
         // possibilities for MSIT based on dst response (or lack thereof)
@@ -128,7 +140,6 @@ var show_DST = {
             demand_selection_trials_performed: dst_index + 1,
             trial_duration: dst_trial_duration,
             message_duration: message_duration,
-            attention_check: attention_check,
         };
           jsPsych.data.write(data);
           // console.table({'round #': current_round,'trial idx':dst_index,'trials this round':dst_index, 'choice':demand_choice, 'matches': current_n_matches, 'mismatches': current_n_mismatches, 'show_task':show_no_show_MSIT[dst_index]});
@@ -142,7 +153,8 @@ var DST_choice = {
     },
     trial_duration: message_duration,
     choices: jsPsych.NO_KEYS,
-    on_finish: function() {
+    on_finish: function(data) {
+        data.phase = 'ignore'
         // increment # of trials performed
         dst_index++;
 
@@ -174,15 +186,23 @@ var MSIT_trials = {
 // delay if # of trials chosen is fewer than # of trials in option not chosen
 var delay_screen = {
     type: 'html-keyboard-response',
-    stimulus: "",
-    choices: jsPsych.NO_KEYS,
-    on_finish: function(){
+    stimulus: function(){
         if(n_choice_fewer) {
-            jsPsych.pauseExperiment();
-            setTimeout(jsPsych.resumeExperiment, (n_choice_diff/2.0) * (fixation_duration + MSIT_trial_duration));
+            return "<p style = 'font-size: 7vmin; font-weight: 'bold>...</p>";
+        } else {
+            return "";
         }
     },
-    trial_duration: 0,
+    trial_duration: function() {
+        if(n_choice_fewer) {
+            var delay_time = (n_choice_diff/2.0) * (fixation_duration + MSIT_trial_duration);
+            // console.log(delay_time)
+            return delay_time;
+        } else {
+            return 0;
+        }
+    },
+    choices: jsPsych.NO_KEYS,
 }
 
 // decide if the round is one where the MSIT trials will be shown
@@ -210,17 +230,18 @@ var no_show_MSIT_conditional = {
     }
 }
 
-var attention_circle = {
+var too_slow = {
     type: 'html-keyboard-response',
-    stimulus: "<div class = 'attention-check-circle'></div>",
+    stimulus: "<p style = 'font-size: 7vmin; font-weight: 'bold>Too slow...</p>",
     choices: jsPsych.NO_KEYS,
-    trial_duration: fixation_duration,
+    trial_duration: message_duration,
 }
 
 var attention_check_conditional = {
-    timeline: [attention_circle],
+    timeline: [too_slow],
     conditional_function: function() {
-        return attention_check > 1;
+        // console.log(jsPsych.data.get().last(2).values()[0])
+        return (jsPsych.data.get().last(2).values()[0]['is_missed'] == true)
     }
 }
 
@@ -244,7 +265,6 @@ var end_instructions = {
         dst_index = 0;
         is_practice = false;
         current_round = 1;
-        attention_check = 0;
 
         n_demand_trials = n_total_demand_choices;
         shuffled_choices = jsPsych.randomization.sampleWithoutReplacement(demand_selection_choices, n_demand_trials);
