@@ -1,6 +1,7 @@
 // start time for file naming
 var date = '';
 var time = '';
+var ID;
 
 // welcome and enable fullscreen mode
 var welcome = {
@@ -23,6 +24,7 @@ var getID = {
     ],
     on_finish: function(data) {
         data.phase = 'MSIT'
+        ID = data.responses;
     }
 };
 
@@ -112,6 +114,7 @@ jsPsych.init({
     },
     on_finish: function() {            
         // (non JATOS)
+        
         // add subject ID to data
         jsPsych.data.get().addToAll({worker_ID: ID});
         var interaction_data = jsPsych.data.getInteractionData();
