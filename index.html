@@ -7,6 +7,7 @@
         <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
         <script src="jspsych-6.1.0/plugins/jspsych-fullscreen.js"></script>
         <script src="jspsych-6.1.0/plugins/jspsych-instructions.js"></script>
+        <script src="jspsych-6.1.0/plugins/jspsych-survey-text.js"></script>
         <script src="jspsych-6.1.0/plugins/MSIT.js"></script>
         <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
         <link href="jspsych-6.1.0/css/MSIT-demand-selection.css" rel="stylesheet" type="text/css"></link>
@@ -14,14 +15,13 @@
     <body>
     </body>
     <script>
-        let task_done = false;
+        var task_done = false;
         // warning message for if user acidentally refreshes, hits back button, etc.
         window.onbeforeunload = function() {
             if (!task_done) {
                 return "Are you sure you want to leave the experiment?"; // custom message ignored in recent browser versions
             }
         };
-
     </script>
     <script type="text/javascript" src="make-dst-stimulus.js"></script>
     <script type="text/javascript" src="MSIT-instructions.js"></script>
