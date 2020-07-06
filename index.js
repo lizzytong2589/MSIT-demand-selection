@@ -23,8 +23,8 @@ var getID = {
       {prompt: "Please input your worker ID"}, 
     ],
     on_finish: function(data) {
-        data.phase = 'MSIT'
-        ID = data.responses;
+        ID = JSON.parse(data.responses);
+        ID = ID["Q0"]
     }
 };
 
@@ -112,9 +112,7 @@ jsPsych.init({
             jatos.submitResultData(resultJson, jatos.startNextComponent);
         }      
     },
-    on_finish: function() {            
-        // (non JATOS)
-        
+    on_finish: function() {
         // add subject ID to data
         jsPsych.data.get().addToAll({worker_ID: ID});
         var interaction_data = jsPsych.data.getInteractionData();
