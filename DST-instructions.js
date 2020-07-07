@@ -266,7 +266,8 @@ var end_instructions = {
         is_practice = false;
         current_round = 1;
 
-        n_demand_trials = n_total_demand_choices;
+        // n_demand_trials = n_total_demand_choices;
+        n_demand_trials = 3;
         shuffled_choices = jsPsych.randomization.sampleWithoutReplacement(demand_selection_choices, n_demand_trials);
 
         // array of 0s and 1s to determine side of screen that match/mismatch will be shown on (re-write arrays used in instructions)
