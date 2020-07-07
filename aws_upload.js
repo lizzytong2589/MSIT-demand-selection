@@ -24,7 +24,7 @@ var aws_upload = function() {
     MSIT_dst_data = MSIT_dst_data.ignore('trial_type');
     MSIT_dst_data = MSIT_dst_data.ignore('trial_index');
 
-    var file_name = 'ID:' + ID + '_'+ date + '_' + time + '_results';
+    var file_name = ID + '_'+ date + '_' + time + '_results';
     var filePath = 'data/' + file_name;
     var results = {
         // MSIT_data: MSIT_dst_data.csv(),

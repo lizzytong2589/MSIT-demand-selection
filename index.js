@@ -96,7 +96,7 @@ jsPsych.init({
     },
     preload_images: instruction_images,
     on_close: function() {
-        aws_upload(filePath, results);
+        aws_upload();
     },
     on_finish: function() {
         aws_upload();
