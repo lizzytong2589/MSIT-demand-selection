@@ -3,6 +3,18 @@ var date = '';
 var time = '';
 var ID;
 
+// MTurk info
+var turkInfo = jsPsych.turk.turkInfo();
+
+// workerID
+ID = turkInfo.workerId
+
+// hitID
+turkInfo.hitId
+
+// assignmentID
+turkInfo.assignmentId
+
 // welcome and enable fullscreen mode
 var welcome = {
     type: 'fullscreen',
@@ -14,19 +26,11 @@ var welcome = {
         var today = start_time.toDateString();
         date = today.substring(8,10) + '-' +  today.substring(4,7) + '-' + today.substring(11,15); // DD-MMM-YYYY
         time = time + start_time.getHours() + ':' + start_time.getMinutes() + ':' + start_time.getSeconds();
+        if(!ID) {
+            ID = jsPsych.randomization.randomID(10);
+        }
     },
 }
-
-var getID = {
-    type: 'survey-text',
-    questions: [
-      {prompt: "Please input your worker ID"}, 
-    ],
-    on_finish: function(data) {
-        ID = JSON.parse(data.responses);
-        ID = ID["Q0"]
-    }
-};
 
 //// Demand Selection ////
 const n_rounds = 2;
@@ -75,7 +79,6 @@ var rounds = {
 //  set up experiment structure
 var main_timeline = [];
 main_timeline.push(welcome);
-main_timeline.push(getID);
 main_timeline.push(...instructions_MSIT);
 main_timeline.push(...instructions_DST);
 main_timeline.push(rounds);
@@ -93,41 +96,9 @@ jsPsych.init({
     },
     preload_images: instruction_images,
     on_close: function() {
-        if(!task_done) {
-            // add subject ID to data
-            jsPsych.data.get().addToAll({worker_ID: ID, experiment_completed: false});
-            var interaction_data = jsPsych.data.getInteractionData();
-
-            // filter data by experiment phase
-            var MSIT_dst_data = jsPsych.data.get().filterCustom(function(trial){
-                return ((trial.phase =='MSIT') || (trial.phase =='demand selection'));
-            });
-            MSIT_dst_data = MSIT_dst_data.ignore('internal_node_id');
-            MSIT_dst_data = MSIT_dst_data.ignore('trial_type');
-            MSIT_dst_data = MSIT_dst_data.ignore('trial_index');
-
-            var results = MSIT_dst_data.join(interaction_data);
-
-            var file_name = 'ID:' + ID + '_'+ date + '_' + time + '_results.csv';
-            aws_upload(results, file_name);
-        }      
+        aws_upload(results, file_name);
     },
     on_finish: function() {
-        // add subject ID to data
-        jsPsych.data.get().addToAll({worker_ID: ID});
-        var interaction_data = jsPsych.data.getInteractionData();
-
-        // filter data by experiment phase
-        var MSIT_dst_data = jsPsych.data.get().filterCustom(function(trial){
-            return ((trial.phase =='MSIT') || (trial.phase =='demand selection'));
-        });
-        MSIT_dst_data = MSIT_dst_data.ignore('internal_node_id');
-        MSIT_dst_data = MSIT_dst_data.ignore('trial_type');
-        MSIT_dst_data = MSIT_dst_data.ignore('trial_index');
-
-        var results = MSIT_dst_data.join(interaction_data);
-
-        var file_name = 'ID:' + ID + '_'+ date + '_' + time + '_results.csv';
         aws_upload(results, file_name);
 
         task_done = true;
