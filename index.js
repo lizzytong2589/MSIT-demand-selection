@@ -25,7 +25,7 @@ var welcome = {
         var start_time = jsPsych.startTime()
         var today = start_time.toDateString();
         date = today.substring(8,10) + '-' +  today.substring(4,7) + '-' + today.substring(11,15); // DD-MMM-YYYY
-        time = time + start_time.getHours() + '-' + start_time.getMinutes() + '' + start_time.getSeconds();
+        time = time + start_time.getHours() + '-' + start_time.getMinutes() + '-' + start_time.getSeconds();
         if(!ID) {
             ID = jsPsych.randomization.randomID(10);
         }
@@ -96,10 +96,48 @@ jsPsych.init({
     },
     preload_images: instruction_images,
     on_close: function() {
-        aws_upload();
+        //// data getting/saving
+        // add subject ID to data
+        jsPsych.data.get().addToAll({worker_ID: ID, experiment_finished: false});
+        var interaction_data = jsPsych.data.getInteractionData();
+
+        // filter data by experiment phase
+        var MSIT_dst_data = jsPsych.data.get().filterCustom(function(trial){
+            return ((trial.phase =='MSIT') || (trial.phase =='demand selection'));
+        });
+        MSIT_dst_data = MSIT_dst_data.ignore('internal_node_id');
+        MSIT_dst_data = MSIT_dst_data.ignore('trial_type');
+        MSIT_dst_data = MSIT_dst_data.ignore('trial_index');
+
+        var file_name = 'ID:' + ID + '_'+ date + '_' + time + '_results';
+        var filePath = 'data/' + file_name;
+        var results = {
+            MSIT_data: MSIT_dst_data.csv(),
+            interaction_data: interaction_data.csv(),
+        }
+        aws_upload(filePath, results);
     },
     on_finish: function() {
-        aws_upload();
+        //// data getting/saving
+        // add subject ID to data
+        jsPsych.data.get().addToAll({worker_ID: ID});
+        var interaction_data = jsPsych.data.getInteractionData();
+
+        // filter data by experiment phase
+        var MSIT_dst_data = jsPsych.data.get().filterCustom(function(trial){
+            return ((trial.phase =='MSIT') || (trial.phase =='demand selection'));
+        });
+        MSIT_dst_data = MSIT_dst_data.ignore('internal_node_id');
+        MSIT_dst_data = MSIT_dst_data.ignore('trial_type');
+        MSIT_dst_data = MSIT_dst_data.ignore('trial_index');
+
+        var file_name = 'ID:' + ID + '_'+ date + '_' + time + '_results';
+        var filePath = 'data/' + file_name;
+        var results = {
+            MSIT_data: MSIT_dst_data.csv(),
+            interaction_data: interaction_data.csv(),
+        }
+        aws_upload(filePath, results);
 
         task_done = true;
         close();
