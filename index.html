@@ -11,12 +11,14 @@
         <script src="jspsych-6.1.0/plugins/MSIT.js"></script>
         <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
         <link href="jspsych-6.1.0/css/MSIT-demand-selection.css" rel="stylesheet" type="text/css"></link>
+        <script src="aws-sdk-2.701.0.min.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     </head>
     <body>
     </body>
     <script>
         var task_done = false;
-        // warning message for if user acidentally refreshes, hits back button, etc.
+        // warning message for leaving the experiment page
         window.onbeforeunload = function() {
             if (!task_done) {
                 return "Are you sure you want to leave the experiment?"; // custom message ignored in recent browser versions
@@ -27,4 +29,5 @@
     <script type="text/javascript" src="MSIT-instructions.js"></script>
     <script type="text/javascript" src="DST-instructions.js"></script>
     <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="aws_upload.js"></script>
 </html>

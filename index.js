@@ -95,7 +95,7 @@ jsPsych.init({
     on_close: function() {
         if(!task_done) {
             // add subject ID to data
-            jsPsych.data.get().addToAll({worker_ID: sessionStorage.getItem('subjID'), experiment_completed: false});
+            jsPsych.data.get().addToAll({worker_ID: ID, experiment_completed: false});
             var interaction_data = jsPsych.data.getInteractionData();
 
             // filter data by experiment phase
@@ -108,8 +108,8 @@ jsPsych.init({
 
             var results = MSIT_dst_data.join(interaction_data);
 
-            var resultJson = results.json();
-            jatos.submitResultData(resultJson, jatos.startNextComponent);
+            var file_name = 'ID:' + ID + '_'+ date + '_' + time + '_results.csv';
+            aws_upload(results, file_name);
         }      
     },
     on_finish: function() {
@@ -128,8 +128,8 @@ jsPsych.init({
         var results = MSIT_dst_data.join(interaction_data);
 
         var file_name = 'ID:' + ID + '_'+ date + '_' + time + '_results.csv';
+        aws_upload(results, file_name);
 
-        results.localSave('csv', file_name);
         task_done = true;
         close();
     },
