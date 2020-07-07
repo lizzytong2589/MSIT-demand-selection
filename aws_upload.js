@@ -31,7 +31,7 @@ var aws_upload = function() {
         interaction_data: interaction_data.json(),
     }
                 
-    let params = {Bucket:bucketName, Key:filePath, Body: results };
+    let params = {Bucket:bucketName, Key:filePath, Body: JSON.stringify(results) };
     s3.upload(params, function(err, data) {
         if(err){
             console.log(err,err.stack);
