@@ -10,7 +10,7 @@ var s3 = new AWS.S3({
     params: {Bucket: bucketName}
 });
 
-var aws_upload = function(fileName) {
+var aws_upload = function() {
     // data getting
     // add subject ID to data
     jsPsych.data.get().addToAll({worker_ID: ID});
