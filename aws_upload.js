@@ -27,8 +27,8 @@ var aws_upload = function() {
     var file_name = 'ID:' + ID + '_'+ date + '_' + time + '_results';
     var filePath = 'data/' + file_name;
     var results = {
-        MSIT_data: MSIT_dst_data.json(),
-        interaction_data: interaction_data.json(),
+        MSIT_data: MSIT_dst_data.csv(),
+        interaction_data: interaction_data.csv(),
     }
                 
     let params = {Bucket:bucketName, Key:filePath, Body: JSON.stringify(results) };
