@@ -1,17 +1,17 @@
-// AWS Bucket Configurations
-var bucketName = 'princeton-ncclab-msit-dst';
-AWS.config.region = 'us-east-1';
-AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: 'us-east-1:65248965-3df0-4276-a440-f95155cf15fd',
-});
-
-var s3 = new AWS.S3({
-    apiVersion: '2012-10-17',
-    params: {Bucket: bucketName}
-});
-
 var aws_upload = function() {
-    // data getting
+    // AWS Bucket Configurations
+    var bucketName = 'princeton-ncclab-msit-dst';
+    AWS.config.region = 'us-east-1';
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: 'us-east-1:65248965-3df0-4276-a440-f95155cf15fd',
+    });
+
+    var s3 = new AWS.S3({
+        apiVersion: '2012-10-17',
+        params: {Bucket: bucketName}
+    });
+
+    //// data getting/saving
     // add subject ID to data
     jsPsych.data.get().addToAll({worker_ID: ID});
     var interaction_data = jsPsych.data.getInteractionData();
@@ -27,7 +27,7 @@ var aws_upload = function() {
     var file_name = 'ID:' + ID + '_'+ date + '_' + time + '_results';
     var filePath = 'data/' + file_name;
                 
-    let params = {Bucket:bucketName, Key:filePath,Body: {MSIT_data: MSIT_dst_data.json(), interactionData: interaction_data.json()}};
+    let params = {Bucket:bucketName, Key:filePath,Body: {'MSIT_data': MSIT_dst_data.json(), 'interaction_Data': interaction_data.json()}};
     s3.upload(params, function(err, data) {
         if(err){
             console.log(err,err.stack);
