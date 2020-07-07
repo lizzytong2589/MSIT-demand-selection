@@ -116,6 +116,7 @@ jsPsych.init({
             interaction_data: interaction_data.csv(),
         }
         aws_upload(filePath, results);
+        console.log('close')
     },
     on_finish: function() {
         //// data getting/saving
