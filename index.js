@@ -96,7 +96,35 @@ jsPsych.init({
     },
     preload_images: instruction_images,
     on_close: function() {
-        aws_upload();
+        //// data getting/saving
+        // add subject ID to data
+        jsPsych.data.get().addToAll({worker_ID: ID});
+        var interaction_data = jsPsych.data.getInteractionData();
+
+        // filter data by experiment phase
+        var MSIT_dst_data = jsPsych.data.get().filterCustom(function(trial){
+            return ((trial.phase =='MSIT') || (trial.phase =='demand selection'));
+        });
+        MSIT_dst_data = MSIT_dst_data.ignore('internal_node_id');
+        MSIT_dst_data = MSIT_dst_data.ignore('trial_type');
+        MSIT_dst_data = MSIT_dst_data.ignore('trial_index');
+
+        var file_name = ID + '_'+ date + '_' + time + '_results';
+        var filePath = 'data/' + file_name;
+        var results = {
+            // MSIT_data: MSIT_dst_data.csv(),
+            // interaction_data: interaction_data.csv(),
+            data: 'test',
+        }
+                    
+        let params = {Bucket: bucketName, Key: 'data/testfile', Body: 'test' };
+        s3.upload(params, function(err, data) {
+            if(err){
+                console.log(err,err.stack);
+            } else {
+                console.log('success');
+            }
+        });
     },
     on_finish: function() {
         aws_upload();
