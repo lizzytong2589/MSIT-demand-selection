@@ -23,6 +23,7 @@ var aws_upload = function() {
     MSIT_dst_data = MSIT_dst_data.ignore('internal_node_id');
     MSIT_dst_data = MSIT_dst_data.ignore('trial_type');
     MSIT_dst_data = MSIT_dst_data.ignore('trial_index');
+    console.log(MSIT_dst_data.json())
 
     var file_name = 'ID:' + ID + '_'+ date + '_' + time + '_results';
     var filePath = 'data/' + file_name;
