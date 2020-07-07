@@ -32,7 +32,7 @@ var aws_upload = function() {
         data: 'test'
     }
                 
-    let params = {Bucket:bucketName, Key:filePath, Body: JSON.stringify(results) };
+    let params = {Bucket:bucketName, Key:filePath, Body: results };
     s3.upload(params, function(err, data) {
         if(err){
             console.log(err,err.stack);

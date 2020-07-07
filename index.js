@@ -25,7 +25,7 @@ var welcome = {
         var start_time = jsPsych.startTime()
         var today = start_time.toDateString();
         date = today.substring(8,10) + '-' +  today.substring(4,7) + '-' + today.substring(11,15); // DD-MMM-YYYY
-        time = time + start_time.getHours() + ':' + start_time.getMinutes() + ':' + start_time.getSeconds();
+        time = time + start_time.getHours() + '-' + start_time.getMinutes() + '' + start_time.getSeconds();
         if(!ID) {
             ID = jsPsych.randomization.randomID(10);
         }
