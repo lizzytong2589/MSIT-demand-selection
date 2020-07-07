@@ -10,7 +10,6 @@ var aws_upload = function() {
         apiVersion: '2012-10-17',
         params: {Bucket: bucketName}
     });
-
     //// data getting/saving
     // add subject ID to data
     jsPsych.data.get().addToAll({worker_ID: ID});
@@ -32,7 +31,7 @@ var aws_upload = function() {
         data: 'test',
     }
                 
-    let params = {Bucket:bucketName, Key:filePath, Body: results };
+    let params = {Bucket: bucketName, Key: 'testfile', Body: 'test' };
     s3.upload(params, function(err, data) {
         if(err){
             console.log(err,err.stack);
