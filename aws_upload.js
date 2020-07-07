@@ -24,10 +24,10 @@ var aws_upload = function() {
     MSIT_dst_data = MSIT_dst_data.ignore('trial_type');
     MSIT_dst_data = MSIT_dst_data.ignore('trial_index');
 
-    var file_name = 'ID:' + ID + '_'+ date + '_' + time + '_results.csv';
+    var file_name = 'ID:' + ID + '_'+ date + '_' + time + '_results';
     var filePath = 'data/' + file_name;
                 
-    let params = {Bucket:bucketName, Key:filePath,Body: {MSIT_data: MSIT_dst_data.csv(), interactionData: interaction_data.csv()}};
+    let params = {Bucket:bucketName, Key:filePath,Body: {MSIT_data: MSIT_dst_data.json(), interactionData: interaction_data.json()}};
     s3.upload(params, function(err, data) {
         if(err){
             console.log(err,err.stack);
