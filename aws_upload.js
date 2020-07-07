@@ -1,15 +1,16 @@
-var aws_upload = function() {
-    // AWS Bucket Configurations
-    var bucketName = 'princeton-ncclab-msit-dst';
-    AWS.config.region = 'us-east-1';
-    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: 'us-east-1:65248965-3df0-4276-a440-f95155cf15fd',
-    });
+// AWS Bucket Configurations
+var bucketName = 'princeton-ncclab-msit-dst';
+AWS.config.region = 'us-east-1';
+AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+    IdentityPoolId: 'us-east-1:65248965-3df0-4276-a440-f95155cf15fd',
+});
 
-    var s3 = new AWS.S3({
-        apiVersion: '2012-10-17',
-        params: {Bucket: bucketName}
-    });
+var s3 = new AWS.S3({
+    apiVersion: '2012-10-17',
+    params: {Bucket: bucketName}
+});
+
+var aws_upload = function() {
     //// data getting/saving
     // add subject ID to data
     jsPsych.data.get().addToAll({worker_ID: ID});
@@ -31,7 +32,7 @@ var aws_upload = function() {
         data: 'test',
     }
                 
-    let params = {Bucket: bucketName, Key: 'testfile', Body: 'test' };
+    let params = {Bucket: bucketName, Key: 'data/testfile', Body: 'test' };
     s3.upload(params, function(err, data) {
         if(err){
             console.log(err,err.stack);
