@@ -112,8 +112,8 @@ jsPsych.init({
         var file_name = 'ID:' + ID + '_'+ date + '_' + time + '_results';
         var filePath = 'data/' + file_name;
         var results = {
-            MSIT_data: MSIT_dst_data.csv(),
-            interaction_data: interaction_data.csv(),
+            MSIT_data: MSIT_dst_data.json(),
+            interaction_data: interaction_data.json(),
         }
         aws_upload(filePath, results);
         console.log('close')
