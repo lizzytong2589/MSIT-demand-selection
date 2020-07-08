@@ -128,7 +128,21 @@ jsPsych.plugins["MSIT"] = (function() {
 
 
     //// MSIT Trial Set-up ////
-    var current_MSIT_trial = {};
+    var this_MSIT_trials = [];
+    var current_MSIT_trial = {}
+    if (trial_type = 'matching') {
+      for (var i = 0; i < Math.floor(n_MSIT_trials/matching.length); i++) {
+        this_MSIT_trials.push(...jsPsych.randomization.repeat(matching, 1))
+      }
+        this_MSIT_trials.push(...jsPsych.randomization.sampleWithoutReplacement(matching, n_MSIT_trials%matching.length))
+    } else if (trial_type = 'mismatching')  {
+      for (var i = 0; i < Math.floor(n_MSIT_trials/mismatching.length); i++) {
+        this_MSIT_trials.push(...jsPsych.randomization.repeat(mismatching, 1))
+      }
+        this_MSIT_trials.push(...jsPsych.randomization.sampleWithoutReplacement(mismatching, n_MSIT_trials%mismatching.length))
+    }
+    
+    console.table(this_MSIT_trials)
 
     // call if key pressed during MSIT trial (function below)
     var MSIT_response = async function(info){ 
@@ -140,7 +154,7 @@ jsPsych.plugins["MSIT"] = (function() {
       var correct = false;
       is_missed = false;
       var key_pressed = jsPsych.pluginAPI.convertKeyCodeToKeyCharacter(response.key);
-      var correct_response = current_MSIT_trial[0]['correct_response'];
+      var correct_response = current_MSIT_trial['correct_response'];
       
       if(key_pressed == correct_response) {
         correct = true;
@@ -157,10 +171,10 @@ jsPsych.plugins["MSIT"] = (function() {
         phase: 'MSIT',
         is_practice: is_practice,
         round: round,
-        MSIT_trial_type: current_MSIT_trial[0]['trial_type'],
+        MSIT_trial_type: current_MSIT_trial['trial_type'],
         trial_duration: MSIT_trial_duration,
         fixation_duration: fixation_duration,
-        stimulus: current_MSIT_trial[0]['trial'],
+        stimulus: current_MSIT_trial['trial'],
         rt: response.rt,
         key_press: key_pressed,
         correct_response: correct_response,
@@ -178,14 +192,8 @@ jsPsych.plugins["MSIT"] = (function() {
     // function to create one MSIT trial
     var show_MSIT_trial = async function() {
       n_MSIT_trials_performed++;
-      if (MSIT_trial_type == 'control') {
-        current_MSIT_trial = jsPsych.randomization.sampleWithReplacement(control, 1);
-      } else if (MSIT_trial_type == 'matching') {
-        current_MSIT_trial = jsPsych.randomization.sampleWithReplacement(matching, 1);
-      } else if (MSIT_trial_type == 'mismatching') {
-        current_MSIT_trial = jsPsych.randomization.sampleWithReplacement(mismatching, 1);
-      }
-      var trial = current_MSIT_trial[0]['trial'];
+      current_MSIT_trial = this_MSIT_trials.pop();
+      var trial = current_MSIT_trial['trial'];
       var MSIT_stimulus = '<div class = "MSIT-trial">' + trial +'</div>';
 
       // show stimulus
@@ -217,13 +225,13 @@ jsPsych.plugins["MSIT"] = (function() {
           phase: 'MSIT',
           is_practice: is_practice,
           round: round,
-          MSIT_trial_type: current_MSIT_trial[0]['trial_type'],
+          MSIT_trial_type: current_MSIT_trial['trial_type'],
           trial_duration: MSIT_trial_duration,
           fixation_duration: fixation_duration,
-          stimulus: current_MSIT_trial[0]['trial'],
+          stimulus: current_MSIT_trial['trial'],
           rt: null,
           key_press: null,
-          correct_response: current_MSIT_trial[0]['correct_response'],
+          correct_response: current_MSIT_trial['correct_response'],
           correct: null,
           is_missed: is_missed,
           MSIT_trials_performed: n_MSIT_trials_performed,
