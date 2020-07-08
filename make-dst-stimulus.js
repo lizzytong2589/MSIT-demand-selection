@@ -16,7 +16,11 @@ var make_dst_stimulus = function() {
     
     var demand_trial_html = "";
     demand_trial_html += "<div class = 'dst-container'>";
-    demand_trial_html += "<div class = 'row'></div>";
+    if(jsPsych.data.get().last(1).values()[0]['is_missed']) {
+      demand_trial_html += "<div class = 'row' style = 'margin-top: 5vh; padding: 5px; font-size: 6.5vmin; line-height: 1.2;'>Too slow...</div>";
+    } else {
+      demand_trial_html += "<div class = 'row'></div>";
+    }
     
     // decide which side of the screen each choice will be on
     if(left_or_right[dst_index] == 0) {

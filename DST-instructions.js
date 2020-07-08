@@ -230,24 +230,9 @@ var no_show_MSIT_conditional = {
     }
 }
 
-var too_slow = {
-    type: 'html-keyboard-response',
-    stimulus: "<p style = 'font-size: 7vmin; font-weight: 'bold>Too slow...</p>",
-    choices: jsPsych.NO_KEYS,
-    trial_duration: message_duration,
-}
-
-var attention_check_conditional = {
-    timeline: [too_slow],
-    conditional_function: function() {
-        // console.log(jsPsych.data.get().last(2).values()[0])
-        return (jsPsych.data.get().last(2).values()[0]['is_missed'] == true)
-    }
-}
-
 // go through distinct demand selection trials (repeat set # of times) w/ possibility of running MSIT trials...
 var DST_trials = {
-    timeline: [show_DST, DST_choice, attention_check_conditional, show_MSIT_conditional, no_show_MSIT_conditional],
+    timeline: [show_DST, DST_choice, show_MSIT_conditional, no_show_MSIT_conditional],
     loop_function: function() {
         return (dst_index < n_demand_trials);
     },
