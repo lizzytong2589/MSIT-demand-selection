@@ -130,19 +130,17 @@ jsPsych.plugins["MSIT"] = (function() {
     //// MSIT Trial Set-up ////
     var this_MSIT_trials = [];
     var current_MSIT_trial = {}
-    if (trial_type = 'matching') {
+    if (trial_type == 'matching') {
       for (var i = 0; i < Math.floor(n_MSIT_trials/matching.length); i++) {
         this_MSIT_trials.push(...jsPsych.randomization.repeat(matching, 1))
       }
         this_MSIT_trials.push(...jsPsych.randomization.sampleWithoutReplacement(matching, n_MSIT_trials%matching.length))
-    } else if (trial_type = 'mismatching')  {
+    } else if (trial_type == 'mismatching')  {
       for (var i = 0; i < Math.floor(n_MSIT_trials/mismatching.length); i++) {
         this_MSIT_trials.push(...jsPsych.randomization.repeat(mismatching, 1))
       }
         this_MSIT_trials.push(...jsPsych.randomization.sampleWithoutReplacement(mismatching, n_MSIT_trials%mismatching.length))
     }
-    
-    console.table(this_MSIT_trials)
 
     // call if key pressed during MSIT trial (function below)
     var MSIT_response = async function(info){ 
