@@ -23,6 +23,7 @@
     display: flex;
     height: 100%;
     flex: 0 1 100%;
+    justify-content: space-evenly;
   }
   .demand-selection-choice-box {
     display: flex;
