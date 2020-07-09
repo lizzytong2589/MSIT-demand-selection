@@ -96,7 +96,7 @@ jsPsych.init({
     },
     // preload_images: instruction_images,
     on_close: function() {
-            if (!task_done) {
+        if (!task_done) {
             //// data getting/saving
             // add subject ID to data
             jsPsych.data.get().addToAll({worker_ID: ID});
@@ -121,9 +121,9 @@ jsPsych.init({
             var file_name = ID + '_'+ date + '_' + time + '_results';
             var filePath = 'data/' + file_name;
             var results = {
-                MSIT_data: MSIT_data.csv(),
-                DST_data: DST_data.csv(),
-                interaction_data: interaction_data.csv(),
+                MSIT_data: MSIT_data.json(),
+                DST_data: DST_data.json(),
+                interaction_data: interaction_data.json(),
             }
                         
             let params = {Bucket: bucketName, Key: filePath, Body: JSON.stringify(results), ContentType: "application/json"};
