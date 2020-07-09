@@ -79,13 +79,13 @@ var rounds = {
 //  set up experiment structure
 var main_timeline = [];
 main_timeline.push(welcome);
-// main_timeline.push(...instructions_MSIT);
+main_timeline.push(...instructions_MSIT);
 main_timeline.push(...instructions_DST);
 main_timeline.push(rounds);
 
 // images for preloading
-// var instruction_images = MSIT_pagelinks_a.concat(MSIT_pagelinks_b);
-// instruction_images.concat(DST_pagelinks_a);
+var instruction_images = MSIT_pagelinks_a.concat(MSIT_pagelinks_b);
+instruction_images.concat(DST_pagelinks_a);
 
 // start experiment
 jsPsych.init({
@@ -94,7 +94,7 @@ jsPsych.init({
         min_width: 800,
         min_height: 600
     },
-    // preload_images: instruction_images,
+    preload_images: instruction_images,
     on_close: function() {
         if (!task_done) {
             //// data getting/saving
