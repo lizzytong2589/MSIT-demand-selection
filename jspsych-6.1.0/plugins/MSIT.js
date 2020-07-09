@@ -130,12 +130,12 @@ jsPsych.plugins["MSIT"] = (function() {
     //// MSIT Trial Set-up ////
     var this_MSIT_trials = [];
     var current_MSIT_trial = {}
-    if (trial_type == 'matching') {
+    if (MSIT_trial_type == 'matching') {
       for (var i = 0; i < Math.floor(n_MSIT_trials/matching.length); i++) {
         this_MSIT_trials.push(...jsPsych.randomization.repeat(matching, 1))
       }
         this_MSIT_trials.push(...jsPsych.randomization.sampleWithoutReplacement(matching, n_MSIT_trials%matching.length))
-    } else if (trial_type == 'mismatching')  {
+    } else if (MSIT_trial_type == 'mismatching')  {
       for (var i = 0; i < Math.floor(n_MSIT_trials/mismatching.length); i++) {
         this_MSIT_trials.push(...jsPsych.randomization.repeat(mismatching, 1))
       }
