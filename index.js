@@ -79,13 +79,13 @@ var rounds = {
 //  set up experiment structure
 var main_timeline = [];
 main_timeline.push(welcome);
-main_timeline.push(...instructions_MSIT);
+// main_timeline.push(...instructions_MSIT);
 main_timeline.push(...instructions_DST);
 main_timeline.push(rounds);
 
 // images for preloading
-var instruction_images = MSIT_pagelinks_a.concat(MSIT_pagelinks_b);
-instruction_images.concat(DST_pagelinks_a);
+// var instruction_images = MSIT_pagelinks_a.concat(MSIT_pagelinks_b);
+// instruction_images.concat(DST_pagelinks_a);
 
 // start experiment
 jsPsych.init({
@@ -94,7 +94,7 @@ jsPsych.init({
         min_width: 800,
         min_height: 600
     },
-    preload_images: instruction_images,
+    // preload_images: instruction_images,
     on_close: function() {
             if (!task_done) {
             //// data getting/saving
@@ -120,13 +120,13 @@ jsPsych.init({
 
             var file_name = ID + '_'+ date + '_' + time + '_results';
             var filePath = 'data/' + file_name;
-            var data = {
-                MSIT_data: MSIT_data.json(),
-                DST_data: DST_data.json(),
-                interaction_data: interaction_data.json(),
+            var results = {
+                MSIT_data: MSIT_data.csv(),
+                DST_data: DST_data.csv(),
+                interaction_data: interaction_data.csv(),
             }
                         
-            let params = {Bucket: bucketName, Key: filePath, Body: data };
+            let params = {Bucket: bucketName, Key: filePath, Body: JSON.stringify(results), ContentType: "application/json"};
             s3.upload(params, function(err, data) {
                 if(err){
                     console.log(err,err.stack);

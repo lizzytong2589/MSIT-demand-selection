@@ -161,6 +161,7 @@ var DST_choice = {
         // reset for next trials
         demand_choice = null;
         default_side = null;
+        is_missed == null;
     }
 }
  
@@ -196,7 +197,6 @@ var delay_screen = {
     trial_duration: function() {
         if(n_choice_fewer) {
             var delay_time = (n_choice_diff/2.0) * (fixation_duration + MSIT_trial_duration);
-            // console.log(delay_time)
             return delay_time;
         } else {
             return 0;
