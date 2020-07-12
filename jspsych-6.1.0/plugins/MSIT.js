@@ -35,6 +35,11 @@ jsPsych.plugins["MSIT"] = (function() {
         default: 250,
         description: 'fixation time in ms',
       },
+      message_duration: {
+        type: jsPsych.plugins.parameterType.INT,
+        default: undefined,
+        description: 'practice feedback time in ms',
+      },
       attention_screen: {
         type: jsPsych.plugins.parameterType.BOOL,
         default: true,
@@ -72,18 +77,21 @@ jsPsych.plugins["MSIT"] = (function() {
         {trial: '2 ' + symbols[2] + ' 2', trial_type: 'mismatching', correct_response: '3'},
     ];
 
-    // plugin parameters 
+    // plugin parameters and other variables
     var round = trial.round;
     var is_practice = trial.is_practice;
     var n_MSIT_trials = trial.n_MSIT_trials;
     var n_MSIT_trials_performed = 0; // number of MSIT trials performed in one travel period
     var MSIT_trial_duration = trial.MSIT_trial_duration;
     var fixation_duration = trial.fixation_duration;
+    var message_duration = trial.message_duration;
     var MSIT_trial_type = trial.MSIT_trial_type;
     var is_missed = false;
     var attention_screen = trial.attention_screen;
     var consecutive_misses = 0;
     var MSIT_timeout; 
+    var correct_response;
+    var correct;
 
     // create promise that can be resolved externally 
     var outside_resolve;
@@ -112,7 +120,8 @@ jsPsych.plugins["MSIT"] = (function() {
 
       var fixation = "";
 
-      if (consecutive_misses > 1 && attention_screen) {
+      // replace fixation cross w/ attention circle if applicable
+      if (consecutive_misses > 1 && attention_screen && !is_practice) {
         fixation += attention_screen_circle;
       } else {
         fixation += fixation_cross;
@@ -126,6 +135,17 @@ jsPsych.plugins["MSIT"] = (function() {
 
     }; // end draw_fixation
 
+    var practice_check = async function() {
+      if(is_practice) {
+        correct_response = current_MSIT_trial['correct_response'];
+        if(is_missed || !correct) {
+          var incorrect_str = "<p style = 'font-size: 200%; line-height: 150%'>Incorrect. Oddball was <br>" +
+            "<span style = 'font-weight:bold; font-size: 175%'>" + correct_response + "</span></p>";
+          display_element.innerHTML = incorrect_str;
+          await timeout(message_duration);
+        }
+      }
+    }
 
     //// MSIT Trial Set-up ////
     var this_MSIT_trials = [];
@@ -149,10 +169,10 @@ jsPsych.plugins["MSIT"] = (function() {
       jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
 
       response = info;
-      var correct = false;
+      correct = false;
       is_missed = false;
       var key_pressed = jsPsych.pluginAPI.convertKeyCodeToKeyCharacter(response.key);
-      var correct_response = current_MSIT_trial['correct_response'];
+      correct_response = current_MSIT_trial['correct_response'];
       
       if(key_pressed == correct_response) {
         correct = true;
@@ -172,6 +192,7 @@ jsPsych.plugins["MSIT"] = (function() {
         MSIT_trial_type: current_MSIT_trial['trial_type'],
         trial_duration: MSIT_trial_duration,
         fixation_duration: fixation_duration,
+        feedback_duration: message_duration,
         stimulus: current_MSIT_trial['trial'],
         rt: response.rt,
         key_press: key_pressed,
@@ -226,6 +247,7 @@ jsPsych.plugins["MSIT"] = (function() {
           MSIT_trial_type: current_MSIT_trial['trial_type'],
           trial_duration: MSIT_trial_duration,
           fixation_duration: fixation_duration,
+          feedback_duration: message_duration,
           stimulus: current_MSIT_trial['trial'],
           rt: null,
           key_press: null,
@@ -247,6 +269,7 @@ jsPsych.plugins["MSIT"] = (function() {
       for (var j = 0; j < n_MSIT_trials; j++) {
         await draw_fixation();
         await show_MSIT_trial();
+        await practice_check();
       }
       end_trial();
     } // end MSIT_trial_sequence
