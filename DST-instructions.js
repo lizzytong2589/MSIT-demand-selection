@@ -64,8 +64,6 @@ var show_no_show_MSIT = jsPsych.randomization.shuffle(left_or_right);
 // initialize parameters (same ones used in demand_selection_task)
 const dst_trial_duration = 7000; 
 const MSIT_trial_duration = 1000;
-const fixation_duration = 250;
-const message_duration = 1000;
 var match_side;
 var mismatch_side;
 var current_n_matches;
