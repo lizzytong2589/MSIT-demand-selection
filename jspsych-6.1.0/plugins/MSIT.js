@@ -112,7 +112,8 @@ jsPsych.plugins["MSIT"] = (function() {
     }
 
     // draw fixation cross
-    var fixation_cross = '<div class="fixation-trial">+</div>';
+    // var fixation_cross = '<div class="fixation-trial">+</div>';
+    var fixation_cross = '<img src = "Stimuli/fixation.png" class = "fixation-trial" style = "vertical-align: bottom"></img>';
     var attention_screen_circle = '<div class = "attention-check-circle"></div>';
     var draw_fixation = async function(){
       var fixation = '';
