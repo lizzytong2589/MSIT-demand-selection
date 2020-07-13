@@ -62,52 +62,44 @@ var instructions_MSIT_b = {
 const n_practice_MSIT = 4; // keep number trials same for practice matching and mismatching
 const fixation_duration = 250;
 const message_duration = 1000;
+var practice_MSIT_trial_types = ['matching', 'mismatching'];
+var practice_type_count = 0;
 
-// CONGRUENT(matching) INTRO
-var matching_intro = {
+// Practie trials intro screen
+var practice_MSIT_intro = {
     type: 'html-keyboard-response',
     stimulus:'',
-    prompt: "<p><span style = 'font-size: 200%; font-weight: bold'>Let's try out some " +
-        "<span class ='match'>matching</span> trials! </span><br> Press any key to start.</p>"
+    prompt: function() {
+        if(practice_MSIT_trial_types[practice_type_count] == 'matching') {
+            return "<p><span style = 'font-size: 200%; font-weight: bold'>Let's try out some " +
+            "<span class ='match'>matching</span> trials! </span><br> Press any key to start.</p>";
+        } else {
+            return "<p><span style = 'font-size: 200%; font-weight:bold'>Let's try out some "+
+            "<span class ='mismatch'>mismatching</span> trials! </span></br> Press any key to start.</p>"
+        }
+    },
 }
 
-// match trials
-var current_correct_key = 0;
-var match_trials = {
+var practice_MSIT_trials = {
     type: 'MSIT',
     round: 0,
     n_MSIT_trials: 4,
     MSIT_trial_duration: 1000,
-    MSIT_trial_type: 'matching',
-    fixation_duration: 250,
-    message_duration: 750,
+    MSIT_trial_type: function() {
+        return practice_MSIT_trial_types[practice_type_count];
+    },
+    fixation_duration: fixation_duration,
+    message_duration: message_duration,
     is_practice: true,
-}
-
-// INCONGRUENT(mismatching) INTRO
-var mismatching_intro = {
-    type: 'html-keyboard-response',
-    stimulus:'',
-    prompt: "<p><span style = 'font-size: 200%; font-weight:bold'>Let's try out some "+
-        "<span style ='color:orange'>mismatching</span> trials! </span></br> Press any key to start.</p>"
-}
-
-// mismatch trials
-var mismatch_trials = {
-    type: 'MSIT',
-    round: 0,
-    n_MSIT_trials: 4,
-    MSIT_trial_duration: 1000,
-    MSIT_trial_type: 'mismatching',
-    fixation_duration: 250,
-    message_duration: 750,
-    is_practice: false,
+    on_finish: function(){
+        practice_type_count++;
+    }
 }
 
 var instructions_MSIT = [];
 instructions_MSIT.push(instructions_MSIT_a);
-instructions_MSIT.push(matching_intro);
-instructions_MSIT.push(match_trials);
+instructions_MSIT.push(practice_MSIT_intro);
+instructions_MSIT.push(practice_MSIT_trials);
 instructions_MSIT.push(instructions_MSIT_b);
-instructions_MSIT.push(mismatching_intro);
-instructions_MSIT.push(mismatch_trials);
+instructions_MSIT.push(practice_MSIT_intro);
+instructions_MSIT.push(practice_MSIT_trials);
