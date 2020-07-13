@@ -37,7 +37,7 @@ jsPsych.plugins["MSIT"] = (function() {
       },
       message_duration: {
         type: jsPsych.plugins.parameterType.INT,
-        default: undefined,
+        default: null,
         description: 'practice feedback time in ms',
       },
       attention_screen: {
@@ -112,16 +112,13 @@ jsPsych.plugins["MSIT"] = (function() {
     }
 
     // draw fixation cross
-    var fixation_cross = '<div class="fixation-trial">'+'+'+'</div>';
+    var fixation_cross = '<div class="fixation-trial">+</div>';
     var attention_screen_circle = '<div class = "attention-check-circle"></div>';
     var draw_fixation = async function(){
-      // clear the display
-      display_element.innerHTML = '';
-
-      var fixation = "";
+      var fixation = '';
 
       // replace fixation cross w/ attention circle if applicable
-      if (consecutive_misses > 1 && attention_screen && !is_practice) {
+      if (consecutive_misses > 1 && attention_screen) {
         fixation += attention_screen_circle;
       } else {
         fixation += fixation_cross;
@@ -136,7 +133,7 @@ jsPsych.plugins["MSIT"] = (function() {
     }; // end draw_fixation
 
     var practice_check = async function() {
-      if(is_practice) {
+      if(is_practice && message_duration !== null) {
         correct_response = current_MSIT_trial['correct_response'];
         if(is_missed || !correct) {
           var incorrect_str = "<p style = 'font-size: 200%; line-height: 150%'>Incorrect. Oddball was <br>" +
