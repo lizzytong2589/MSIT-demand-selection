@@ -1,28 +1,20 @@
 var DST_pagelinks_a = ['Instructions/instructions_DST/Slide01.png',
-                            'Instructions/instructions_DST/Slide02.png',
-                            'Instructions/instructions_DST/Slide03.png',
-                            'Instructions/instructions_DST/Slide04.png',
-                            'Instructions/instructions_DST/Slide05.png',
-                            'Instructions/instructions_DST/Slide06.png',
-                            'Instructions/instructions_DST/Slide07.png',
-                            'Instructions/instructions_DST/Slide08.png',
-                            'Instructions/instructions_DST/Slide09.png',
-                            'Instructions/instructions_DST/Slide10.png',
-                            'Instructions/instructions_DST/Slide11.png',
-                            'Instructions/instructions_DST/Slide12.png',
-                            'Instructions/instructions_DST/Slide13.png',
-                            'Instructions/instructions_DST/Slide14.png',
-                            'Instructions/instructions_DST/Slide15.png',
-                            'Instructions/instructions_DST/Slide16.png',
-                            'Instructions/instructions_DST/Slide17.png',
-                            'Instructions/instructions_DST/Slide18.png',
-                            'Instructions/instructions_DST/Slide19.png',
-                            'Instructions/instructions_DST/Slide20.png',
-                            'Instructions/instructions_DST/Slide21.png',
-                            'Instructions/instructions_DST/Slide22.png',
-                            'Instructions/instructions_DST/Slide23.png',
-                            'Instructions/instructions_DST/Slide24.png',
-                            'Instructions/instructions_DST/Slide25.png',
+                            // 'Instructions/instructions_DST/Slide02.png',
+                            // 'Instructions/instructions_DST/Slide03.png',
+                            // 'Instructions/instructions_DST/Slide04.png',
+                            // 'Instructions/instructions_DST/Slide05.png',
+                            // 'Instructions/instructions_DST/Slide06.png',
+                            // 'Instructions/instructions_DST/Slide07.png',
+                            // 'Instructions/instructions_DST/Slide08.png',
+                            // 'Instructions/instructions_DST/Slide09.png',
+                            // 'Instructions/instructions_DST/Slide10.png',
+                            // 'Instructions/instructions_DST/Slide11.png',
+                            // 'Instructions/instructions_DST/Slide12.png',
+                            // 'Instructions/instructions_DST/Slide13.png',
+                            // 'Instructions/instructions_DST/Slide14.png',
+                            // 'Instructions/instructions_DST/Slide15.png',
+                            // 'Instructions/instructions_DST/Slide16.png',
+                            // 'Instructions/instructions_DST/Slide17.png',
 ];
 
 // Set up pages for instructions
@@ -152,7 +144,7 @@ var DST_choice = {
     trial_duration: message_duration,
     choices: jsPsych.NO_KEYS,
     on_finish: function(data) {
-        data.phase = 'ignore'
+        data.phase = 'ignore';
         // increment # of trials performed
         dst_index++;
 
