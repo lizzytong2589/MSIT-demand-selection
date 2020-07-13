@@ -95,47 +95,47 @@ jsPsych.init({
         min_height: 600
     },
     preload_images: instruction_images,
-    on_close: function() {
-        if (!task_done) {
-            //// data getting/saving
-            // add subject ID to data
-            jsPsych.data.get().addToAll({worker_ID: ID});
-            var interaction_data = jsPsych.data.getInteractionData();
+    // on_close: function() {
+    //     if (!task_done) {
+    //         //// data getting/saving
+    //         // add subject ID to data
+    //         jsPsych.data.get().addToAll({worker_ID: ID});
+    //         var interaction_data = jsPsych.data.getInteractionData();
 
-            // filter data by experiment phase
-            var MSIT_data = jsPsych.data.get().filterCustom(function(trial){
-                return trial.phase =='MSIT';
-            });
-            MSIT_data = MSIT_data.ignore('internal_node_id');
-            MSIT_data = MSIT_data.ignore('trial_type');
-            MSIT_data = MSIT_data.ignore('trial_index');
+    //         // filter data by experiment phase
+    //         var MSIT_data = jsPsych.data.get().filterCustom(function(trial){
+    //             return trial.phase =='MSIT';
+    //         });
+    //         MSIT_data = MSIT_data.ignore('internal_node_id');
+    //         MSIT_data = MSIT_data.ignore('trial_type');
+    //         MSIT_data = MSIT_data.ignore('trial_index');
 
-            var DST_data = jsPsych.data.get().filterCustom(function(trial){
-                return trial.phase =='demand selection';
-            });
-            DST_data = DST_data.ignore('internal_node_id');
-            DST_data = DST_data.ignore('trial_type');
-            DST_data = DST_data.ignore('trial_index');
+    //         var DST_data = jsPsych.data.get().filterCustom(function(trial){
+    //             return trial.phase =='demand selection';
+    //         });
+    //         DST_data = DST_data.ignore('internal_node_id');
+    //         DST_data = DST_data.ignore('trial_type');
+    //         DST_data = DST_data.ignore('trial_index');
 
 
-            var file_name = ID + '_'+ date + '_' + time + '_results';
-            var filePath = 'data/' + file_name;
-            var results = {
-                MSIT_data: MSIT_data.json(),
-                DST_data: DST_data.json(),
-                interaction_data: interaction_data.json(),
-            }
+    //         var file_name = ID + '_'+ date + '_' + time + '_results';
+    //         var filePath = 'data/' + file_name;
+    //         var results = {
+    //             MSIT_data: MSIT_data.json(),
+    //             DST_data: DST_data.json(),
+    //             interaction_data: interaction_data.json(),
+    //         }
                         
-            let params = {Bucket: bucketName, Key: filePath, Body: JSON.stringify(results), ContentType: "application/json"};
-            s3.upload(params, function(err, data) {
-                if(err){
-                    console.log(err,err.stack);
-                } else {
-                    console.log('success');
-                }
-            });
-        }
-    },
+    //         let params = {Bucket: bucketName, Key: filePath, Body: JSON.stringify(results), ContentType: "application/json"};
+    //         s3.upload(params, function(err, data) {
+    //             if(err){
+    //                 console.log(err,err.stack);
+    //             } else {
+    //                 console.log('success');
+    //             }
+    //         });
+    //     }
+    // },
     on_finish: function() {
         //// data getting/saving
         // add subject ID to data
