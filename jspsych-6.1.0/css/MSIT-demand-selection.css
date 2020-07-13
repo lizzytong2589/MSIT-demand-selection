@@ -1,4 +1,8 @@
   .fixation-trial {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     font-size: 16vmin;
   }
   .MSIT-trial {
@@ -17,18 +21,17 @@
     flex: 0 1 100%;
     align-items: safe center;
     justify-content: safe center;
-    margin: auto;
   }
   .row {
     display: flex;
     height: 100%;
     flex: 0 1 100%;
-    justify-content: space-evenly;
+    justify-content: safe center;
   }
   .demand-selection-choice-box {
     display: flex;
     align-self: center;;
-    flex: 1 1 content;
+    flex: 0 1 content;
     flex-direction: column;
     border: 8px solid black;
     overflow: hidden;
@@ -37,7 +40,7 @@
     display: flex;
     flex-flow: column wrap;
     font-size: 6.5vmin;
-    flex: 1 1 100%;
+    flex: 0 1 100%;
     line-height: 1.2;
     padding: 5%;
     justify-content: safe center;
