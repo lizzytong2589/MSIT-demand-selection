@@ -5,7 +5,7 @@ var make_dst_stimulus = function() {
     current_n_mismatches = current_choice['mismatching'];
 
     // fixation cross
-    var fixation_cross = "<div class = 'col'><div class = 'fixation-trial'>+</div></div>";
+    var fixation_cross = "<div class = 'col'> </div><div class = 'fixation-trial'>+</div>";
 
     // arrows
     var left_arrow = "<span class = 'arrow-key-container'><</span>";
@@ -17,7 +17,7 @@ var make_dst_stimulus = function() {
     var demand_trial_html = "";
     demand_trial_html += "<div class = 'dst-container'>";
     if(jsPsych.data.get().last(1).values()[0]['is_missed']) {
-      demand_trial_html += "<div class = 'row' style = 'margin-top: 5vh; padding: 5px; font-size: 6.5vmin; line-height: 1.2;'>Too slow...</div>";
+      demand_trial_html += "<div class = 'row' style = 'font-size: 6.5vmin; line-height: 2;'>Too slow...</div>";
     } else {
       demand_trial_html += "<div class = 'row'></div>";
     }
