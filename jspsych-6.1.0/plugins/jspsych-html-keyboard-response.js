@@ -139,6 +139,7 @@ jsPsych.plugins["html-keyboard-response"] = (function() {
     // end trial if trial_duration is set
     if (trial.trial_duration !== null) {
       jsPsych.pluginAPI.setTimeout(function() {
+        display_element.innerHTML = '';
         end_trial();
       }, trial.trial_duration);
     }
