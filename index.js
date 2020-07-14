@@ -85,7 +85,6 @@ main_timeline.push(rounds);
 
 // images for preloading
 var instruction_images = MSIT_pagelinks_a.concat(MSIT_pagelinks_b);
-instruction_images = instruction_images.concat('Stimuli/fixation.png');
 instruction_images.concat(DST_pagelinks_a);
 
 // start experiment
