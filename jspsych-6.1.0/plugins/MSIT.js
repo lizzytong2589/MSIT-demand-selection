@@ -93,14 +93,6 @@ jsPsych.plugins["MSIT"] = (function() {
     var correct_response;
     var correct;
 
-    // create promise that can be resolved externally 
-    var outside_resolve;
-    var external_promise = function(){
-      return new Promise(function(resolve) { 
-        outside_resolve = resolve;
-      });
-    } // end external_prommise
-
     // promisify timeout function
     var timeout = function(ms) {
       return new Promise(function(resolve) {
@@ -112,8 +104,7 @@ jsPsych.plugins["MSIT"] = (function() {
     }
 
     // draw fixation cross
-    // var fixation_cross = '<div class="fixation-trial">+</div>';
-    var fixation_cross = '<img src = "Stimuli/fixation.png" class = "fixation-trial" style = "vertical-align: bottom"></img>';
+    var fixation_cross = '<div class="fixation-trial">+</div>';
     var attention_screen_circle = '<div class = "attention-check-circle"></div>';
     var draw_fixation = async function(){
       var fixation = '';
@@ -133,6 +124,7 @@ jsPsych.plugins["MSIT"] = (function() {
 
     }; // end draw_fixation
 
+    // feedback for practice MSIT trials
     var practice_check = async function() {
       if(is_practice && message_duration !== null) {
         correct_response = current_MSIT_trial['correct_response'];
@@ -143,7 +135,7 @@ jsPsych.plugins["MSIT"] = (function() {
           await timeout(message_duration);
         }
       }
-    }
+    } // end practice_check
 
     //// MSIT Trial Set-up ////
     var this_MSIT_trials = [];
@@ -162,8 +154,7 @@ jsPsych.plugins["MSIT"] = (function() {
 
     // call if key pressed during MSIT trial (function below)
     var MSIT_response = async function(info){ 
-      // kill keyboard listener and timeout
-      clearTimeout(MSIT_timeout);
+      // kill keyboard listener
       jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
 
       response = info;
@@ -174,10 +165,6 @@ jsPsych.plugins["MSIT"] = (function() {
       
       if(key_pressed == correct_response) {
         correct = true;
-      }
-
-      // adjust miss counter accordingly
-      if(correct) {
         consecutive_misses = 0;
       } else {
         consecutive_misses++;
@@ -201,8 +188,8 @@ jsPsych.plugins["MSIT"] = (function() {
       }
       jsPsych.data.write(data);
       
-      // hide trial; resolve promise for show_MSIT_trial()
-      outside_resolve();
+      // clear trial stimulus
+      display_element.innerHTML = "";
 
     } // end MSIT_response
 
@@ -217,10 +204,7 @@ jsPsych.plugins["MSIT"] = (function() {
       display_element.innerHTML = MSIT_stimulus;
 
       // clear MSIT trial after set time if no response
-      MSIT_timeout = setTimeout(function() {
-        jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
-        outside_resolve();
-      }, MSIT_trial_duration);
+      MSIT_timeout = setTimeout(jsPsych.pluginAPI.cancelKeyboardResponse(MSIT_response), MSIT_trial_duration);
 
       is_missed = true; // before any keys pressed
       keyboardListener = jsPsych.pluginAPI.getKeyboardResponse({
@@ -231,7 +215,7 @@ jsPsych.plugins["MSIT"] = (function() {
         allow_held_key: false
       })
       
-      await external_promise()
+      await timeout(MSIT_trial_duration);
 
       // if no key is pressed
       if (is_missed) {
@@ -257,7 +241,6 @@ jsPsych.plugins["MSIT"] = (function() {
         jsPsych.data.write(data);
       }
     } // end show_MSIT_trial
-  
 
     // create desired number of MSIT trials 
     var MSIT_trial_sequence = async function() {
@@ -271,7 +254,7 @@ jsPsych.plugins["MSIT"] = (function() {
       }
       end_trial();
     } // end MSIT_trial_sequence
-
+    
     // function to end trial when it is time
     var end_trial = function() {
       // kill any remaining plugin timeouts
@@ -288,10 +271,9 @@ jsPsych.plugins["MSIT"] = (function() {
       // move on to the next trial
       jsPsych.finishTrial();
     }; // end end_trial
-    
+
     // run trial sequence
     MSIT_trial_sequence();
-
   };
 
   return plugin;
