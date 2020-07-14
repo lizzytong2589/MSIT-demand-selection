@@ -27,11 +27,6 @@ var MSIT_pagelinks_b = ['Instructions/instructions_MSIT/Slide20.png',
                             'Instructions/instructions_MSIT/Slide25.png', 
                             'Instructions/instructions_MSIT/Slide26.png',
                             'Instructions/instructions_MSIT/Slide27.png',
-                            'Instructions/instructions_MSIT/Slide28.png',
-                            'Instructions/instructions_MSIT/Slide29.png',
-                            'Instructions/instructions_MSIT/Slide30.png',
-                            'Instructions/instructions_MSIT/Slide31.png', 
-                            'Instructions/instructions_MSIT/Slide32.png', 
 ];
 
 
