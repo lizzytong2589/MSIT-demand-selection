@@ -1,8 +1,7 @@
   .fixation-trial {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    /* height: 12vmin;
+    max-height: 100%;
+    max-width: 100%; */
     font-size: 16vmin;
   }
   .MSIT-trial {
@@ -30,7 +29,7 @@
   }
   .demand-selection-choice-box {
     display: flex;
-    align-self: center;;
+    align-self: center;
     flex: 0 1 content;
     flex-direction: column;
     border: 8px solid black;
