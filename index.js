@@ -97,7 +97,13 @@ jsPsych.init({
         min_height: 600
     },
     preload_images: instruction_images,
+    on_close: function() {
+        if(!task_done) {
+            aws_upload();
+        }
+    },
     on_finish: function() {
-        aws_upload().then(task_done = true);
+        task_done = true;
+        aws_upload()
     },
 });

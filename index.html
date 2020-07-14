@@ -21,6 +21,8 @@
         // warning message for leaving the experiment page
         window.onbeforeunload = function() {
             if (!task_done) {
+                // save data
+                aws_upload();
                 return "Are you sure you want to leave the experiment?"; // custom message ignored in recent browser versions
             }
         };

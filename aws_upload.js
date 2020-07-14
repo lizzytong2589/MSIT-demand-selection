@@ -39,9 +39,10 @@ var aws_upload = function() {
         DST_data: DST_data.json(),
         interaction_data: interaction_data.json(),
     }
-                
+    
+    console.log('save function called')
     let params = {Bucket: bucketName, Key: filePath, Body: JSON.stringify(results), ContentType: "application/json"};
-    s3.upload(params, function(err, data) {
+    return s3.upload(params, function(err, data) {
         if(err){
             console.log(err,err.stack);
         } else {
