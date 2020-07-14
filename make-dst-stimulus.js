@@ -5,7 +5,8 @@ var make_dst_stimulus = function() {
     current_n_mismatches = current_choice['mismatching'];
 
     // fixation cross
-    var fixation_cross = "<div class = 'col'> </div><div class = 'fixation-trial'>+</div>";
+    // var fixation_cross = "<div class = 'col' style = 'align-content: center'><img src = 'Stimuli/fixation.png' class = 'fixation-trial'></img></div>";
+    var fixation_cross = '<div class="col fixation-trial">+</div>';
 
     // arrows
     var left_arrow = "<span class = 'arrow-key-container'><</span>";
