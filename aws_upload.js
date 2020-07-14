@@ -13,7 +13,7 @@ var s3 = new AWS.S3({
 var aws_upload = function() {
     //// data getting/saving
     // add subject ID to data
-    jsPsych.data.get().addToAll({worker_ID: ID});
+    jsPsych.data.get().addToAll({worker_ID: ID, MTurk_completion_code: completion_code});
     var interaction_data = jsPsych.data.getInteractionData();
 
     // filter data by experiment phase

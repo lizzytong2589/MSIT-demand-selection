@@ -2,6 +2,7 @@
 var date = '';
 var time = '';
 var ID;
+var completion_code = jsPsych.randomization.randomID(10);
 
 // MTurk info
 var turkInfo = jsPsych.turk.turkInfo();
@@ -44,8 +45,9 @@ var next_round = {
             "<br>When you are ready, please press the button below to continue to the next round.</br></p>";
 
         } else {
-            var string = "<p style = 'font-size: 120%'>You have completed " + current_round + " round(s) of " + n_rounds + "."+
-            "<br>Thank you for participating in this experiment. You may now close this page.</br></p>";
+            var string = "<p style = 'font-size: 120%'>You have completed " + current_round + " round(s) of " + n_rounds + "." +
+                "</br>Thank you for participating in this experiment. This is your MTurk completion code: <strong>" + completion_code + "</strong>.</p></br>" +
+                "Please make sure to submit this code to MTurk so that you can receive your payment.</br></p>";
         }
         return string;
     },
@@ -95,15 +97,7 @@ jsPsych.init({
         min_height: 600
     },
     preload_images: instruction_images,
-    // on_close: function() {
-    //     if (!task_done) {
-    //         aws_upload();
-    //     }
-    // },
     on_finish: function() {
-        aws_upload();
-        task_done = true;
-        close();
-
+        aws_upload().then(task_done = true);
     },
 });
