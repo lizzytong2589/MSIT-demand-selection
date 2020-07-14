@@ -29,6 +29,15 @@ var instructions_DST_a = {
     show_clickable_nav: true
 }
 
+var practice_intro = {
+    type: 'html-keyboard-response',
+    stimulus:'',
+    prompt: function() {
+        return "<p><span style = 'font-size: 200%; font-weight:bold'>Let's try out the "+
+            "Batch Choice Game! </span></br> Press any key to start.</p>";
+    },
+}
+
 // set up match/mismatch combinations for demand selection (also use these arrays in the actual dst)
 var n_mismatch = [1,1,1,1,2,2,2,2,2,3,3,3,3,3,3,3,4,4,4,5,5,6,6,7,7,7,8,8,9,9,10,10,12];
 var n_match = [5,8,10,13,3,6,8,10,14,2,3,6,9,12,13,15,11,12,16,5,10,9,16,12,14,16,12,16,6,15,10,16,8];
@@ -257,5 +266,6 @@ var end_instructions = {
 
 var instructions_DST = [];
 instructions_DST.push(instructions_DST_a);
+instructions_DST.push(practice_intro);
 instructions_DST.push(...practice_DST);
 instructions_DST.push(end_instructions);
