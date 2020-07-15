@@ -14,7 +14,6 @@ var DST_pagelinks_a = ['Instructions/instructions_DST/Slide01.png',
                             'Instructions/instructions_DST/Slide14.png',
                             'Instructions/instructions_DST/Slide15.png',
                             'Instructions/instructions_DST/Slide16.png',
-                            'Instructions/instructions_DST/Slide17.png',
 ];
 
 // Set up pages for instructions
