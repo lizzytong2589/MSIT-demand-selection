@@ -9,6 +9,7 @@
         <script src="jspsych-6.1.0/plugins/jspsych-instructions.js"></script>
         <script src="jspsych-6.1.0/plugins/jspsych-survey-text.js"></script>
         <script src="jspsych-6.1.0/plugins/MSIT.js"></script>
+        <script src="flexibility.js"></script>
         <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
         <link href="jspsych-6.1.0/css/MSIT-demand-selection.css" rel="stylesheet" type="text/css"></link>
         <script src="aws-sdk-2.701.0.min.js"></script>
@@ -16,20 +17,18 @@
     </head>
     <body>
     </body>
-    <script>
-        var task_done = false;
-        // warning message for leaving the experiment page
-        window.onbeforeunload = function() {
-            if (!task_done) {
-                // save data
-                aws_upload();
-                return "Are you sure you want to leave the experiment?"; // custom message ignored in recent browser versions
-            }
-        };
-    </script>
     <script type="text/javascript" src="aws_upload.js"></script>
     <script type="text/javascript" src="make-dst-stimulus.js"></script>
     <script type="text/javascript" src="MSIT-instructions.js"></script>
     <script type="text/javascript" src="DST-instructions.js"></script>
     <script type="text/javascript" src="index.js"></script>
+    <script>
+        var task_done = false;
+        window.onbeforeunload = function() {
+            if (!task_done) {
+                aws_upload();
+                return 'Do you really want to leave the experiment?'
+            }
+        };
+    </script>
 </html>

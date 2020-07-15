@@ -16,7 +16,7 @@
   }
   .col {
     display: flex;
-    flex-flow: column;
+    flex-direction: column;
     flex: 0 1 100%;
     align-items: safe center;
     justify-content: safe center;
@@ -30,14 +30,15 @@
   .demand-selection-choice-box {
     display: flex;
     align-self: center;
-    flex: 0 1 content;
+    flex: 0 1 100%;
     flex-direction: column;
     border: 8px solid black;
     overflow: hidden;
   }
   .demand-selection-choice-box p {
     display: flex;
-    flex-flow: column wrap;
+    flex-direction: column;
+    flex-wrap: wrap;
     font-size: 6.5vmin;
     flex: 0 1 100%;
     line-height: 1.2;

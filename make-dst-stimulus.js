@@ -16,7 +16,7 @@ var make_dst_stimulus = function() {
 
     
     var demand_trial_html = "";
-    demand_trial_html += "<div class = 'dst-container'>";
+    demand_trial_html += "<div data-style = 'display:flex' class = 'dst-container'>";
     if(jsPsych.data.get().last(1).values()[0]['is_missed']) {
       demand_trial_html += "<div class = 'row' style = 'font-size: 6.5vmin; line-height: 2;'>Too slow...</div>";
     } else {
