@@ -31,6 +31,9 @@ var welcome = {
             ID = jsPsych.randomization.randomID(10);
         }
     },
+    // on_finish: function(){
+    //     aws_upload();
+    // }
 }
 
 //// Demand Selection ////
@@ -97,13 +100,12 @@ jsPsych.init({
         min_height: 600
     },
     preload_images: instruction_images,
-    on_close: function() {
-        if(!task_done) {
-            aws_upload();
-        }
-    },
     on_finish: function() {
         task_done = true;
-        aws_upload()
+        aws_upload();
     },
 });
+
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    alert("Sorry, this experiment does not work on mobile devices");
+}
