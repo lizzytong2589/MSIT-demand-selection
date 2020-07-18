@@ -63,7 +63,6 @@ var show_no_show_MSIT = jsPsych.randomization.shuffle(left_or_right);
 //////// PRACTICE DST TRIALS ////////
 // initialize parameters (same ones used in demand_selection_task)
 const dst_trial_duration = 7000; 
-const MSIT_trial_duration = 1000;
 var match_side;
 var mismatch_side;
 var current_n_matches;
@@ -253,10 +252,20 @@ var end_instructions = {
         shuffled_choices = jsPsych.randomization.sampleWithoutReplacement(demand_selection_choices, n_demand_trials);
 
         // array of 0s and 1s to determine side of screen that match/mismatch will be shown on (re-write arrays used in instructions)
-        left_or_right = new Array(n_demand_trials);
-        left_or_right.fill(0);
-        left_or_right.fill(1,Math.floor(n_demand_trials/2), n_demand_trials); // round down start, one more 1 than 0s
-        left_or_right = jsPsych.randomization.shuffle(left_or_right);
+        // end up with one more 1 than 0s
+        left_or_right = [];
+        for(var i = 0; i < 4; i++) {
+            var temp = new Array(Math.floor(n_demand_trials/4));
+            temp.fill(0);
+            temp.fill(1, Math.floor(temp.length/2), temp.length);
+            temp = jsPsych.randomization.shuffle(temp);
+            left_or_right.push(...temp);
+        }
+        var extra = new Array(Math.floor(n_demand_trials%4));
+        extra.fill(0);
+        extra.fill(1, Math.floor(extra.length/2), extra.length);
+        extra = jsPsych.randomization.shuffle(extra);
+        left_or_right.push(...extra)
 
         // shuffle again to get a different array for whether or not to run the MSIT trials
         show_no_show_MSIT = jsPsych.randomization.shuffle(left_or_right);
