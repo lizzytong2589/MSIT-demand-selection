@@ -7,15 +7,22 @@
         <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
         <script src="jspsych-6.1.0/plugins/jspsych-fullscreen.js"></script>
         <script src="jspsych-6.1.0/plugins/jspsych-instructions.js"></script>
-        <script src="jspsych-6.1.0/plugins/jspsych-survey-text.js"></script>
         <script src="jspsych-6.1.0/plugins/MSIT.js"></script>
         <script src="flexibility.js"></script>
         <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
         <link href="jspsych-6.1.0/css/MSIT-demand-selection.css" rel="stylesheet" type="text/css"></link>
+        <link href="jspsych-6.1.0/css/evans-stylesheet.css" rel="stylesheet" type="text/css"></link>
         <script src="aws-sdk-2.701.0.min.js"></script>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
     </head>
     <body>
+        <div class="form" id="mainSection">
+            <header class="form__header" id="header" style ="padding: 10px; vertical-align: middle">
+                <img src="Stimuli/princeton_logo.svg" alt="Princeton University Logo" class = "logo"></img>
+                <h2 id="header_title" class="form__title"></h2>
+            </header>
+            <section class="mainInstructions" id="consent"></section>
+      </div>
     </body>
     <script type="text/javascript" src="aws_upload.js"></script>
     <script type="text/javascript" src="make-dst-stimulus.js"></script>
@@ -23,9 +30,10 @@
     <script type="text/javascript" src="DST-instructions.js"></script>
     <script type="text/javascript" src="index.js"></script>
     <script>
+        var task_started = false;
         var task_done = false;
         window.onbeforeunload = function() {
-            if (!task_done) {
+            if (!task_done && task_started) {
                 aws_upload();
                 return 'Do you really want to leave the experiment?'
             }
