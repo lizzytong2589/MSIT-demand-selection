@@ -26,7 +26,6 @@ var MSIT_pagelinks_b = ['Instructions/instructions_MSIT/Slide20.png',
                             'Instructions/instructions_MSIT/Slide24.png',
                             'Instructions/instructions_MSIT/Slide25.png', 
                             'Instructions/instructions_MSIT/Slide26.png',
-                            'Instructions/instructions_MSIT/Slide27.png',
 ];
 
 
@@ -57,6 +56,7 @@ var instructions_MSIT_b = {
 const n_practice_MSIT = 4; // keep number trials same for practice matching and mismatching
 const fixation_duration = 250;
 const message_duration = 1000;
+const MSIT_trial_duration = 1000;
 var practice_MSIT_trial_types = ['matching', 'mismatching'];
 var practice_type_count = 0;
 
@@ -79,7 +79,7 @@ var practice_MSIT_trials = {
     type: 'MSIT',
     round: 0,
     n_MSIT_trials: 4,
-    MSIT_trial_duration: 1000,
+    MSIT_trial_duration: MSIT_trial_duration,
     MSIT_trial_type: function() {
         return practice_MSIT_trial_types[practice_type_count];
     },
