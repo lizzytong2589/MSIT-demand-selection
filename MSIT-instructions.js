@@ -1,4 +1,5 @@
-var MSIT_pagelinks_a = ['Instructions/instructions_MSIT/Slide01.png',
+var MSIT_pagelinks_a = ['Instructions/instructions_foraging/Slide01.png',
+                            'Instructions/instructions_MSIT/Slide01.png',
                             'Instructions/instructions_MSIT/Slide02.png',
                             'Instructions/instructions_MSIT/Slide03.png',
                             'Instructions/instructions_MSIT/Slide04.png',
@@ -16,18 +17,16 @@ var MSIT_pagelinks_a = ['Instructions/instructions_MSIT/Slide01.png',
                             'Instructions/instructions_MSIT/Slide16.png',
                             'Instructions/instructions_MSIT/Slide17.png',
                             'Instructions/instructions_MSIT/Slide18.png',
-                            'Instructions/instructions_MSIT/Slide19.png',
 ];
 
-var MSIT_pagelinks_b = ['Instructions/instructions_MSIT/Slide20.png',
+var MSIT_pagelinks_b = ['Instructions/instructions_MSIT/Slide19.png',
+                            'Instructions/instructions_MSIT/Slide20.png',
                             'Instructions/instructions_MSIT/Slide21.png',
                             'Instructions/instructions_MSIT/Slide22.png',
                             'Instructions/instructions_MSIT/Slide23.png',
                             'Instructions/instructions_MSIT/Slide24.png',
-                            'Instructions/instructions_MSIT/Slide25.png', 
-                            'Instructions/instructions_MSIT/Slide26.png',
+                            'Instructions/instructions_MSIT/Slide25.png',
 ];
-
 
 // Set up pages for instructions
 var MSIT_pages_a = [];
