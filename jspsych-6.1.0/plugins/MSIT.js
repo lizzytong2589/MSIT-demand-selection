@@ -127,6 +127,10 @@ jsPsych.plugins["MSIT"] = (function() {
     // feedback for practice MSIT trials
     var practice_check = async function() {
       if(is_practice && message_duration !== null) {
+        // kill keyboard listeners
+        if (typeof keyboardListener !== 'undefined') {
+          jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
+        }
         correct_response = current_MSIT_trial['correct_response'];
         if(is_missed || !correct) {
           var incorrect_str = "<p style = 'font-size: 200%; line-height: 150%'>Incorrect. Oddball was <br>" +
