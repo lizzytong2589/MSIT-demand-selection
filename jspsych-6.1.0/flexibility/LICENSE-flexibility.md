@@ -1,4 +1,4 @@
-# The MIT License (MIT)
+The MIT License (MIT)
 
 Copyright © 2015 Jonathan Neal, 10up
 
