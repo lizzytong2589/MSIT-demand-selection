@@ -107,6 +107,10 @@ jsPsych.plugins["MSIT"] = (function() {
     var fixation_cross = '<div class="fixation-trial">+</div>';
     var attention_screen_circle = '<div class = "attention-check-circle"></div>';
     var draw_fixation = async function(){
+      // make sure keyboard listeners are killed
+      if (typeof keyboardListener !== 'undefined') {
+        jsPsych.pluginAPI.cancelKeyboardResponse(keyboardListener);
+      }
       var fixation = '';
 
       // replace fixation cross w/ attention circle if applicable
