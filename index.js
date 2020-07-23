@@ -93,7 +93,7 @@ main_timeline.push(rounds);
 
 // images for preloading
 var instruction_images = MSIT_pagelinks_a.concat(MSIT_pagelinks_b);
-instruction_images.concat(DST_pagelinks_a);
+instruction_images.push(...DST_pagelinks_a);
 
 // wrap so that consent page displayed first
 function run_task() {

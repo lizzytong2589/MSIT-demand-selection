@@ -1,5 +1,4 @@
-var MSIT_pagelinks_a = ['Instructions/instructions_foraging/Slide01.png',
-                            'Instructions/instructions_MSIT/Slide01.png',
+var MSIT_pagelinks_a = ['Instructions/instructions_MSIT/Slide01.png',
                             'Instructions/instructions_MSIT/Slide02.png',
                             'Instructions/instructions_MSIT/Slide03.png',
                             'Instructions/instructions_MSIT/Slide04.png',

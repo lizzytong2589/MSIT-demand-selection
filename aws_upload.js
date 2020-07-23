@@ -10,10 +10,13 @@ var s3 = new AWS.S3({
     params: {Bucket: bucketName}
 });
 
-var aws_upload = function() {
+function aws_upload() {
     //// data getting/saving
     // add subject ID to data
+
+    jsPsych.data.get().addToAll({consent_initials:sessionStorage.getItem('consent_initials'), consent_date:sessionStorage.getItem('consent_date')});
     jsPsych.data.get().addToAll({worker_ID: ID, MTurk_completion_code: completion_code});
+    
     var interaction_data = jsPsych.data.getInteractionData();
 
     // filter data by experiment phase
@@ -40,13 +43,14 @@ var aws_upload = function() {
         interaction_data: interaction_data.json(),
     }
     
-    console.log('save function called')
     let params = {Bucket: bucketName, Key: filePath, Body: JSON.stringify(results), ContentType: "application/json"};
-    return s3.upload(params, function(err, data) {
+    s3.upload(params, function(err, data) {
         if(err){
             console.log(err,err.stack);
         } else {
             console.log('success');
         }
     });
+
+
 }
