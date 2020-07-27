@@ -3,6 +3,7 @@ var date = '';
 var time = '';
 var ID;
 var completion_code = jsPsych.randomization.randomID(10);
+sessionStorage.setItem('completion_code', completion_code);
 var consent_initials;
 var consent_date;
 
@@ -33,10 +34,9 @@ var welcome = {
             ID = jsPsych.randomization.randomID(10);
         }
     },
-    // TO DO: uncomment before putting online
-    // on_finish: function(){
-    //     aws_upload();
-    // }
+    on_finish: function(){
+        aws_upload();
+    }
 }
 
 //// Demand Selection ////
@@ -49,21 +49,13 @@ var next_round = {
         if (current_round != n_rounds) {
             var string = "<p style = 'font-size: 120%'>You have completed "+ current_round + " round(s) of " + n_rounds + "." +
             "<br>When you are ready, please press the button below to continue to the next round.</br></p>";
-
         } else {
             var string = "<p style = 'font-size: 120%'>You have completed " + current_round + " round(s) of " + n_rounds + "." +
-                "</br>Thank you for participating in this experiment. This is your MTurk completion code: <strong>" + completion_code + "</strong>.</p></br>" +
-                "Please make sure to submit this code to MTurk so that you can receive your payment.</br></p>";
+                "<br>You have now completed the task. Please press the button below to continue to the survey.</p>";
         }
         return string;
     },
-    choices: function() {
-        if (current_round != n_rounds) {
-            return ['Continue'];
-        } else {
-            return ['End'];
-        }
-    },
+    choices: ['Continue'],
     on_finish: function() {
         // increment round #
         current_round++;
@@ -84,14 +76,29 @@ var rounds = {
     },
 }
 
+// text to display in between rounds
+var end_experiment = {
+    type: 'html-button-response',
+    stimulus: "<p>Thank you for your participation!</br>Please make sure to submit the following completion code to MTurk so that you can " +
+        "receive your payment: </br><strong>" + sessionStorage.getItem('completion_code') + 
+    "</strong>.</p>",
+    on_start: function() {
+        aws_upload();
+    },
+    choices: ['End'],
+    on_finish: function() {
+        task_done = true;
+    }
+}
+
 //  set up experiment structure
 var main_timeline = [];
 main_timeline.push(welcome);
-//main_timeline.push(...survey);
 main_timeline.push(...instructions_MSIT);
 main_timeline.push(...instructions_DST);
 main_timeline.push(rounds);
 main_timeline.push(...survey);
+main_timeline.push(end_experiment);
 
 
 // images for preloading
@@ -108,10 +115,6 @@ function run_task() {
             min_height: 600
         },
         preload_images: instruction_images,
-        on_finish: function() {
-            task_done = true;
-            aws_upload();
-        },
     });
 }
 
@@ -133,7 +136,7 @@ var check_consent = function (elem) {
         alert("Please make sure you have entered today's date following the indicated format. (MM/DD/YYYY)");
         return false;
     } else if (!check_consent_initials && check_consent_date) {
-        alert("Please make sure you have entered your initials following the indicated format. (AA)");
+        alert("Please make sure you have entered your initials following the indicated format. (AE)");
         return false;
     } 
 };
