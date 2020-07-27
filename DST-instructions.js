@@ -244,7 +244,7 @@ var end_instructions = {
         // set up for actual trials; reset/re-write parameters
         dst_index = 0;
         is_practice = false;
-        current_round = 1;
+        current_round++;
 
         n_demand_trials = n_total_demand_choices;
         shuffled_choices = jsPsych.randomization.sampleWithoutReplacement(demand_selection_choices, n_demand_trials);
@@ -263,7 +263,7 @@ var end_instructions = {
         extra.fill(0);
         extra.fill(1, Math.floor(extra.length/2), extra.length);
         extra = jsPsych.randomization.shuffle(extra);
-        left_or_right.push(...extra)
+        left_or_right.push(...extra);
 
         // shuffle again to get a different array for whether or not to run the MSIT trials
         show_no_show_MSIT = jsPsych.randomization.shuffle(left_or_right);
