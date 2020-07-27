@@ -260,7 +260,7 @@ var demographics_parent_edu = {
 
 
 var survey = [];
-survey.push(left_right);
+//survey.push(left_right);
 survey.push(nfc);
 survey.push(shaps);
 survey.push(dst_strategies);
