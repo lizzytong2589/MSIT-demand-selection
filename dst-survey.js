@@ -137,7 +137,7 @@ var dst_enjoyment = {
 var dst_trials_preference = {
     type: 'survey-multi-choice',
     questions: [
-        {prompt: "<b> Between the matching trials or mismatching trials which task did you prefer doing? </b> <br>",
+        {prompt: "<b> Between the matching trials or mismatching trials which task did you prefer doing? </b>",
      name: "dst_trials_preference", options: dst_trials_preference_options, required: true}, 
     ],
 }
