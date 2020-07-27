@@ -1,4 +1,5 @@
 // AWS Bucket Configurations
+
 var bucketName = 'ncclab-msit-dst';
 AWS.config.region = 'us-east-1';
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -34,16 +35,14 @@ function aws_upload() {
     DST_data = DST_data.ignore('trial_type');
     DST_data = DST_data.ignore('trial_index');
 
-
     var file_name = ID + '_'+ date + '_' + time + '_results';
     var filePath = 'data/' + file_name;
-    var results = {
-        MSIT_data: MSIT_data.json(),
-        DST_data: DST_data.json(),
-        interaction_data: interaction_data.json(),
-    }
+
+    var results = MSIT_data.join(DST_data);
+    results = results.join(interaction_data);
+    results = results.csv();
     
-    let params = {Bucket: bucketName, Key: filePath, Body: JSON.stringify(results), ContentType: "application/json"};
+    let params = {Bucket: bucketName, Key: filePath, Body: results, ContentType: "text/csv"};
     s3.upload(params, function(err, data) {
         if(err){
             console.log(err,err.stack);
