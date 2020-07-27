@@ -1,5 +1,4 @@
 // AWS Bucket Configurations
-
 var bucketName = 'ncclab-msit-dst';
 AWS.config.region = 'us-east-1';
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -35,10 +34,19 @@ function aws_upload() {
     DST_data = DST_data.ignore('trial_type');
     DST_data = DST_data.ignore('trial_index');
 
+    var survey_data = jsPsych.data.get().filterCustom(function(trial){
+        return trial.phase =='survey';
+    });
+    survey_data = survey_data.ignore('internal_node_id');
+    survey_data = survey_data.ignore('trial_type');
+    survey_data = survey_data.ignore('trial_index');
+
+
     var file_name = ID + '_'+ date + '_' + time + '_results';
     var filePath = 'data/' + file_name;
 
     var results = MSIT_data.join(DST_data);
+    results = results.join(survey_data);
     results = results.join(interaction_data);
     results = results.csv();
     

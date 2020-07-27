@@ -1,4 +1,4 @@
-//Create Labels
+// Create Labels
 var left_right_options = ["right hand", "left hand"];
 var nfc_scale = ["extremely uncharacteristic", "somewhat uncharacteristic", "uncertain", "somewhat characteristic", "extremely characteristic"];
 var shaps_scale = ["strongly disagree", "disagree", "agree", "strongly agree"];
@@ -47,13 +47,6 @@ var demographics_edu_options = ["Not Applicable/Unknown",
 
 
 //survey questions
-var left_right = {
-    type: 'survey-multi-choice',
-    questions: [
-    {prompt: "Which hand do you write with?", name: 'Left/Right', options: left_right_options, required: true}, 
-    ],
-};
-
 var nfc = {
     type: 'survey-likert',
     preamble: "<div>For each of the statements below, please indicate to what extent the statement is characteristic of you.<br>" +
@@ -80,7 +73,10 @@ var nfc = {
         {prompt: 'I feel relief rather than satisfaction after completing a task that requires a lot of mental effort.', name: "nfc 16", labels: nfc_scale, required: true},
         {prompt: "It's enough for me that something gets the job done; I don't care how or why it works.", name: "nfc 17", labels: nfc_scale, required: true},
         {prompt: 'I usually end up deliberating about issues even when they do not affect me personally.', name: "nfc 18", labels: nfc_scale, required: true},
-    ] 
+    ],
+    on_finish: function(data) {
+        data.phase = "survey"
+    }
 };
 
 var shaps = {
@@ -103,7 +99,10 @@ var shaps = {
         {prompt: 'I would be able to enjoy a beautiful landscape or view.', name: "shaps 12", labels: shaps_scale, required: true},
         {prompt: 'I would get pleasure from helping others.', name: "shaps 13", labels: shaps_scale, required: true},
         {prompt: 'I would feel pleasure when I receive praise from other people.', name: "shaps 14", labels: shaps_scale, required: true},
-    ] 
+    ],
+    on_finish: function(data) {
+        data.phase = "survey"
+    } 
 };
 
 var dst_strategies = {
@@ -113,7 +112,10 @@ var dst_strategies = {
         {prompt: 'In the Batch Choice Game, how did you decide which option you preferred to complete?', name: "dst_strategies 1", rows: 7, columns: 80, required: true},
         {prompt: 'What strategies did you use in the Oddball Number Task?', name: "dst_strategies 2", rows: 7, columns: 80, required: true},
         {prompt: 'What strategies did you use in the Batch Choice Game?', name: "dst_strategies 3", rows: 7, columns: 80, required: true},
-    ] 
+    ],
+    on_finish: function(data) {
+        data.phase = "survey"
+    } 
 };
 
 var dst_effort = {
@@ -122,7 +124,10 @@ var dst_effort = {
     questions: [
         {prompt: 'How effortful did you find responding to the matching trials?', name: "dst_effort 1", labels: dst_effort_scale, required: true},
         {prompt: 'How effortful did you find responding to the mismatching trials?', name: "dst_effort 2",  labels: dst_effort_scale, required: true},
-    ] 
+    ],
+    on_finish: function(data) {
+        data.phase = "survey"
+    } 
 };
 
 var dst_enjoyment = {
@@ -131,7 +136,10 @@ var dst_enjoyment = {
     questions: [
         {prompt: 'How enjoyable did you find responding to the matching trials?', name: "dst_enjoyment 1", labels: dst_enjoyment_scale, required: true},
         {prompt: 'How enjoyable did you find responding to the mismatching trials?', name: "dst_enjoyment 2",  labels: dst_enjoyment_scale, required: true},
-    ] 
+    ],
+    on_finish: function(data) {
+        data.phase = "survey"
+    } 
 };
 
 var dst_trials_preference = {
@@ -140,6 +148,9 @@ var dst_trials_preference = {
         {prompt: "<b> Between the matching trials or mismatching trials which task did you prefer doing? </b>",
      name: "dst_trials_preference", options: dst_trials_preference_options, required: true}, 
     ],
+    on_finish: function(data) {
+        data.phase = "survey"
+    }
 }
 
 var dst_avoid = {
@@ -147,7 +158,10 @@ var dst_avoid = {
     preamble: '<div><b> How many trials of your preferred task would you complete to avoid one trial of your less preferred task? </b><br>' ,
     questions: [
         {prompt: '', name: "dst_avoid", rows: 1, columns: 30, required: true},
-    ] 
+    ],
+    on_finish: function(data) {
+        data.phase = "survey"
+    } 
 };
 
 var dst_boring = {
@@ -157,7 +171,10 @@ var dst_boring = {
         {prompt: 'How boring did you find the matching trials?', name: "var dst_boring 1", labels: dst_boring_options, required: true},
         {prompt: 'How boring did you find the mismatching trials?', name: "dst_boring 2",  labels: dst_boring_options, required: true},
         {prompt: 'How boring did you find sitting with the blank screen when you chose the option with fewer trials?', name: "dst_boring 3",  labels: dst_boring_options, required: true},
-    ] 
+    ],
+    on_finish: function(data) {
+        data.phase = "survey"
+    } 
 };
 
 var sex_biological = {
@@ -169,6 +186,9 @@ var sex_biological = {
      "Biological Sex", 
      name: "sex_biological", options: sex_options, required: true}, 
     ],
+    on_finish: function(data) {
+        data.phase = "survey"
+    }
 }
 
 var age = {
@@ -177,7 +197,10 @@ var age = {
     'If you do not wish to answer, write: "Prefer not to answer"</b><br>' ,
     questions: [
         {prompt: 'Age (years)', name: "age", rows: 1, columns: 30, required: true},
-    ] 
+    ],
+    on_finish: function(data) {
+        data.phase = "survey"
+    }
 };
 
 var handedness ={
@@ -189,6 +212,9 @@ var handedness ={
      "Overall handedness", 
      name: "handedness", options: handedness_options, required: true}, 
     ],
+    on_finish: function(data) {
+        data.phase = "survey"
+    }
 }
 
 var race = {
@@ -199,7 +225,10 @@ var race = {
         "<p> <p> <br>" +
         "Please check any of the following racial categories that apply to you:", 
         name:  "race_category", options: race_options, horizontal: false, required: true}, 
-    ], 
+    ],
+    on_finish: function(data) {
+        data.phase = "survey"
+    }
 };
 
 var hispanic_latino ={
@@ -211,6 +240,9 @@ var hispanic_latino ={
      "Are you Hispanic or Latino?", 
      name: "hispanic_latino", options: hispanic_latino_options, required: true}, 
     ],
+    on_finish: function(data) {
+        data.phase = "survey"
+    }
 }
 
 var income_level_childhood ={
@@ -222,6 +254,9 @@ var income_level_childhood ={
      "What was the income level of your immediate family during your childhood?", 
      name: "income_level_childhood", options: income_level_childhood_options, required: true}, 
     ],
+    on_finish: function(data) {
+        data.phase = "survey"
+    }
 }
 
 var income_level_now ={
@@ -232,7 +267,10 @@ var income_level_now ={
         "<p> <p> <br>" +
      "What was your total household income before taxes during the past 12 months? (If you are a dependent please use your parents' income)</b>", 
      name: "income_level_now", options: income_level_now_options, required: true}, 
-    ],   
+    ],
+    on_finish: function(data) {
+        data.phase = "survey"
+    }
 }
 
 var student ={
@@ -243,7 +281,10 @@ var student ={
         "<p> <p> <br>" +
      "Are you currently a student?</b>", 
      name: "student", options: student_options, required: true}, 
-    ],   
+    ],
+    on_finish: function(data) {
+        data.phase = "survey"
+    }
 }
 
 var demographics_parent_edu = {
@@ -255,12 +296,14 @@ var demographics_parent_edu = {
         {prompt: 'I would like to complete', name: "family_edu 2",  labels: demographics_edu_options, required: true},
         {prompt: 'My father has completed', name: "family_edu 3",  labels: demographics_edu_options, required: true},
         {prompt: 'My mother has completed', name: "family_edu 3",  labels: demographics_edu_options, required: true},
-    ] 
+    ],
+    on_finish: function(data) {
+        data.phase = "survey"
+    }
 };
 
 
 var survey = [];
-//survey.push(left_right);
 survey.push(nfc);
 survey.push(shaps);
 survey.push(dst_strategies);
