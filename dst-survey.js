@@ -60,7 +60,7 @@ var nfc = {
         'If the statement is extremely uncharacteristic of you (not at all like you) please select "extremely uncharacteristic;"<br>' +
         'if the statement is extremely characteristic of you (very much like you) please select "extremely characteristic".<br>' +
         'Of course, a statement may be neither extremely uncharacteristic nor extremely characteristic of you;<br>' +
-        'if so, please use the number in the middle of the scale ("uncertain") that describes the best fit.<br>',
+        'if so, please use the choice in the middle of the scale ("uncertain") that describes the best fit.<br>',
     questions: [
         {prompt: 'I would prefer complex to simple problems.', name: "ncf 1", labels: nfc_scale, required: true},
         {prompt: 'I like to have the responsibility of handling a situation that requires a lot of thinking.', name: "nfc 2",  labels: nfc_scale, required: true},
