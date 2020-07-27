@@ -87,9 +87,12 @@ var rounds = {
 //  set up experiment structure
 var main_timeline = [];
 main_timeline.push(welcome);
+//main_timeline.push(...survey);
 main_timeline.push(...instructions_MSIT);
 main_timeline.push(...instructions_DST);
 main_timeline.push(rounds);
+main_timeline.push(...survey);
+
 
 // images for preloading
 var instruction_images = MSIT_pagelinks_a.concat(MSIT_pagelinks_b);
