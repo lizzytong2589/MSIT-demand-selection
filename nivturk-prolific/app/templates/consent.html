@@ -7,20 +7,24 @@ The consent.html displays the text of an IRB-approved consent form.
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Decision Making Experiment - Informed Consent Form</title>
-  <link rel="stylesheet" href="/static/css/tacit-css.min.css"/>
+  <link rel="stylesheet" href="../static/css/tacit-css.min.css"/>
+  <link href="../static/css/evans-stylesheet.css" rel="stylesheet" type="text/css"></link>
 </head>
 <body>
+  <div class="form" id="mainSection" style = 'text-align: justify; text-justify: inter-word'>
+    <header class="form__header" id="header" style ="padding: 10px; vertical-align: middle">
+      <img src="../static/Images/princeton_logo.svg" alt="Princeton University Logo" class = "logo"></img>
+      <h1 id="header_title" class="form__title">CONSENT FORM</h1>
+    </header>
+    <section class="mainInstructions" id="consent"></section>
 
   <!-- Study headers -->
-  <h1>CONSENT FORM</h1>
-
-  <hr>
   <p>
     <b>TITLE OF RESEARCH:</b> Behavioral Studies of Learning and Decision-making
     <br>
-    <b>PRINCIPAL INVESTIGATOR</b>: Yael Niv, Ph.D.
+    <b>PRINCIPAL INVESTIGATOR</b>: Nathaniel D. Daw, PhD
     <br>
-    <b>PRINCIPAL INVESTIGATOR’S DEPARTMENT</b>: Psychology and the Princeton Neuroscience Institute
+    <b>PRINCIPAL INVESTIGATOR’S DEPARTMENT</b>: Princeton Neuroscience Institute
   </p>
   <hr>
 
@@ -39,7 +43,7 @@ The consent.html displays the text of an IRB-approved consent form.
   <h2>Expected duration of participation:</h2>
   <p>
     <!-- Adapt for experiment -->
-    This experiment should take between <font style="color:red">30-45 minutes</font> to complete.
+    This experiment should take approximately <font style="color:red">30 minutes</font> to complete.
   </p>
 
   <!-- Study procedures -->
@@ -104,9 +108,10 @@ The consent.html displays the text of an IRB-approved consent form.
     1. Principal investigator:
 
     <ul style="list-style-type:none;">
-      <li>Yael Niv, Ph.D.</li>
+      <li>Nathaniel D. Daw, PhD</li>
       <li>Princeton University</li>
-      <li>Email: yael@princeton.edu</li>
+      <li>Email: <a href="mailto:ndaw@princeton.edu">ndaw@princeton.edu</a></li>
+      
     </ul>
 
   </p>
@@ -117,7 +122,8 @@ The consent.html displays the text of an IRB-approved consent form.
     <ul style="list-style-type:none;">
       <li>Assistant Director</li>
       <li>Office of Research Integrity and Assurance</li>
-      <li>Email: irb@princeton.edu</li>
+      <li>Email: <a href="mailto:irb@princeton.edu">irb@princeton.edu</a></li>
+      
     </ul>
   </p>
 
@@ -128,7 +134,8 @@ The consent.html displays the text of an IRB-approved consent form.
     I understand the information that was presented and that:
 
     <blockquote>
-      My participation is voluntary. Refusal to participate will involve no penalty or loss of benefits to which I am otherwise entitled. I may discontinue participation at any time without penalty or loss of benefits. I do not waive any legal rights or release Princeton University or its agents from liability for negligence.
+      My participation is voluntary. Refusal to participate will involve no penalty or loss of benefits to which I am otherwise entitled. I may discontinue participation at any time without penalty or loss of benefits. I do not waive any legal rights or release Princeton University or its agents from liability for negligence. <br><br>
+   <b>  <p style = 'color: red';> This experiment will take about 30 minutes, if you have enough time to complete it begin now, otherwise, you may return to the experiment page later (save the url). Once you begin, you will have breaks but you will not be able to leave the experiment and return where you left off.</b>
 
     </blockquote>
 
@@ -151,6 +158,8 @@ The consent.html displays the text of an IRB-approved consent form.
 
     </form>
   </center>
+
+</div>
 
 </body>
 <style>
