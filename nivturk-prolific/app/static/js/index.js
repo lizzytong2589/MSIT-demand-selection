@@ -34,6 +34,28 @@ var welcome = {
     },
 }
 
+// experiment set-up
+var participant_type = "Prolific";
+var prolific_ID;
+var get_prolific_ID = { // get Prolific ID
+    type: 'call-function',
+    func: function() {
+        prolific_ID = jsPsych.data.getURLVariable('PROLIFIC_PID');
+        sessionStorage.setItem('prolific_ID', prolific_ID);
+    }
+}
+
+var get_prolific_ID_conditional = {
+    timeline: [get_prolific_ID],
+    conditional_function: function(){
+        if (participant_type == "Prolific") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
 //// Demand Selection ////
 const n_rounds = 2;
 
@@ -89,6 +111,7 @@ var end_experiment = {
 //  set up experiment structure
 var main_timeline = [];
 main_timeline.push(welcome);
+main_timeline.push(get_prolific_ID_conditional); // for prolific
 main_timeline.push(...instructions_MSIT);
 main_timeline.push(...instructions_DST);
 main_timeline.push(rounds);
