@@ -51,7 +51,7 @@ var instructions_MSIT_b = {
 }
 
 //////// PRACTICE MSIT TRIALS ////////
-const n_practice_MSIT = 4; // keep number trials same for practice matching and mismatching
+const n_practice_MSIT = 30; // keep number trials same for practice matching and mismatching
 const fixation_duration = 250;
 const message_duration = 1000;
 const MSIT_trial_duration = 1000;
