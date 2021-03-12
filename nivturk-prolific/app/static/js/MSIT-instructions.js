@@ -1,30 +1,43 @@
-var MSIT_pagelinks_a = ['../static/Instructions/instructions_MSIT/Slide01.png',
-                            '../static/Instructions/instructions_MSIT/Slide02.png',
-                            '../static/Instructions/instructions_MSIT/Slide03.png',
-                            '../static/Instructions/instructions_MSIT/Slide04.png',
-                            '../static/Instructions/instructions_MSIT/Slide05.png',
-                            '../static/Instructions/instructions_MSIT/Slide06.png',
-                            '../static/Instructions/instructions_MSIT/Slide07.png',
-                            '../static/Instructions/instructions_MSIT/Slide08.png',
-                            '../static/Instructions/instructions_MSIT/Slide09.png',
-                            '../static/Instructions/instructions_MSIT/Slide10.png',
-                            '../static/Instructions/instructions_MSIT/Slide11.png',
-                            '../static/Instructions/instructions_MSIT/Slide12.png',
-                            '../static/Instructions/instructions_MSIT/Slide13.png',
-                            '../static/Instructions/instructions_MSIT/Slide14.png',
-                            '../static/Instructions/instructions_MSIT/Slide15.png',
-                            '../static/Instructions/instructions_MSIT/Slide16.png',
-                            '../static/Instructions/instructions_MSIT/Slide17.png',
-                            '../static/Instructions/instructions_MSIT/Slide18.png',
+var MSIT_pagelinks_a = ['../static/Instructions/instructions_MSIT/Slide01.PNG', // welcome
+                            '../static/Instructions/instructions_MSIT/Slide02.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide03.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide04.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide05.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide06.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide07.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide08.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide09.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide10.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide11.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide12.PNG',
 ];
 
-var MSIT_pagelinks_b = ['../static/Instructions/instructions_MSIT/Slide19.png',
-                            '../static/Instructions/instructions_MSIT/Slide20.png',
-                            '../static/Instructions/instructions_MSIT/Slide21.png',
-                            '../static/Instructions/instructions_MSIT/Slide22.png',
-                            '../static/Instructions/instructions_MSIT/Slide23.png',
-                            '../static/Instructions/instructions_MSIT/Slide24.png',
-                            '../static/Instructions/instructions_MSIT/Slide25.png',
+var MSIT_pagelinks_b = ['../static/Instructions/instructions_MSIT/Slide13.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide14.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide14a.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide15.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide16.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide16a.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide17.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide18.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide18a.PNG',
+];
+
+var MSIT_pagelinks_c = ['../static/Instructions/instructions_MSIT/Slide19.PNG', // You will now practice the matching...
+];
+
+var MSIT_pagelinks_d = ['../static/Instructions/instructions_MSIT/Slide20.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide21.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide21a.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide22.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide23.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide23a.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide24.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide25.PNG',
+                            '../static/Instructions/instructions_MSIT/Slide25a.PNG',
+];
+
+var MSIT_pagelinks_e = ['../static/Instructions/instructions_MSIT/Slide26.PNG', // You will now practice the mismatching...
 ];
 
 // Set up pages for instructions
@@ -38,15 +51,57 @@ for (var i = 0; i < MSIT_pagelinks_b.length; i++){
     MSIT_pages_b.push('<img src= "'+ MSIT_pagelinks_b[i] +  '" alt = "" >')
 }
 
+var MSIT_pages_c = [];
+for (var i = 0; i < MSIT_pagelinks_c.length; i++){
+    MSIT_pages_c.push('<img src= "'+ MSIT_pagelinks_c[i] +  '" alt = "" >')
+}
+
+var MSIT_pages_d = [];
+for (var i = 0; i < MSIT_pagelinks_d.length; i++){
+    MSIT_pages_d.push('<img src= "'+ MSIT_pagelinks_d[i] +  '" alt = "" >')
+}
+
+var MSIT_pages_e = [];
+for (var i = 0; i < MSIT_pagelinks_e.length; i++){
+    MSIT_pages_e.push('<img src= "'+ MSIT_pagelinks_e[i] +  '" alt = "" >')
+}
+
+
+
+const wait_time_MSIT = 3.7 * 1000;
+
 var instructions_MSIT_a = {
     type: 'instructions',
     pages: MSIT_pages_a,
-    show_clickable_nav: true
+    wait_time: wait_time_MSIT,
+    show_clickable_nav: true,
 }
 
 var instructions_MSIT_b = {
-    type: 'instructions',
+    type: 'instructions-automatic',
     pages: MSIT_pages_b,
+    wait_time: wait_time_MSIT,
+    show_clickable_nav: true,
+}
+
+var instructions_MSIT_c = {
+    type: 'instructions',
+    pages: MSIT_pages_c,
+    wait_time: wait_time_MSIT,
+    show_clickable_nav: true,
+}
+
+var instructions_MSIT_d = {
+    type: 'instructions-automatic',
+    pages: MSIT_pages_d,
+    wait_time: wait_time_MSIT,
+    show_clickable_nav: true,
+}
+
+var instructions_MSIT_e = {
+    type: 'instructions',
+    pages: MSIT_pages_e,
+    wait_time: wait_time_MSIT,
     show_clickable_nav: true
 }
 
@@ -58,7 +113,7 @@ const MSIT_trial_duration = 1000;
 var practice_MSIT_trial_types = ['matching', 'mismatching'];
 var practice_type_count = 0;
 
-// Practie trials intro screen
+// Practice trials intro screen
 var practice_MSIT_intro = {
     type: 'html-keyboard-response',
     stimulus:'',
@@ -76,7 +131,7 @@ var practice_MSIT_intro = {
 var practice_MSIT_trials = {
     type: 'MSIT',
     round: 0,
-    n_MSIT_trials: 4,
+    n_MSIT_trials: n_practice_MSIT,
     MSIT_trial_duration: MSIT_trial_duration,
     MSIT_trial_type: function() {
         return practice_MSIT_trial_types[practice_type_count];
@@ -91,8 +146,11 @@ var practice_MSIT_trials = {
 
 var instructions_MSIT = [];
 instructions_MSIT.push(instructions_MSIT_a);
+instructions_MSIT.push(instructions_MSIT_b); // matching
+instructions_MSIT.push(instructions_MSIT_c);
 instructions_MSIT.push(practice_MSIT_intro);
 instructions_MSIT.push(practice_MSIT_trials);
-instructions_MSIT.push(instructions_MSIT_b);
+instructions_MSIT.push(instructions_MSIT_d); // mismatching
+instructions_MSIT.push(instructions_MSIT_e);
 instructions_MSIT.push(practice_MSIT_intro);
 instructions_MSIT.push(practice_MSIT_trials);

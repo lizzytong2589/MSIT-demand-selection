@@ -38,4 +38,3 @@ function aws_upload() {
 
 
 }
-}
