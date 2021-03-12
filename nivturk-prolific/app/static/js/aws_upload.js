@@ -14,43 +14,20 @@ function aws_upload() {
     //// data getting/saving
     // add subject ID to data
 
-    jsPsych.data.get().addToAll({consent_initials:sessionStorage.getItem('consent_initials'), consent_date:sessionStorage.getItem('consent_date')});
-    jsPsych.data.get().addToAll({worker_ID: ID, MTurk_completion_code: completion_code});
+    // ADD BACK FOR USE WITH MTURK 
+    // jsPsych.data.get().addToAll({consent_initials:sessionStorage.getItem('consent_initials'), consent_date:sessionStorage.getItem('consent_date')});
+    // jsPsych.data.get().addToAll({worker_ID: ID, MTurk_completion_code: completion_code});
     
-    var interaction_data = jsPsych.data.getInteractionData();
+    jsPsych.data.get().addToAll({prolific_ID: prolific_ID, completion_code: completion_code});
+    file_name = sessionStorage.getItem('prolific_ID') + '_'+ date + '_' + time + '_results';
+    file_path = 'data/Prolific/' + file_name;
 
-    // filter data by experiment phase
-    var MSIT_data = jsPsych.data.get().filterCustom(function(trial){
-        return trial.phase =='MSIT';
-    });
-    MSIT_data = MSIT_data.ignore('internal_node_id');
-    MSIT_data = MSIT_data.ignore('trial_type');
-    MSIT_data = MSIT_data.ignore('trial_index');
+    var data = jsPsych.data.get();
+    data = data.csv();
 
-    var DST_data = jsPsych.data.get().filterCustom(function(trial){
-        return trial.phase =='demand selection';
-    });
-    DST_data = DST_data.ignore('internal_node_id');
-    DST_data = DST_data.ignore('trial_type');
-    DST_data = DST_data.ignore('trial_index');
+    pass_message(jsPsych.data.getInteractionData().json()); 
 
-    var survey_data = jsPsych.data.get().filterCustom(function(trial){
-        return trial.phase =='survey';
-    });
-    survey_data = survey_data.ignore('internal_node_id');
-    survey_data = survey_data.ignore('trial_type');
-    survey_data = survey_data.ignore('trial_index');
-
-
-    var file_name = ID + '_'+ date + '_' + time + '_results';
-    var filePath = 'data/' + file_name;
-
-    var results = MSIT_data.join(DST_data);
-    results = results.join(survey_data);
-    results = results.join(interaction_data);
-    results = results.csv();
-    
-    let params = {Bucket: bucketName, Key: filePath, Body: results, ContentType: "text/csv"};
+    let params = {Bucket: bucketName, Key: file_path, Body: data, ContentType: "text/csv"};
     s3.upload(params, function(err, data) {
         if(err){
             console.log(err,err.stack);
@@ -60,4 +37,5 @@ function aws_upload() {
     });
 
 
+}
 }
