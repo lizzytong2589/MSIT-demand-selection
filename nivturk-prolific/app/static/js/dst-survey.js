@@ -155,9 +155,9 @@ var dst_trials_preference = {
 
 var dst_avoid = {
     type: 'survey-text',
-    preamble: '<div><b> How many trials of your preferred task would you complete to avoid one trial of your less preferred task? </b><br>' ,
+    preamble: '<div><b> How many trials of your preferred task would you complete to avoid one trial of your less preferred task? </b>' ,
     questions: [
-        {prompt: '', name: "dst_avoid", rows: 1, columns: 30, required: true},
+        {prompt: ' ', name: "dst_avoid", rows: 1, columns: 30, required: true},
     ],
     on_finish: function(data) {
         data.phase = "survey"
