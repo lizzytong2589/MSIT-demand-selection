@@ -49,6 +49,7 @@ var get_prolific_ID_conditional = {
     timeline: [get_prolific_ID],
     conditional_function: function(){
         if (participant_type == "Prolific") {
+            console.log("got Prolific ID: " + prolific_ID);
             return true;
         } else {
             return false;
