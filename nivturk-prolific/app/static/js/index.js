@@ -2,7 +2,7 @@
 var date = '';
 var time = '';
 var ID;
-var completion_code = jsPsych.randomization.randomID(10);
+var completion_code = "6720CE6E";
 sessionStorage.setItem('completion_code', completion_code);
 
 // MTurk info
