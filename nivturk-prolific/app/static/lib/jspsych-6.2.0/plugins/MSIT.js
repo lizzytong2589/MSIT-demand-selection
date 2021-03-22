@@ -204,6 +204,7 @@ jsPsych.plugins["MSIT"] = (function() {
         correct: correct,
         MSIT_is_missed: MSIT_is_missed,
         MSIT_trials_performed: n_MSIT_trials_performed,
+        experiment_time: jsPsych.totalTime(),
       }
       jsPsych.data.write(data);
       
@@ -257,6 +258,7 @@ jsPsych.plugins["MSIT"] = (function() {
           correct: null,
           MSIT_is_missed: MSIT_is_missed,
           MSIT_trials_performed: n_MSIT_trials_performed,
+          experiment_time: jsPsych.totalTime(),
         }
         jsPsych.data.write(data);
       }
