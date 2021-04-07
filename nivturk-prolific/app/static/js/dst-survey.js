@@ -1,5 +1,7 @@
 // Create Labels
 var left_right_options = ["right hand", "left hand"];
+var phq9_gad7_scale = ["Not at all", "Several days", "More than half the days", "Nearly every day"];
+var phq9_impact_options = ["Not difficult at all", "Somewhat difficult", "Very difficult", "Extremely difficult"];
 var nfc_scale = ["extremely uncharacteristic", "somewhat uncharacteristic", "uncertain", "somewhat characteristic", "extremely characteristic"];
 var shaps_scale = ["strongly disagree", "disagree", "agree", "strongly agree"];
 var dst_effort_scale = ["1- Least effortful", "2", "3", "4", "5- Most effortful"];
@@ -103,6 +105,80 @@ var shaps = {
     on_finish: function(data) {
         data.phase = "survey"
     } 
+};
+
+var nfc = {
+    type: 'survey-likert',
+    preamble: "<div>For each of the statements below, please indicate to what extent the statement is characteristic of you.<br>" +
+        'If the statement is extremely uncharacteristic of you (not at all like you) please select "extremely uncharacteristic;"<br>' +
+        'if the statement is extremely characteristic of you (very much like you) please select "extremely characteristic".<br>' +
+        'Of course, a statement may be neither extremely uncharacteristic nor extremely characteristic of you;<br>' +
+        'if so, please use the number in the middle of the scale ("uncertain") that describes the best fit.<br>',
+    questions: [
+        {prompt: 'I would prefer complex to simple problems.', name: "ncf 1", labels: nfc_scale, required: true},
+        {prompt: 'I like to have the responsibility of handling a situation that requires a lot of thinking.', name: "nfc 2",  labels: nfc_scale, required: true},
+        {prompt: 'Thinking is not my idea of fun.', name: "nfc 3", labels: nfc_scale, required: true},
+        {prompt: 'I would rather do something that requires little thought than something that is sure to challenge my thinking abilities.', name: "nfc 4", labels: nfc_scale, required: true},
+        {prompt: 'I try to anticipate and avoid situations where there is a likely chance I will have to think in depth about something.', name: "nfc 5", labels: nfc_scale, required: true},
+        {prompt: 'I find satisfaction in deliberating hard and for long hours.', name: "nfc 6", labels: nfc_scale, required: true},
+        {prompt: 'I only think as hard as I have to.', name: "nfc 7", labels: nfc_scale, required: true},
+        {prompt: 'I prefer to think about small daily projects to long term ones.', name: "nfc 8", labels: nfc_scale, required: true},
+        {prompt: 'I like tasks that require little thought once I\'ve learned them.', name: "nfc 9", labels: nfc_scale, required: true},
+        {prompt: 'The idea of relying on thought to make my way to the top appeals to me.', name: "nfc 10", labels: nfc_scale, required: true},
+        {prompt: 'I really enjoy a task that involves coming up with new solutions to problems.', name: "nfc 11", labels: nfc_scale, required: true},
+        {prompt: 'Learning new ways to think doesn\'t excite me very much.', name: "nfc 12", labels: nfc_scale, required: true},
+        {prompt: 'I prefer my life to be filled with puzzles I must solve.', name: "nfc 13", labels: nfc_scale, required: true},
+        {prompt: 'The notion of thinking abstractly is appealing to me.', name: "nfc 14", labels: nfc_scale, required: true},
+        {prompt: 'I would prefer a task that is intellectual, difficult, and important to one that is somewhat important but does not require much thought.', name: "nfc 15", labels: nfc_scale, required: true},
+        {prompt: 'I feel relief rather than satisfaction after completing a task that requires a lot of mental effort.', name: "nfc 16", labels: nfc_scale, required: true},
+        {prompt: 'It\'s enough for me that something gets the job done; I don\'t care how or why it works.', name: "nfc 17", labels: nfc_scale, required: true},
+        {prompt: 'I usually end up deliberating about issues even when they do not affect me personally.', name: "nfc 18", labels: nfc_scale, required: true},
+    ] 
+};
+
+var ami = {
+    type: 'survey-likert',
+    preamble: "Below are a number of statements. Each statement asks you to think about your life over the <span style='color:red'>last 2 weeks</span>." +
+        "For each statement, select how appropriately it describes your life right now. Select \"Completely true\" if the" +
+        "statement describes you perfectly, \"Completely untrue\" if the statement does not describe you at all over the" +
+        "last 2 weeks, and use the answers in between accordingly.",
+    questions: [
+        {prompt: "I feel sad or upset when I hear bad news.", name: "ami 1", labels: ami_scale, required: true},
+        {prompt: "I start conversations with random people.", name: "ami 2", labels: ami_scale, required: true},
+        {prompt: "I enjoy doing things with people I have just met", name: "ami 3", labels: ami_scale, required: true},
+        {prompt: "I suggest activities for me and my friends to do.", name: "ami 4", labels: ami_scale, required: true},
+        {prompt: "I make decisions firmly and without hesitation", name: "ami 5", labels: ami_scale, required: true},
+        {prompt: "After making a decision, I\'ll wonder if I have made the wrong choice.", name: "ami 6", labels: ami_scale, required: true},
+        {prompt: "Based on the last two weeks, I\'d say I care deeply about how my loved ones think of me.", name: "ami 7", labels: ami_scale, required: true},
+        {prompt: "I go out with my friends on a weekly basis", name: "ami 8", labels: ami_scale, required: true},
+        {prompt: "When I decide to do something, I am able to make an effort easily.", name: "ami 9", labels: ami_scale, required: true},
+        {prompt: "I dont like to laze around.", name: "ami 10", labels: ami_scale, required: true},
+        {prompt: "I get things done when they need to be done, without requiring reminders from others.", name: "ami 11", labels: ami_scale, required: true},
+        {prompt: "When I decide to do something, I\'m motivated to see it through to the end.", name: "ami 12", labels: ami_scale, required: true},
+        {prompt: "I feel awful if I say something insensitive", name: "ami 13", labels: ami_scale, required: true},
+        {prompt: "I start conversations without being prompted", name: "ami 14", labels: ami_scale, required: true},
+        {prompt: "When I have something I need to do, I do it straightaway so it is out of the way.", name: "ami 15", labels: ami_scale, required: true},
+        {prompt: "I feel bad when I hear an acquaintance has an accident or illness.", name: "ami 16", labels: ami_scale, required: true},
+        {prompt: "I enjoy choosing what to do from a range of activities.", name: "ami 17", labels: ami_scale, required: true},
+        {prompt: "If I realize I have been unpleasant to someone, I will feel terribly guilty afterwards.", name: "ami 18", labels: ami_scale, required: true},
+    ],
+};
+
+var phq9 = {
+    type: 'survey-likert',
+    preamble: '<div>Over the <b>last 2 weeks</b>, how often have you been bothered by any of the following problems?<br>',
+    questions: [
+        {prompt: 'Little interest or pleasure in doing things', name: "phq9 1", labels: phq9_gad7_scale, required: true},
+        {prompt: 'Feeling down, depressed, or hopeless', name: "phq9 2",  labels: phq9_gad7_scale, required: true},
+        {prompt: 'Trouble falling or staying asleep, or sleeping too much', name: "phq9 3", labels: phq9_gad7_scale, required: true},
+        {prompt: 'Feeling tired or having little energy', name: "phq9 4", labels: phq9_gad7_scale, required: true},
+        {prompt: 'Poor appetite or overeating', name: "phq9 5", labels: phq9_gad7_scale, required: true},
+        {prompt: 'Feeling bad about yourself - or that you are a failure or have let yourself or your family down', name: "phq9 6", labels: phq9_gad7_scale, required: true},
+        {prompt: 'Trouble concentrating on things, such as reading the newspaper or watching television', name: "phq9 7", labels: phq9_gad7_scale, required: true},
+        {prompt: 'Moving or speaking so slowly that other people could have noticed. Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual.', name: "phq9 8", labels: phq9_gad7_scale, required: true},
+        {prompt: 'Thoughts that you would be better off dead, or of hurting yourself', name: "phq9 9", labels: phq9_gad7_scale, required: true},
+        {prompt: '<hr>If you checked off <b>any problems</b>, how <b>difficult</b> have these problems made it for you to do your work, take care of things at home, or get along with other people?', name: "phq9_impact", labels: phq9_impact_options, required: true}
+    ] 
 };
 
 var dst_strategies = {
@@ -304,6 +380,8 @@ var demographics_parent_edu = {
 
 var survey = [];
 survey.push(nfc);
+survey.push(ami);
+survey.push(phq9);
 survey.push(shaps);
 survey.push(dst_strategies);
 survey.push(dst_effort);
