@@ -129,12 +129,13 @@ var show_DST = {
             key_press: demand_choice,
             is_missed: is_missed,
             match_screen_side: match_side,
-            n_matches: current_n_matches,
+            n_matching: current_n_matches,
             mismatch_screen_side: mismatch_side,
-            n_mismatches: current_n_mismatches,
+            n_mismatching: current_n_mismatches,
             demand_selection_trials_performed: dst_index + 1,
             trial_duration: dst_trial_duration,
             message_duration: message_duration,
+            fixation_duration: fixation_duration,
         };
           jsPsych.data.write(data);
           // console.table({'round #': current_round,'trial idx':dst_index,'trials this round':dst_index, 'choice':demand_choice, 'matches': current_n_matches, 'mismatches': current_n_mismatches, 'show_task':show_no_show_MSIT[dst_index]});
