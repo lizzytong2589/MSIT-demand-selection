@@ -1,5 +1,6 @@
 // Create Labels
 var left_right_options = ["right hand", "left hand"];
+var ami_scale = ["Completely UNTRUE", "Mostly untrue", "Neither true or untrue", "Completely TRUE"];
 var phq9_gad7_scale = ["Not at all", "Several days", "More than half the days", "Nearly every day"];
 var phq9_impact_options = ["Not difficult at all", "Somewhat difficult", "Very difficult", "Extremely difficult"];
 var nfc_scale = ["extremely uncharacteristic", "somewhat uncharacteristic", "uncertain", "somewhat characteristic", "extremely characteristic"];
