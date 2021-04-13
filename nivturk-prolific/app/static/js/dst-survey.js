@@ -153,7 +153,7 @@ var ami = {
         {prompt: "Based on the last two weeks, I\'d say I care deeply about how my loved ones think of me.", name: "ami 7", labels: ami_scale, required: true},
         {prompt: "I go out with my friends on a weekly basis", name: "ami 8", labels: ami_scale, required: true},
         {prompt: "When I decide to do something, I am able to make an effort easily.", name: "ami 9", labels: ami_scale, required: true},
-        {prompt: "I dont like to laze around.", name: "ami 10", labels: ami_scale, required: true},
+        {prompt: "I don't like to laze around.", name: "ami 10", labels: ami_scale, required: true},
         {prompt: "I get things done when they need to be done, without requiring reminders from others.", name: "ami 11", labels: ami_scale, required: true},
         {prompt: "When I decide to do something, I\'m motivated to see it through to the end.", name: "ami 12", labels: ami_scale, required: true},
         {prompt: "I feel awful if I say something insensitive", name: "ami 13", labels: ami_scale, required: true},
