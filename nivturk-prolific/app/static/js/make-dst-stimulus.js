@@ -4,8 +4,13 @@ var make_dst_stimulus = function() {
     current_n_matches = current_choice['matching'];
     current_n_mismatches = current_choice['mismatching'];
 
+    var n_extra_trials = 0;
+    if (current_n_matches > current_n_mismatches) {
+      n_extra_trials = current_n_matches - current_n_mismatches;
+    }
+    console.log("n_extra_trials: " + n_extra_trials);
+
     // fixation cross
-    // var fixation_cross = "<div class = 'col' style = 'align-content: center'><img src = 'Stimuli/fixation.png' class = 'fixation-trial'></img></div>";
     var fixation_cross = '<div class="col fixation-trial">+</div>';
 
     // arrows
@@ -37,8 +42,26 @@ var make_dst_stimulus = function() {
       } else {
         demand_trial_html += "<div class ='demand-selection-choice-box col'>";
       }
-      demand_trial_html += "<p>" + current_n_mismatches + "<span class = 'mismatch'> mismatching</span></p></div>";
-      
+
+      // handle case when more mismatch trials offered than match trials
+      if (n_extra_trials != 0) {
+        if (match_or_mismatch_first <= 0.5) {
+          // extra matching first and mismatching second
+          demand_trial_html += "<p>" + n_extra_trials + "<span class = 'match'> matching</span>";
+          demand_trial_html += "<br>&<br><br>";
+          demand_trial_html += current_n_mismatches + "<span class = 'mismatch'> mismatching</span></p></div>";        
+         } 
+         else {
+          // mismatching first and extra matching second
+          demand_trial_html += "<p>" + current_n_mismatches + "<span class = 'mismatch'> mismatching</span>";
+          demand_trial_html += "<br>&<br><br>";
+          demand_trial_html += n_extra_trials + "<span class = 'match'> matching</span></p></div>";
+        }
+      } 
+      else { 
+         // more matching than mismatching or equal number of each trial offered
+        demand_trial_html += "<p>" + current_n_mismatches + "<span class = 'mismatch'> mismatching</span></p></div>";
+      }
       demand_trial_html += fixation_cross;
 
       //// choice on RHS of screen
@@ -49,9 +72,18 @@ var make_dst_stimulus = function() {
         demand_trial_html += "<div class ='demand-selection-choice-box col'>";
       }
 
-      demand_trial_html += "<p>" + current_n_matches + "<span class = 'match'> matching</span></p></div></div>";
-      
-    } else if(left_or_right[dst_index] == 1){
+      if (n_extra_trials != 0) {
+        demand_trial_html += "<br>";
+        demand_trial_html += "<p>" + current_n_matches + "<span class = 'match'> matching</span></p>";
+        demand_trial_html += "<p></p></div></div>";
+      } 
+      else {
+        demand_trial_html += "<p>" + current_n_matches + "<span class = 'match'> matching</span></p></div></div>";
+      }
+    }
+
+    else if(left_or_right[dst_index] == 1){
+      // other option for left/right order 
       match_side = 'left';
       mismatch_side = 'right';
 
@@ -65,7 +97,14 @@ var make_dst_stimulus = function() {
         demand_trial_html += "<div class ='demand-selection-choice-box col'>";
       }
 
-      demand_trial_html += "<p>" + current_n_matches + "<span class = 'match'> matching</span></p></div>";
+      if (n_extra_trials != 0) {
+        demand_trial_html += "<br>";
+        demand_trial_html += "<p>" + current_n_matches + "<span class = 'match'> matching</span></p>";
+        demand_trial_html += "<p></p></div>";
+      } 
+      else {
+        demand_trial_html += "<p>" + current_n_matches + "<span class = 'match'> matching</span></p></div>";
+      }
 
       demand_trial_html += fixation_cross;
       
@@ -76,12 +115,31 @@ var make_dst_stimulus = function() {
       } else {
         demand_trial_html += "<div class ='demand-selection-choice-box col'>";
       }
-      demand_trial_html += "<p>" + current_n_mismatches + "<span class = 'mismatch'> mismatching</span></p></div></div>";
 
+      // handle case when more mismatch trials offered than match trials
+      if (n_extra_trials != 0) {
+        // extra matching first and mismatching second
+        if (match_or_mismatch_first <= 0.5) {
+          demand_trial_html += "<p>" + n_extra_trials + "<span class = 'match'> matching</span>";
+          demand_trial_html += "<br>&<br><br>";
+          demand_trial_html += current_n_mismatches + "<span class = 'mismatch'> mismatching</span></p></div></div>";
+         } 
+         else {
+          // mismatching first and extra matching second
+          demand_trial_html += "<p>" + current_n_mismatches + "<span class = 'mismatch'> mismatching</span>";
+          demand_trial_html += "<br>&<br><br>";
+          demand_trial_html += n_extra_trials + "<span class = 'match'> matching</span></p></div></div>";
+        }
+      } 
+      else {
+        // more mismatching than matching trials or same number of matching and mismatching
+        demand_trial_html += "<p>" + current_n_mismatches + "<span class = 'mismatch'> mismatching</span></p></div></div>";
+      }
     }
 
     // add left/right arrows under choices and close div for container
     demand_trial_html += arrows + "</div>";
 
+    console.table({'match_or_mismatch_first':match_or_mismatch_first,'n_extra_trials':n_extra_trials,'current_n_matches':current_n_matches, 'current_n_mismatches':current_n_mismatches});
     return demand_trial_html;
 };

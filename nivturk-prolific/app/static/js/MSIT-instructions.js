@@ -117,13 +117,14 @@ var practice_type_count = 0;
 var practice_MSIT_intro = {
     type: 'html-keyboard-response',
     stimulus:'',
+    choices: ['space'],
     prompt: function() {
         if(practice_MSIT_trial_types[practice_type_count] == 'matching') {
             return "<p><span style = 'font-size: 200%; font-weight: bold'>Let's try out some " +
-            "<span class ='match'>matching</span> trials! </span><br> Press any key to start.</p>";
+            "<span class ='match'>matching</span> trials! </span><br> Please press space to start.</p>";
         } else {
             return "<p><span style = 'font-size: 200%; font-weight:bold'>Let's try out some "+
-            "<span class ='mismatch'>mismatching</span> trials! </span></br> Press any key to start.</p>"
+            "<span class ='mismatch'>mismatching</span> trials! </span></br> Please press space to start.</p>"
         }
     },
 }

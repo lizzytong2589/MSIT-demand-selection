@@ -29,10 +29,12 @@ var instructions_DST_a = {
 var practice_intro = {
     type: 'html-keyboard-response',
     stimulus:'',
+    choices: ['space'],
     prompt: function() {
         return "<p><span style = 'font-size: 200%; font-weight:bold'>Let's try out the "+
-            "Batch Choice Game! </span></br> Press any key to start.</p>";
+            "Batch Choice Game! </span></br> Please press space to start.</p>";
     },
+
 }
 
 // set up match/mismatch combinations for demand selection (also use these arrays in the actual dst)
@@ -60,18 +62,23 @@ var show_no_show_MSIT = jsPsych.randomization.shuffle(left_or_right);
 
 //////// PRACTICE DST TRIALS ////////
 // initialize parameters (same ones used in demand_selection_task)
-const dst_trial_duration = 7000; 
+const dst_trial_duration = 3000;  // amount of time to make DST choice
 var match_side;
 var mismatch_side;
 var current_n_matches;
 var current_n_mismatches;
 var n_choice_fewer; // whether # trials chosen is less than the option not chosen
+var n_extra_trials; // number of extra matches to offer if applicable
 var n_choice_diff;
 var demand_choice;
-var n_trials_MSIT;
+var n_trials_MSIT1; 
+var n_trials_MSIT2; // extra set of trials if applicable
 var trial_type; // match or mismatch for MSIT trials
+var trial_type1;
+var trial_type2;
 var dst_index = 0;
 var random_choice;
+var match_or_mismatch_first; // when more mismatch, whether extra matching trials 1st or 2nd
 var default_side;
 var is_practice = true;
 var current_round = 0;
@@ -80,6 +87,7 @@ var current_round = 0;
 var show_DST = {
     type: "html-keyboard-response",
     stimulus: function() {
+        match_or_mismatch_first = Math.random();
         return make_dst_stimulus();
     },
     trial_duration: dst_trial_duration,
@@ -99,46 +107,79 @@ var show_DST = {
         }
 
         // possibilities for MSIT based on dst response (or lack thereof)
+
+        // matching chosen
         if((demand_choice == 'leftarrow' && match_side == 'left') || (demand_choice == 'rightarrow' && match_side == 'right') ||
         (default_side == 'left' && match_side == 'left') || (default_side == 'right' && match_side == 'right')) {
-            n_trials_MSIT = current_n_matches;
-            trial_type = 'matching';
-            
-            // check if need delay screen
+            // check for delay
             if(current_n_matches < current_n_mismatches) {
                 n_choice_fewer = true;
                 n_choice_diff = current_n_mismatches - current_n_matches;
             }
+            n_trials_MSIT1 = current_n_matches;
+            trial_type1 = 'matching';
+            trial_type2 = null;
 
-        } else if ((demand_choice == 'leftarrow' && mismatch_side == 'left') || (demand_choice == 'rightarrow' && mismatch_side == 'right') ||
+            if (n_choice_fewer && match_or_mismatch_first <= 0.5) {
+                n_trials_MSIT1 = current_n_matches;
+                n_trials_MSIT2 = n_choice_diff;
+                trial_type1 = "matching";
+                trial_type2 = "mismatching";
+
+            } else if (n_choice_diff && match_or_mismatch_first > 0.5) {
+                n_trials_MSIT1 = n_choice_diff;
+                n_trials_MSIT2 = current_n_matches;
+                trial_type1 = "mismatching";
+                trial_type2 = "matching";
+            }
+            
+            
+
+        } 
+        // mismatching chosen
+        else if ((demand_choice == 'leftarrow' && mismatch_side == 'left') || (demand_choice == 'rightarrow' && mismatch_side == 'right') ||
         ((default_side == 'left' && mismatch_side == 'left') || (default_side == 'right' && mismatch_side == 'right'))) {
-            n_trials_MSIT = current_n_mismatches;
-            trial_type = 'mismatching';
-
+            // check for extra matching trials needed
             if(current_n_mismatches < current_n_matches) {
                 n_choice_fewer = true;
                 n_choice_diff = current_n_matches - current_n_mismatches;
             }
+            n_trials_MSIT1 = current_n_mismatches;
+            trial_type1 = 'mismatching';
+            trial_type2 = null;
+
+            if (n_choice_fewer && match_or_mismatch_first <= 0.5) {
+                n_trials_MSIT1 = n_choice_diff;
+                n_trials_MSIT2 = current_n_mismatches;
+                trial_type1 = "matching";
+                trial_type2 = "mismatching";
+
+            } else if (n_choice_diff && match_or_mismatch_first > 0.5) {
+                n_trials_MSIT1 = current_n_mismatches;
+                n_trials_MSIT2 = n_choice_diff;
+                trial_type1 = "mismatching";
+                trial_type2 = "matching";
+            }
+            
         } 
 
         // data writing
-        var data = {
-            phase: 'demand selection',
-            is_practice: is_practice,
-            round: current_round,
-            key_press: demand_choice,
-            is_missed: is_missed,
-            match_screen_side: match_side,
-            n_matching: current_n_matches,
-            mismatch_screen_side: mismatch_side,
-            n_mismatching: current_n_mismatches,
-            demand_selection_trials_performed: dst_index + 1,
-            trial_duration: dst_trial_duration,
-            message_duration: message_duration,
-            fixation_duration: fixation_duration,
-        };
-          jsPsych.data.write(data);
-          // console.table({'round #': current_round,'trial idx':dst_index,'trials this round':dst_index, 'choice':demand_choice, 'matches': current_n_matches, 'mismatches': current_n_mismatches, 'show_task':show_no_show_MSIT[dst_index]});
+        data.phase ='demand selection';
+        data.is_practice= is_practice;
+        data.round = current_round;
+        data.key_press = demand_choice;
+        data.is_missed = is_missed;
+        data.match_screen_side = match_side;
+        data.n_matching = current_n_matches;
+        data.mismatch_screen_side = mismatch_side;
+        data.n_mismatching = current_n_mismatches;
+        data.demand_selection_trials_performed = dst_index + 1;
+        data.trial_duration = dst_trial_duration;
+        data.message_duration = message_duration;
+        data.fixation_duration = fixation_duration;
+        data.experiment_time = jsPsych.totalTime();
+        
+        //   console.table({'round #': current_round,'trial idx':dst_index,'trials this round':dst_index, 'choice':demand_choice, 'matches': current_n_matches, 'mismatches': current_n_mismatches, 'show_task':show_no_show_MSIT[dst_index]});
     }
 }
 
@@ -162,17 +203,18 @@ var DST_choice = {
 }
  
 // call to run MSIT trials
-var MSIT_trials = {
+var MSIT_trials1 = {
     type: 'MSIT',
     round: function() {
         return current_round;
     },
     n_MSIT_trials: function() {
-        return n_trials_MSIT;
+        console.log("1:" + n_trials_MSIT1 + " " + trial_type1);
+        return n_trials_MSIT1;
     },
     MSIT_trial_duration: MSIT_trial_duration,
     MSIT_trial_type: function() {
-        return trial_type;
+        return trial_type1;
     },
     fixation_duration: fixation_duration,
     is_practice: function() {
@@ -180,18 +222,49 @@ var MSIT_trials = {
     },
 }
 
+var MSIT_trials2 = {
+    type: 'MSIT',
+    round: function() {
+        return current_round;
+    },
+    n_MSIT_trials: function() {
+        console.log("2:" + n_trials_MSIT2 + " " + trial_type2);
+        return n_trials_MSIT2;
+    },
+    MSIT_trial_duration: MSIT_trial_duration,
+    MSIT_trial_type: function() {
+        console.log("MSIT2 trial type" + ((trial_type == "matching") ? "mismatching" : "matching"));
+        return trial_type2;
+    },
+    fixation_duration: fixation_duration,
+    is_practice: function() {
+        return is_practice;
+    },
+}
+
+var MSIT_trials2_conditional = {
+    timeline: [MSIT_trials2],
+    conditional_function: function() {
+        if(n_choice_fewer && trial_type2 != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
 // delay if # of trials chosen is fewer than # of trials in option not chosen
 var delay_screen = {
     type: 'html-keyboard-response',
     stimulus: function(){
-        if(n_choice_fewer) {
+        if(n_choice_fewer && trial_type == "matching") {
             return "<p style = 'font-size: 7vmin; font-weight: 'bold>...</p>";
         } else {
             return "";
         }
     },
     trial_duration: function() {
-        if(n_choice_fewer) {
+        if(n_choice_fewer && trial_type == "matching") {
             var delay_time = (n_choice_diff/2.0) * (fixation_duration + MSIT_trial_duration);
             return delay_time;
         } else {
@@ -201,9 +274,20 @@ var delay_screen = {
     choices: jsPsych.NO_KEYS,
 }
 
+var delay_screen_conditional = {
+    timeline: [delay_screen],
+    conditional_function: function() {
+        if(trial_type == "matching" && n_choice_fewer) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
 // decide if the round is one where the MSIT trials will be shown
 var show_MSIT_conditional = {
-    timeline: [delay_screen, MSIT_trials, delay_screen],
+    timeline: [delay_screen_conditional, MSIT_trials1, MSIT_trials2_conditional, delay_screen_conditional],
     conditional_function: function() {
         // determine whether or not to show trials; -1 b/c already incremented # of trials
         return(show_no_show_MSIT[dst_index - 1] == 1);
