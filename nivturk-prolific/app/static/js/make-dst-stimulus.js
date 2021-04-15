@@ -8,7 +8,6 @@ var make_dst_stimulus = function() {
     if (current_n_matches > current_n_mismatches) {
       n_extra_trials = current_n_matches - current_n_mismatches;
     }
-    console.log("n_extra_trials: " + n_extra_trials);
 
     // fixation cross
     var fixation_cross = '<div class="col fixation-trial">+</div>';
@@ -73,9 +72,8 @@ var make_dst_stimulus = function() {
       }
 
       if (n_extra_trials != 0) {
-        demand_trial_html += "<br>";
-        demand_trial_html += "<p>" + current_n_matches + "<span class = 'match'> matching</span></p>";
-        demand_trial_html += "<p></p></div></div>";
+        demand_trial_html += "<br><br><p>" + current_n_matches + "<span class = 'match'> matching</span><br><br><br></p>";
+        demand_trial_html += "</div></div>";
       } 
       else {
         demand_trial_html += "<p>" + current_n_matches + "<span class = 'match'> matching</span></p></div></div>";
@@ -98,9 +96,8 @@ var make_dst_stimulus = function() {
       }
 
       if (n_extra_trials != 0) {
-        demand_trial_html += "<br>";
-        demand_trial_html += "<p>" + current_n_matches + "<span class = 'match'> matching</span></p>";
-        demand_trial_html += "<p></p></div>";
+        demand_trial_html += "<p><br><br>" + current_n_matches + "<span class = 'match'> matching</span><br><br><br></p>";
+        demand_trial_html += "</div>";
       } 
       else {
         demand_trial_html += "<p>" + current_n_matches + "<span class = 'match'> matching</span></p></div>";
@@ -140,6 +137,6 @@ var make_dst_stimulus = function() {
     // add left/right arrows under choices and close div for container
     demand_trial_html += arrows + "</div>";
 
-    console.table({'match_or_mismatch_first':match_or_mismatch_first,'n_extra_trials':n_extra_trials,'current_n_matches':current_n_matches, 'current_n_mismatches':current_n_mismatches});
+    // console.table({'match_or_mismatch_first':match_or_mismatch_first,'n_extra_trials':n_extra_trials,'current_n_matches':current_n_matches, 'current_n_mismatches':current_n_mismatches});
     return demand_trial_html;
 };

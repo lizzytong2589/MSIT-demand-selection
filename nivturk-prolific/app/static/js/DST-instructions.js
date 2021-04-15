@@ -111,7 +111,7 @@ var show_DST = {
         // matching chosen
         if((demand_choice == 'leftarrow' && match_side == 'left') || (demand_choice == 'rightarrow' && match_side == 'right') ||
         (default_side == 'left' && match_side == 'left') || (default_side == 'right' && match_side == 'right')) {
-            // check for delay
+            // check for delay or extra matching trials needed
             if(current_n_matches < current_n_mismatches) {
                 n_choice_fewer = true;
                 n_choice_diff = current_n_mismatches - current_n_matches;
@@ -120,26 +120,11 @@ var show_DST = {
             trial_type1 = 'matching';
             trial_type2 = null;
 
-            if (n_choice_fewer && match_or_mismatch_first <= 0.5) {
-                n_trials_MSIT1 = current_n_matches;
-                n_trials_MSIT2 = n_choice_diff;
-                trial_type1 = "matching";
-                trial_type2 = "mismatching";
-
-            } else if (n_choice_diff && match_or_mismatch_first > 0.5) {
-                n_trials_MSIT1 = n_choice_diff;
-                n_trials_MSIT2 = current_n_matches;
-                trial_type1 = "mismatching";
-                trial_type2 = "matching";
-            }
-            
-            
-
         } 
         // mismatching chosen
         else if ((demand_choice == 'leftarrow' && mismatch_side == 'left') || (demand_choice == 'rightarrow' && mismatch_side == 'right') ||
         ((default_side == 'left' && mismatch_side == 'left') || (default_side == 'right' && mismatch_side == 'right'))) {
-            // check for extra matching trials needed
+            // check for delay or extra matching trials needed
             if(current_n_mismatches < current_n_matches) {
                 n_choice_fewer = true;
                 n_choice_diff = current_n_matches - current_n_mismatches;
@@ -154,7 +139,7 @@ var show_DST = {
                 trial_type1 = "matching";
                 trial_type2 = "mismatching";
 
-            } else if (n_choice_diff && match_or_mismatch_first > 0.5) {
+            } else if (n_choice_fewer && match_or_mismatch_first > 0.5) {
                 n_trials_MSIT1 = current_n_mismatches;
                 n_trials_MSIT2 = n_choice_diff;
                 trial_type1 = "mismatching";
@@ -209,7 +194,6 @@ var MSIT_trials1 = {
         return current_round;
     },
     n_MSIT_trials: function() {
-        console.log("1:" + n_trials_MSIT1 + " " + trial_type1);
         return n_trials_MSIT1;
     },
     MSIT_trial_duration: MSIT_trial_duration,
@@ -228,12 +212,10 @@ var MSIT_trials2 = {
         return current_round;
     },
     n_MSIT_trials: function() {
-        console.log("2:" + n_trials_MSIT2 + " " + trial_type2);
         return n_trials_MSIT2;
     },
     MSIT_trial_duration: MSIT_trial_duration,
     MSIT_trial_type: function() {
-        console.log("MSIT2 trial type" + ((trial_type == "matching") ? "mismatching" : "matching"));
         return trial_type2;
     },
     fixation_duration: fixation_duration,
@@ -256,15 +238,9 @@ var MSIT_trials2_conditional = {
 // delay if # of trials chosen is fewer than # of trials in option not chosen
 var delay_screen = {
     type: 'html-keyboard-response',
-    stimulus: function(){
-        if(n_choice_fewer && trial_type == "matching") {
-            return "<p style = 'font-size: 7vmin; font-weight: 'bold>...</p>";
-        } else {
-            return "";
-        }
-    },
+    stimulus: "<p style = 'font-size: 7vmin; font-weight: 'bold>...</p>",
     trial_duration: function() {
-        if(n_choice_fewer && trial_type == "matching") {
+        if(n_choice_fewer && trial_type1 == "matching") {
             var delay_time = (n_choice_diff/2.0) * (fixation_duration + MSIT_trial_duration);
             return delay_time;
         } else {
@@ -277,7 +253,7 @@ var delay_screen = {
 var delay_screen_conditional = {
     timeline: [delay_screen],
     conditional_function: function() {
-        if(trial_type == "matching" && n_choice_fewer) {
+        if(trial_type2 == null && n_choice_fewer) {
             return true;
         } else {
             return false;
