@@ -1,10 +1,17 @@
 // Create Labels
 var left_right_options = ["right hand", "left hand"];
+var promis_cf_scale = [
+    'Never', 'Rarely (Once)', 'Sometimes (two or three times)', 'Often (about once a day)',
+    'Very often (Several times a day)'];
+var promis_cfa_f_scale = ['Not at all', 'A little bit', 'Somewhat', 'Quite a bit', 'Very much'];
 var ami_scale = ["Completely UNTRUE", "Mostly untrue", "Neither true or untrue", "Completely TRUE"];
 var phq9_gad7_scale = ["Not at all", "Several days", "More than half the days", "Nearly every day"];
 var phq9_impact_options = ["Not difficult at all", "Somewhat difficult", "Very difficult", "Extremely difficult"];
 var nfc_scale = ["extremely uncharacteristic", "somewhat uncharacteristic", "uncertain", "somewhat characteristic", "extremely characteristic"];
 var shaps_scale = ["strongly disagree", "disagree", "agree", "strongly agree"];
+var pswq_a_scale = [
+    'Not at all typical of me', 'Not very typical of me', 'Somewhat typical of me',
+    'Fairly typical of me', 'Very typical of me'];
 var dst_effort_scale = ["1- Least effortful", "2", "3", "4", "5- Most effortful"];
 var dst_enjoyment_scale = ["1- Least enjoyable", "2", "3", "4", "5- Most enjoyable"];
 var dst_trials_preference_options = ["matching", "mismatching"];
@@ -50,6 +57,41 @@ var demographics_edu_options = ["Not Applicable/Unknown",
 
 
 //survey questions
+var promis_cf_cfa = {
+    type: 'survey-template',
+    instructions: 'Please respond to each question or statement by marking one box per row. In the past 7 days...',
+    items: [
+        'My thinking has been slow',
+        'It has seemed like my brain was not working as well as usual',
+        'I have had to work harder than usual to keep track of what I was doing',
+        'I have had trouble shifting back and forth between different activities that require thinking',
+        'My mind has been as sharp as usual.',
+        'I have been able to lift a small (1 lb) weight.',
+        'My memory has been as good as usual.',
+        'My thinking has been as fast as usual.',
+        'I have been able to keep track of what I am doing, even if I am interrupted.'
+    ],
+    scale: promis_cf_scale,
+    scale2: promis_cfa_f_scale,
+    scale2_indices: [4, 5, 6, 7, 8],
+    infrequency_items: [5],
+    reverse: [false, false, false, false, true, true, true, true, true],
+    randomize_question_order: false
+};
+
+var promis_f = {
+    type: 'survey-template',
+    instructions: 'Please respond to each item by checking one box per row.',
+    items: [
+        'During the past 7 days, I feel fatigued',
+        'During the past 7 days, I have trouble <u>starting</u> things because I am tired',
+        'In the past 7 days, how run-down did you feel on average?',
+        'In the past 7 days, how fatigued were you on average?'
+    ],
+    scale: promis_cfa_f_scale,
+    randomize_question_order: false
+};
+
 var nfc = {
     type: 'survey-likert',
     preamble: "<div>For each of the statements below, please indicate to what extent the statement is characteristic of you.<br>" +
@@ -180,6 +222,23 @@ var phq9 = {
         {prompt: 'Thoughts that you would be better off dead, or of hurting yourself', name: "phq9 9", labels: phq9_gad7_scale, required: true},
         {prompt: '<hr>If you checked off <b>any problems</b>, how <b>difficult</b> have these problems made it for you to do your work, take care of things at home, or get along with other people?', name: "phq9_impact", labels: phq9_impact_options, required: true}
     ] 
+};
+
+var pswq_a = {
+    type: 'survey-template',
+    instructions: 'Select the option that best describes how typical or characteristic each item is of you.',
+    items: [
+        'My worries overwhelm me.',
+        'Many situations make me worry.',
+        'I know I should not worry about things, but I just can\'t help it.',
+        'When I\'m under pressure I worry a lot.',
+        'I\'m always worrying about something.',
+        'As soon as I finish one task, I start to worry about everything else I have to do.',
+        'I have been a worrier all my life.',
+        'I notice that I have been worrying about things.'
+    ],
+    scale: pswq_a_scale,
+    randomize_question_order: false
 };
 
 var dst_strategies = {
@@ -380,10 +439,15 @@ var demographics_parent_edu = {
 
 
 var survey = [];
-survey.push(nfc);
-survey.push(ami);
+// survey.push(nfc);
+// survey.push(ami);
+survey.push(promis_cf_cfa);
+// survey.push(promis_f);
 survey.push(phq9);
-survey.push(shaps);
+survey.push(gad7);
+survey.push(pswq_a);
+survey.push(bis_bas);
+// survey.push(shaps);
 survey.push(dst_strategies);
 survey.push(dst_effort);
 survey.push(dst_enjoyment);
