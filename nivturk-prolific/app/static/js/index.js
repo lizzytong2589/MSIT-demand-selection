@@ -45,6 +45,7 @@ var get_prolific_ID = { // get Prolific ID
 
         completion_code = jsPsych.data.getURLVariable('COMPLETION_CODE');
         sessionStorage.setItem('completion_code', completion_code);
+        console.log(completion_code)
     }
 }
 
@@ -115,8 +116,8 @@ var end_experiment = {
 //  set up experiment structure
 var main_timeline = [];
 main_timeline.push(welcome);
-// main_timeline.push(get_prolific_ID_conditional); // for prolific
-// main_timeline.push(...instructions_MSIT);
+main_timeline.push(get_prolific_ID_conditional); // for prolific
+main_timeline.push(...instructions_MSIT);
 main_timeline.push(...instructions_DST);
 main_timeline.push(rounds);
 main_timeline.push(...survey);
