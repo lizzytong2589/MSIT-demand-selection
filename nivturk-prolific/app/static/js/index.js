@@ -43,7 +43,7 @@ var get_prolific_ID = { // get Prolific ID
         prolific_ID = jsPsych.data.getURLVariable('PROLIFIC_PID');
         sessionStorage.setItem('prolific_ID', prolific_ID);
 
-        completion_code = jsPsych.data.getURLVariable('C');
+        completion_code = jsPsych.data.getURLVariable('A');
         sessionStorage.setItem('completion_code', completion_code);
         console.log(completion_code)
     }
