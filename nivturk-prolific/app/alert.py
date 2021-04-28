@@ -49,4 +49,4 @@ def alert_post():
     """Process participant repsonse to alert page."""
 
     ## Redirect participant to experiment.
-    return redirect(url_for('experiment.experiment', PROLIFIC_PID=session['workerId']))
+    return redirect(url_for('experiment.experiment', PROLIFIC_PID=session['workerId'], COMPLETION_CODE=session['code_success']))

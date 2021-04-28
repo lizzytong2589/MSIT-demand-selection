@@ -2,7 +2,7 @@
 var date = '';
 var time = '';
 var ID;
-var completion_code = "6720CE6E";
+var completion_code;
 sessionStorage.setItem('completion_code', completion_code);
 
 // MTurk info
@@ -42,6 +42,9 @@ var get_prolific_ID = { // get Prolific ID
     func: function() {
         prolific_ID = jsPsych.data.getURLVariable('PROLIFIC_PID');
         sessionStorage.setItem('prolific_ID', prolific_ID);
+
+        completion_code = jsPsych.data.getURLVariable('COMPLETION_CODE');
+        sessionStorage.setItem('completion_code', completion_code);
     }
 }
 
