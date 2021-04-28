@@ -3,7 +3,6 @@ var date = '';
 var time = '';
 var ID;
 var completion_code;
-sessionStorage.setItem('completion_code', completion_code);
 
 // MTurk info
 var turkInfo = jsPsych.turk.turkInfo();
@@ -45,7 +44,7 @@ var get_prolific_ID = { // get Prolific ID
 
         completion_code = jsPsych.data.getURLVariable('A');
         sessionStorage.setItem('completion_code', completion_code);
-        console.log(completion_code)
+        
     }
 }
 
@@ -117,6 +116,7 @@ var end_experiment = {
 var main_timeline = [];
 main_timeline.push(welcome);
 main_timeline.push(get_prolific_ID_conditional); // for prolific
+main_timeline.push(self_reports);
 main_timeline.push(...instructions_MSIT);
 main_timeline.push(...instructions_DST);
 main_timeline.push(rounds);

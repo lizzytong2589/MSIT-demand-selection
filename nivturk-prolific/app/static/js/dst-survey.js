@@ -479,17 +479,18 @@ var demographics_parent_edu = {
     }
 };
 
+var self_reports = [];
+// self_reports.push(nfc);
+// self_reports.push(ami);
+self_reports.push(promis_cf_cfa);
+// self_reports.push(promis_f);
+self_reports.push(phq9);
+self_reports.push(gad7);
+self_reports.push(pswq_a);
+self_reports.push(bis_bas);
+// self_reports.push(shaps);
 
 var survey = [];
-// survey.push(nfc);
-// survey.push(ami);
-survey.push(promis_cf_cfa);
-// survey.push(promis_f);
-survey.push(phq9);
-survey.push(gad7);
-survey.push(pswq_a);
-survey.push(bis_bas);
-// survey.push(shaps);
 survey.push(dst_strategies);
 survey.push(dst_effort);
 survey.push(dst_enjoyment);
