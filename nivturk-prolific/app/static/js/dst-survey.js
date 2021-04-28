@@ -207,6 +207,24 @@ var ami = {
     ],
 };
 
+var gad7 = {
+    type: 'survey-template',
+    instructions: '<div>Over the <b>last 2 weeks</b>, how often have you been bothered by the following problems?<br>',
+    items: [
+        'Feeling nervous, anxious, or on edge',
+        'Not being able to stop or control worrying',
+        'Worrying too much about different things',
+        'Trouble relaxing',
+        'Being so restless that it\'s hard to sit still',
+        'Worrying about the 1992 Olympics',
+        'Becoming easily annoyed or irritable',
+        'Feeling afraid as if something awful might happen'
+    ],
+    scale: phq9_gad7_scale,
+    infrequency_items: [5],
+    randomize_question_order: false
+};
+
 var phq9 = {
     type: 'survey-likert',
     preamble: '<div>Over the <b>last 2 weeks</b>, how often have you been bothered by any of the following problems?<br>',
