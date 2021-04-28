@@ -12,6 +12,7 @@ var shaps_scale = ["strongly disagree", "disagree", "agree", "strongly agree"];
 var pswq_a_scale = [
     'Not at all typical of me', 'Not very typical of me', 'Somewhat typical of me',
     'Fairly typical of me', 'Very typical of me'];
+var bis_bas_scale = ['Very false for me', 'Somewhat false for me', 'Somewhat true for me', 'Very true for me'];
 var dst_effort_scale = ["1- Least effortful", "2", "3", "4", "5- Most effortful"];
 var dst_enjoyment_scale = ["1- Least enjoyable", "2", "3", "4", "5- Most enjoyable"];
 var dst_trials_preference_options = ["matching", "mismatching"];
@@ -256,6 +257,29 @@ var pswq_a = {
         'I notice that I have been worrying about things.'
     ],
     scale: pswq_a_scale,
+    randomize_question_order: false
+};
+
+var bis_bas = {
+    type: 'survey-template',
+    instructions: 'Each item below is a statement that a person may either agree with or disagree with. ' 
+    + 'For each item, indicate how much you agree or disagree with what the item says. Please be as accurate and honest as you can be. ' 
+    + 'Respond to each item as if it were the only item. That is, don\'t worry about being "consistent" in your responses.',
+    items: [
+        'I worry about making mistakes.',
+        'Criticism or scolding hurts me quite a bit.',
+        'I feel pretty worried or upset when I think or know somebody is angry at me.',
+        'I feel worried when I think I have done poorly at something important.',
+        'When I get something I want, I feel excited and energized.',
+        'When I\'m doing well at something I love to keep at it.',
+        'It would excite me to win a contest.',
+        'When I see an opportunity for something I like I get excited right away.',
+        "When I want something I usually go all-out to get it.",
+        'I go out of my way to get things I want.',
+        'If I see a chance to get something I want I move on it right away.',
+        'When I go after something I use a no-holds-barred approach.'
+    ],
+    scale: bis_bas_scale,
     randomize_question_order: false
 };
 
