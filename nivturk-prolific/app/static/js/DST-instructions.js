@@ -152,6 +152,7 @@ var show_DST = {
         data.is_practice= is_practice;
         data.round = current_round;
         data.key_press = demand_choice;
+        data.button_pressed = "ignore";
         data.is_missed = is_missed;
         data.match_screen_side = match_side;
         data.n_matching = current_n_matches;
