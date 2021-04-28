@@ -18,7 +18,7 @@ function aws_upload() {
     // jsPsych.data.get().addToAll({consent_initials:sessionStorage.getItem('consent_initials'), consent_date:sessionStorage.getItem('consent_date')});
     // jsPsych.data.get().addToAll({worker_ID: ID, MTurk_completion_code: completion_code});
     
-    jsPsych.data.get().addToAll({prolific_ID: prolific_ID, completion_code: completion_code});
+    jsPsych.data.get().addToAll({prolific_ID: prolific_ID, completion_code: completion_code, last_commit: last_commit});
     file_name = sessionStorage.getItem('prolific_ID') + '_'+ date + '_' + time + '_results';
     file_path = 'data/Prolific/' + file_name;
 
