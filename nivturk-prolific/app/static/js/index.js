@@ -116,7 +116,7 @@ var end_experiment = {
 var main_timeline = [];
 main_timeline.push(welcome);
 main_timeline.push(get_prolific_ID_conditional); // for prolific
-main_timeline.push(self_reports);
+main_timeline.push(...self_reports);
 main_timeline.push(...instructions_MSIT);
 main_timeline.push(...instructions_DST);
 main_timeline.push(rounds);

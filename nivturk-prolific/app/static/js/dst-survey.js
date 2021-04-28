@@ -479,6 +479,14 @@ var demographics_parent_edu = {
     }
 };
 
+var height_weight = {
+    type: 'survey-text',
+    questions: [
+        {prompt: 'What is your height? (feet\' inches")', name: 'height', required: true},
+        {prompt: 'What is your weight? (pounds)', name: 'weight', required: true}
+    ],   
+};
+
 var self_reports = [];
 // self_reports.push(nfc);
 // self_reports.push(ami);
@@ -489,6 +497,16 @@ self_reports.push(gad7);
 self_reports.push(pswq_a);
 self_reports.push(bis_bas);
 // self_reports.push(shaps);
+self_reports.push(sex_biological);
+self_reports.push(age); 
+self_reports.push(handedness);
+self_reports.push(race);
+self_reports.push(hispanic_latino);
+self_reports.push(income_level_childhood);
+self_reports.push(income_level_now);
+self_reports.push(student);
+self_reports.push(demographics_parent_edu);
+self_reports.push(height_weight);
 
 var survey = [];
 survey.push(dst_strategies);
@@ -496,13 +514,4 @@ survey.push(dst_effort);
 survey.push(dst_enjoyment);
 survey.push(dst_trials_preference); 
 survey.push(dst_avoid); 
-survey.push(dst_boring); 
-survey.push(sex_biological);
-survey.push(age);
-survey.push(handedness);
-survey.push(race);
-survey.push(hispanic_latino)
-survey.push(income_level_childhood)
-survey.push(income_level_now)
-survey.push(student)
-survey.push(demographics_parent_edu);
+survey.push(dst_boring);
