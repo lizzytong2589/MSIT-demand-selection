@@ -45,6 +45,8 @@ var get_prolific_ID = { // get Prolific ID
 
         completion_code = jsPsych.data.getURLVariable('A');
         sessionStorage.setItem('completion_code', completion_code);
+
+        console.log(completion_code);
         
     }
 }
@@ -98,11 +100,11 @@ var rounds = {
     },
 }
 
-// text to display in between rounds
+// text to display at end of experiment
 var end_experiment = {
     type: 'html-button-response',
     stimulus: "<p>Thank you for your participation!</br>Please make sure to submit the following completion code to Prolific so that you can " +
-        "receive your payment: </br><strong>" + sessionStorage.getItem('completion_code') + 
+        "receive your payment: </br><strong>" + completion_code + 
     "</strong>.</p>",
     on_start: function() {
         aws_upload();
