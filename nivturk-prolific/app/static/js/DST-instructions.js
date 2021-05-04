@@ -38,8 +38,8 @@ var practice_intro = {
 }
 
 // set up match/mismatch combinations for demand selection (also use these arrays in the actual dst)
-var n_mismatch = [1,1,1,1,2,2,2,2,2,4,3,3,3,3,3,3,4,4,4,5,5,6,6,7,7,7,8,8,9,9,10,10,12];
-var n_match = [5,8,10,13,3,6,8,10,14,4,3,6,9,12,13,15,11,12,16,5,10,9,16,12,14,16,12,16,9,15,10,16,12];
+var n_mismatch = [1,1,1,1,2,2,2,2,2,3,3,3,3,3,3,3,4,4,4,5,5,6,6,7,7,7,8,8,9,9,10,10,12];
+var n_match = [5,8,10,13,3,6,8,10,14,2,3,6,9,12,13,15,11,12,16,5,10,9,16,12,14,16,12,16,6,15,10,16,8];
 const n_total_demand_choices = n_mismatch.length;
 var demand_selection_choices = [];
 for (var i = 0; i < n_total_demand_choices; i++) {
