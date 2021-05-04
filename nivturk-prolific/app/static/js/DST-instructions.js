@@ -68,17 +68,12 @@ var mismatch_side;
 var current_n_matches;
 var current_n_mismatches;
 var n_choice_fewer; // whether # trials chosen is less than the option not chosen
-var n_extra_trials; // number of extra matches to offer if applicable
 var n_choice_diff;
 var demand_choice;
-var n_trials_MSIT1; 
-var n_trials_MSIT2; // extra set of trials if applicable
+var n_trials_MSIT;
 var trial_type; // match or mismatch for MSIT trials
-var trial_type1;
-var trial_type2;
 var dst_index = 0;
 var random_choice;
-var match_or_mismatch_first; // when more mismatch, whether extra matching trials 1st or 2nd
 var default_side;
 var is_practice = true;
 var current_round = 0;
@@ -107,45 +102,26 @@ var show_DST = {
         }
 
         // possibilities for MSIT based on dst response (or lack thereof)
-
-        // matching chosen
         if((demand_choice == 'leftarrow' && match_side == 'left') || (demand_choice == 'rightarrow' && match_side == 'right') ||
         (default_side == 'left' && match_side == 'left') || (default_side == 'right' && match_side == 'right')) {
-            // check for delay or extra matching trials needed
+            n_trials_MSIT = current_n_matches;
+            trial_type = 'matching';
+            
+            // check if need delay screen
             if(current_n_matches < current_n_mismatches) {
                 n_choice_fewer = true;
                 n_choice_diff = current_n_mismatches - current_n_matches;
             }
-            n_trials_MSIT1 = current_n_matches;
-            trial_type1 = 'matching';
-            trial_type2 = null;
 
-        } 
-        // mismatching chosen
-        else if ((demand_choice == 'leftarrow' && mismatch_side == 'left') || (demand_choice == 'rightarrow' && mismatch_side == 'right') ||
+        } else if ((demand_choice == 'leftarrow' && mismatch_side == 'left') || (demand_choice == 'rightarrow' && mismatch_side == 'right') ||
         ((default_side == 'left' && mismatch_side == 'left') || (default_side == 'right' && mismatch_side == 'right'))) {
-            // check for delay or extra matching trials needed
+            n_trials_MSIT = current_n_mismatches;
+            trial_type = 'mismatching';
+
             if(current_n_mismatches < current_n_matches) {
                 n_choice_fewer = true;
                 n_choice_diff = current_n_matches - current_n_mismatches;
             }
-            n_trials_MSIT1 = current_n_mismatches;
-            trial_type1 = 'mismatching';
-            trial_type2 = null;
-
-            if (n_choice_fewer && match_or_mismatch_first <= 0.5) {
-                n_trials_MSIT1 = n_choice_diff;
-                n_trials_MSIT2 = current_n_mismatches;
-                trial_type1 = "matching";
-                trial_type2 = "mismatching";
-
-            } else if (n_choice_fewer && match_or_mismatch_first > 0.5) {
-                n_trials_MSIT1 = current_n_mismatches;
-                n_trials_MSIT2 = n_choice_diff;
-                trial_type1 = "mismatching";
-                trial_type2 = "matching";
-            }
-            
         } 
 
         // data writing
@@ -189,51 +165,22 @@ var DST_choice = {
 }
  
 // call to run MSIT trials
-var MSIT_trials1 = {
+var MSIT_trials = {
     type: 'MSIT',
     round: function() {
         return current_round;
     },
     n_MSIT_trials: function() {
-        return n_trials_MSIT1;
+        return n_trials_MSIT;
     },
     MSIT_trial_duration: MSIT_trial_duration,
     MSIT_trial_type: function() {
-        return trial_type1;
+        return trial_type;
     },
     fixation_duration: fixation_duration,
     is_practice: function() {
         return is_practice;
     },
-}
-
-var MSIT_trials2 = {
-    type: 'MSIT',
-    round: function() {
-        return current_round;
-    },
-    n_MSIT_trials: function() {
-        return n_trials_MSIT2;
-    },
-    MSIT_trial_duration: MSIT_trial_duration,
-    MSIT_trial_type: function() {
-        return trial_type2;
-    },
-    fixation_duration: fixation_duration,
-    is_practice: function() {
-        return is_practice;
-    },
-}
-
-var MSIT_trials2_conditional = {
-    timeline: [MSIT_trials2],
-    conditional_function: function() {
-        if(n_choice_fewer && trial_type2 != null) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
 
 // delay if # of trials chosen is fewer than # of trials in option not chosen
