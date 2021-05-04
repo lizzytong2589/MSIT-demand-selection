@@ -211,7 +211,7 @@ var delay_screen_conditional = {
 
 // decide if the round is one where the MSIT trials will be shown
 var show_MSIT_conditional = {
-    timeline: [delay_screen_conditional, MSIT_trials1, MSIT_trials2_conditional, delay_screen_conditional],
+    timeline: [delay_screen_conditional, MSIT_trials, delay_screen_conditional],
     conditional_function: function() {
         // determine whether or not to show trials; -1 b/c already incremented # of trials
         return(show_no_show_MSIT[dst_index - 1] == 1);
