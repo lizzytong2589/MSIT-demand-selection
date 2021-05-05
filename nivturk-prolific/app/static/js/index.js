@@ -3,7 +3,7 @@ var date = '';
 var time = '';
 var ID;
 var completion_code;
-var last_commit = "76f82cc";
+var last_commit = "d00819f";
 
 // MTurk info
 var turkInfo = jsPsych.turk.turkInfo();
