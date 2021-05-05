@@ -186,9 +186,15 @@ var MSIT_trials = {
 // delay if # of trials chosen is fewer than # of trials in option not chosen
 var delay_screen = {
     type: 'html-keyboard-response',
-    stimulus: "<p style = 'font-size: 7vmin; font-weight: 'bold>...</p>",
+    stimulus: function(){
+        if(n_choice_fewer) {
+            return "<p style = 'font-size: 7vmin; font-weight: 'bold>...</p>";
+        } else {
+            return "";
+        }
+    },
     trial_duration: function() {
-        if(n_choice_fewer && trial_type1 == "matching") {
+        if(n_choice_fewer) {
             var delay_time = (n_choice_diff/2.0) * (fixation_duration + MSIT_trial_duration);
             return delay_time;
         } else {
@@ -198,20 +204,9 @@ var delay_screen = {
     choices: jsPsych.NO_KEYS,
 }
 
-var delay_screen_conditional = {
-    timeline: [delay_screen],
-    conditional_function: function() {
-        if(trial_type2 == null && n_choice_fewer) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-}
-
 // decide if the round is one where the MSIT trials will be shown
 var show_MSIT_conditional = {
-    timeline: [delay_screen_conditional, MSIT_trials, delay_screen_conditional],
+    timeline: [delay_screen, MSIT_trials, delay_screen],
     conditional_function: function() {
         // determine whether or not to show trials; -1 b/c already incremented # of trials
         return(show_no_show_MSIT[dst_index - 1] == 1);
