@@ -9,6 +9,7 @@ var phq9_gad7_scale = ["Not at all", "Several days", "More than half the days", 
 var phq9_impact_options = ["Not difficult at all", "Somewhat difficult", "Very difficult", "Extremely difficult"];
 var nfc_scale = ["extremely uncharacteristic", "somewhat uncharacteristic", "uncertain", "somewhat characteristic", "extremely characteristic"];
 var shaps_scale = ["strongly disagree", "disagree", "agree", "strongly agree"];
+var test_scale = ["strongly disagree", "disagree", "agree", "strongly agree"];
 var pswq_a_scale = [
     'Not at all typical of me', 'Not very typical of me', 'Somewhat typical of me',
     'Fairly typical of me', 'Very typical of me'];
