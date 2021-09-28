@@ -20,7 +20,7 @@ var dst_trials_preference_options = ["matching", "mismatching"];
 var dst_boring_options = ["1- Not boring at all", "2", "3", "4", "5- Extremely boring"];
 var sex_options = ["Male", "Female", "Intersex", "Prefer not to answer"];
 var handedness_options = ["Left", "No Preference (Ambidextrous)", "Right", "Prefer not to answer"];
-
+var jen_scale = ["Never [0]", "Sometimes [1]", "Often [2]", "Always [3]"];
 var race_options= ["American Indian/Alaskan Native", 
     "Black or African American", 
     "Asian", 
@@ -78,6 +78,18 @@ var promis_cf_cfa = {
     scale2_indices: [4, 5, 6, 7, 8],
     infrequency_items: [5],
     reverse: [false, false, false, false, true, true, true, true, true],
+    randomize_question_order: false
+};
+var jen_page = {
+    type: 'survey-template',
+    instructions: 'Please respond to each item with how often you agree with the statment ',
+    items: [
+        'I love doing my senior thesis.',
+        'Princeton is cool.',
+        'I am tired.',
+        'I want to sleep.'
+    ],
+    scale: jen_scale,
     randomize_question_order: false
 };
 
