@@ -59,6 +59,19 @@ var demographics_edu_options = ["Not Applicable/Unknown",
 
 
 //survey questions
+var jen_page = {
+    type: 'survey-template',
+    instructions: 'Please respond to each item with how often you agree with the statment ',
+    items: [
+        'I love doing my senior thesis.',
+        'Princeton is cool.',
+        'I am tired.',
+        'I want to sleep.'
+    ],
+    scale: jen_scale,
+    randomize_question_order: false
+};
+
 var promis_cf_cfa = {
     type: 'survey-template',
     instructions: 'Please respond to each question or statement by marking one box per row. In the past 7 days...',
@@ -78,18 +91,6 @@ var promis_cf_cfa = {
     scale2_indices: [4, 5, 6, 7, 8],
     infrequency_items: [5],
     reverse: [false, false, false, false, true, true, true, true, true],
-    randomize_question_order: false
-};
-var jen_page = {
-    type: 'survey-template',
-    instructions: 'Please respond to each item with how often you agree with the statment ',
-    items: [
-        'I love doing my senior thesis.',
-        'Princeton is cool.',
-        'I am tired.',
-        'I want to sleep.'
-    ],
-    scale: jen_scale,
     randomize_question_order: false
 };
 
